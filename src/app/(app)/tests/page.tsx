@@ -14,7 +14,7 @@ import { FileText } from 'lucide-react';
 const tests = [
   {
     title: 'Weekly Maths Test - Chapter 3',
-    subject: 'Maths',
+    subject: 'Mathematics',
     class: '8',
     questions: 20,
     duration: '45 mins',
@@ -28,7 +28,7 @@ const tests = [
   },
   {
     title: 'History Quiz - The Mughal Empire',
-    subject: 'History',
+    subject: 'Social Science',
     class: '8',
     questions: 15,
     duration: '20 mins',
@@ -41,18 +41,32 @@ const tests = [
     duration: '40 mins',
   },
   {
-    title: 'Full Syllabus Mock Test 1',
-    subject: 'All Subjects',
-    class: '8',
-    questions: 100,
-    duration: '180 mins',
+    title: 'Sanskrit Vocabulary Test',
+    subject: 'Sanskrit',
+    class: '6',
+    questions: 20,
+    duration: '25 mins',
   },
   {
-    title: 'Chemistry Test - Metals & Non-metals',
-    subject: 'Science',
-    class: '8',
+    title: 'Hindi Literature Quiz',
+    subject: 'Hindi',
+    class: '7',
+    questions: 15,
+    duration: '20 mins',
+  },
+  {
+    title: 'Environmental Awareness Test',
+    subject: 'Environment Studies',
+    class: '5',
     questions: 20,
-    duration: '35 mins',
+    duration: '30 mins',
+  },
+  {
+    title: 'Monthly GK Challenge',
+    subject: 'General Knowledge',
+    class: 'All',
+    questions: 50,
+    duration: '60 mins',
   },
 ];
 

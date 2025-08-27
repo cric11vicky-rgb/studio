@@ -14,7 +14,7 @@ import {
 const solutions = [
   {
     title: 'Chapter 1: Rational Numbers',
-    subject: 'Maths',
+    subject: 'Mathematics',
     class: '8',
     exercises: 4,
   },
@@ -25,8 +25,8 @@ const solutions = [
     exercises: 5,
   },
   {
-    title: 'Chapter 1: How, When and Where',
-    subject: 'History',
+    title: 'Chapter 1: The Indian Constitution',
+    subject: 'Social Science',
     class: '8',
     exercises: 3,
   },
@@ -37,16 +37,28 @@ const solutions = [
     exercises: 2,
   },
   {
-    title: 'Chapter 3: Integers',
-    subject: 'Maths',
+    title: 'Chapter 1: Subhashitani',
+    subject: 'Sanskrit',
     class: '7',
-    exercises: 6,
+    exercises: 5,
   },
   {
-    title: 'Chapter 4: Heat',
-    subject: 'Science',
+    title: 'Chapter 2: Prani-Jagat',
+    subject: 'Hindi',
     class: '7',
     exercises: 4,
+  },
+  {
+    title: 'Chapter 1: Super Senses',
+    subject: 'Environment Studies',
+    class: '5',
+    exercises: 4,
+  },
+  {
+    title: 'Indian States and Capitals',
+    subject: 'General Knowledge',
+    class: 'All',
+    exercises: 1,
   },
 ];
 

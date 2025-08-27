@@ -24,15 +24,33 @@ type Note = {
 const initialNotes: Note[] = [
   {
     id: 1,
-    title: 'Photosynthesis Important Points',
+    title: 'Science: Photosynthesis',
     content: 'Chlorophyll, sunlight, carbon dioxide, and water are essential.',
     timestamp: '2 days ago',
   },
   {
     id: 2,
-    title: 'Algebra Formulas',
+    title: 'Mathematics: Algebra Formulas',
     content: '(a+b)^2 = a^2 + 2ab + b^2',
     timestamp: '5 days ago',
+  },
+  {
+    id: 3,
+    title: 'English: Noun Types',
+    content: 'Proper, Common, Collective, Abstract, Material.',
+    timestamp: '1 week ago',
+  },
+  {
+    id: 4,
+    title: 'Hindi: Sandhi ke Bhed',
+    content: 'Swar Sandhi, Vyanjan Sandhi, Visarg Sandhi.',
+    timestamp: '1 week ago',
+  },
+  {
+    id: 5,
+    title: 'Social Science: Major Rivers of India',
+    content: 'Ganga, Yamuna, Brahmaputra, Godavari, Krishna, Narmada.',
+    timestamp: '2 weeks ago',
   },
 ];
 
