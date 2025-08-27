@@ -16,6 +16,7 @@ import {
   StickyNote,
   User,
   Video,
+  Tv,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -49,10 +50,11 @@ const menuItems = [
   { href: '/books', label: 'Digital Books', icon: Book },
   { href: '/solutions', label: 'Solutions', icon: FileText },
   { href: '/classes', label: 'Recorded Classes', icon: Video },
+  { href: '/live-class', label: 'Live Classes', icon: Tv },
   { href: '/notes', label: 'Notes', icon: StickyNote },
   { href: '/doubts', label: 'Doubt Section', icon: HelpCircle },
   { href: '/generate-paper', label: 'AI Paper Generator', icon: Sparkles },
-  { href: '/contact', label: 'Help &amp; Contact', icon: Mail },
+  { href: '/contact', label: 'Help & Contact', icon: Mail },
 ];
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
