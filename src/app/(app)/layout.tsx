@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Book,
+  ClipboardList,
   FileText,
   HelpCircle,
   LayoutDashboard,
@@ -54,6 +55,7 @@ const menuItems = [
   { href: '/notes', label: 'Notes', icon: StickyNote },
   { href: '/doubts', label: 'Doubt Section', icon: HelpCircle },
   { href: '/generate-paper', label: 'AI Paper Generator', icon: Sparkles },
+  { href: '/tests', label: 'Tests', icon: ClipboardList },
   { href: '/contact', label: 'Help & Contact', icon: Mail },
 ];
 

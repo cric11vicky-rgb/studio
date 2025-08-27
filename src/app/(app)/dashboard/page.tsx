@@ -11,6 +11,7 @@ import {
   StickyNote,
   Tv,
   Video,
+  ClipboardList,
 } from 'lucide-react';
 import { AppHeader } from '@/app/(app)/layout';
 import {
@@ -30,6 +31,7 @@ const menuItems = [
   { href: '/notes', label: 'Notes', icon: StickyNote },
   { href: '/doubts', label: 'Doubt Section', icon: HelpCircle },
   { href: '/generate-paper', label: 'AI Paper Generator', icon: Sparkles },
+  { href: '/tests', label: 'Tests', icon: ClipboardList },
   { href: '/contact', label: 'Help & Contact', icon: Mail },
 ];
 
