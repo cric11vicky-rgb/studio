@@ -1,3 +1,4 @@
+
 import { AppHeader } from '@/app/(app)/layout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -12,26 +13,33 @@ import {
 import { FileText } from 'lucide-react';
 
 const tests = [
-  {
-    title: 'Weekly Maths Test - Chapter 3',
+    {
+    title: 'Maths Fun Quiz',
     subject: 'Mathematics',
-    class: '8',
-    questions: 20,
-    duration: '45 mins',
+    class: '3',
+    questions: 10,
+    duration: '15 mins',
   },
   {
-    title: 'Science Mock Test - Physics',
-    subject: 'Science',
-    class: '8',
-    questions: 25,
-    duration: '50 mins',
-  },
-  {
-    title: 'History Quiz - The Mughal Empire',
-    subject: 'Social Science',
-    class: '8',
+    title: 'Our Environment Test',
+    subject: 'Environment Studies',
+    class: '4',
     questions: 15,
     duration: '20 mins',
+  },
+  {
+    title: 'Science Chapter 1 Test',
+    subject: 'Science',
+    class: '5',
+    questions: 20,
+    duration: '30 mins',
+  },
+  {
+    title: 'Social Science - Our Pasts I',
+    subject: 'Social Science',
+    class: '6',
+    questions: 25,
+    duration: '40 mins',
   },
   {
     title: 'English Grammar Test',
@@ -41,25 +49,25 @@ const tests = [
     duration: '40 mins',
   },
   {
-    title: 'Sanskrit Vocabulary Test',
-    subject: 'Sanskrit',
-    class: '6',
+    title: 'Weekly Maths Test - Chapter 3',
+    subject: 'Mathematics',
+    class: '8',
     questions: 20,
-    duration: '25 mins',
+    duration: '45 mins',
   },
   {
-    title: 'Hindi Literature Quiz',
-    subject: 'Hindi',
-    class: '7',
-    questions: 15,
-    duration: '20 mins',
+    title: 'Physics - Motion and Time',
+    subject: 'Science',
+    class: '9',
+    questions: 25,
+    duration: '50 mins',
   },
   {
-    title: 'Environmental Awareness Test',
-    subject: 'Environment Studies',
-    class: '5',
-    questions: 20,
-    duration: '30 mins',
+    title: 'Chemistry - Carbon Compounds',
+    subject: 'Science',
+    class: '10',
+    questions: 30,
+    duration: '60 mins',
   },
   {
     title: 'Monthly GK Challenge',

@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -22,35 +23,53 @@ type Note = {
 };
 
 const initialNotes: Note[] = [
-  {
+    {
     id: 1,
-    title: 'Science: Photosynthesis',
-    content: 'Chlorophyll, sunlight, carbon dioxide, and water are essential.',
-    timestamp: '2 days ago',
+    title: 'Class 3 Science: Living and Non-living things',
+    content: 'Living things breathe, eat, grow, move, and reproduce. Non-living things do not.',
+    timestamp: '1 day ago',
   },
   {
     id: 2,
-    title: 'Mathematics: Algebra Formulas',
-    content: '(a+b)^2 = a^2 + 2ab + b^2',
-    timestamp: '5 days ago',
+    title: 'Class 4 Hindi: संज्ञा',
+    content: 'किसी व्यक्ति, वस्तु, स्थान, या भाव के नाम को संज्ञा कहते हैं।',
+    timestamp: '3 days ago',
   },
   {
     id: 3,
-    title: 'English: Noun Types',
-    content: 'Proper, Common, Collective, Abstract, Material.',
-    timestamp: '1 week ago',
+    title: 'Class 5 EVS: Water Cycle',
+    content: 'Evaporation -> Condensation -> Precipitation -> Collection',
+    timestamp: '4 days ago',
   },
   {
     id: 4,
-    title: 'Hindi: Sandhi ke Bhed',
-    content: 'Swar Sandhi, Vyanjan Sandhi, Visarg Sandhi.',
+    title: 'Class 6 History: Indus Valley Civilization',
+    content: 'Major cities: Harappa and Mohenjo-Daro. Well-planned cities, drainage system.',
     timestamp: '1 week ago',
   },
   {
     id: 5,
-    title: 'Social Science: Major Rivers of India',
-    content: 'Ganga, Yamuna, Brahmaputra, Godavari, Krishna, Narmada.',
+    title: 'Class 7 Science: Acids and Bases',
+    content: 'Acids are sour, turn blue litmus red. Bases are bitter, turn red litmus blue.',
+    timestamp: '1 week ago',
+  },
+  {
+    id: 6,
+    title: 'Class 8 Maths: Squares and Square Roots',
+    content: 'The square of a number is the number multiplied by itself. Square root is the inverse.',
     timestamp: '2 weeks ago',
+  },
+  {
+    id: 7,
+    title: 'Class 9 English: The Road Not Taken',
+    content: 'Poem by Robert Frost about choices and their impact on life.',
+    timestamp: '2 weeks ago',
+  },
+  {
+    id: 8,
+    title: 'Class 10 Social Science: Nationalism in India',
+    content: 'Key events: Non-Cooperation Movement, Civil Disobedience Movement, Quit India Movement.',
+    timestamp: '3 weeks ago',
   },
 ];
 

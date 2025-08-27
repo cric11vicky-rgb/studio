@@ -1,3 +1,4 @@
+
 import { ArrowRight } from 'lucide-react';
 import { AppHeader } from '@/app/(app)/layout';
 import { Badge } from '@/components/ui/badge';
@@ -12,10 +13,58 @@ import {
 } from '@/components/ui/card';
 
 const solutions = [
+    {
+    title: 'Chapter 1: Where to Look From',
+    subject: 'Mathematics',
+    class: '3',
+    exercises: 3,
+  },
+  {
+    title: 'Chapter 1: Poonam\'s Day Out',
+    subject: 'Environment Studies',
+    class: '3',
+    exercises: 4,
+  },
+    {
+    title: 'Chapter 1: Building with Bricks',
+    subject: 'Mathematics',
+    class: '4',
+    exercises: 5,
+  },
+  {
+    title: 'Chapter 1: Super Senses',
+    subject: 'Environment Studies',
+    class: '5',
+    exercises: 4,
+  },
+  {
+    title: 'Chapter 1: Knowing Our Numbers',
+    subject: 'Mathematics',
+    class: '6',
+    exercises: 3,
+  },
+  {
+    title: 'Chapter 1: Integers',
+    subject: 'Mathematics',
+    class: '7',
+    exercises: 4,
+  },
   {
     title: 'Chapter 1: Rational Numbers',
     subject: 'Mathematics',
     class: '8',
+    exercises: 4,
+  },
+  {
+    title: 'Chapter 1: Number Systems',
+    subject: 'Mathematics',
+    class: '9',
+    exercises: 6,
+  },
+  {
+    title: 'Chapter 1: Real Numbers',
+    subject: 'Mathematics',
+    class: '10',
     exercises: 4,
   },
   {
@@ -25,34 +74,10 @@ const solutions = [
     exercises: 5,
   },
   {
-    title: 'Chapter 1: The Indian Constitution',
-    subject: 'Social Science',
-    class: '8',
-    exercises: 3,
-  },
-  {
     title: 'Poem 1: The Ant and the Cricket',
     subject: 'English',
     class: '8',
     exercises: 2,
-  },
-  {
-    title: 'Chapter 1: Subhashitani',
-    subject: 'Sanskrit',
-    class: '7',
-    exercises: 5,
-  },
-  {
-    title: 'Chapter 2: Prani-Jagat',
-    subject: 'Hindi',
-    class: '7',
-    exercises: 4,
-  },
-  {
-    title: 'Chapter 1: Super Senses',
-    subject: 'Environment Studies',
-    class: '5',
-    exercises: 4,
   },
   {
     title: 'Indian States and Capitals',
