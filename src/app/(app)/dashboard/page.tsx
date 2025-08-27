@@ -2,15 +2,14 @@
 
 import * as React from 'react';
 import {
-  ArrowRight,
-  ClipboardEdit,
-  Presentation,
-  CheckCircle,
-  BarChart,
-  FileQuestion,
   BookOpen,
-  CalendarDays,
-  Annoyed,
+  Video,
+  FileText,
+  Sparkles,
+  CheckCircle,
+  Presentation,
+  Book,
+  PenSquare,
 } from 'lucide-react';
 import { AppHeader } from '@/app/(app)/layout';
 import { Button } from '@/components/ui/button';
@@ -26,61 +25,61 @@ import Link from 'next/link';
 
 const quickAccessItems = [
   {
-    title: 'Start Mock Test',
-    description: 'Practice with a full-length test',
-    icon: ClipboardEdit,
+    title: 'Digital Books',
+    description: 'Access your textbooks anytime',
+    icon: BookOpen,
+    href: '/books',
+  },
+  {
+    title: 'Recorded Classes',
+    description: 'Watch lessons at your own pace',
+    icon: Video,
+    href: '/classes',
+  },
+  {
+    title: 'Textbook Solutions',
+    description: 'Find answers to exercises',
+    icon: FileText,
+    href: '/solutions',
+  },
+  {
+    title: 'AI Paper Generator',
+    description: 'Create practice tests',
+    icon: Sparkles,
     href: '/generate-paper',
-  },
-  {
-    title: 'Daily Practice Problems',
-    description: 'Solve curated daily questions',
-    icon: CheckCircle,
-    href: '#',
-  },
-  {
-    title: 'Performance Analysis',
-    description: 'Track your progress and scores',
-    icon: BarChart,
-    href: '#',
-  },
-   {
-    title: 'Previous Year Questions',
-    description: 'Review past exam papers',
-    icon: FileQuestion,
-    href: '#',
   },
 ];
 
 const recentActivity = [
   {
-    title: 'Scored 85% in "Trigonometry" mock test',
-    category: 'Maths',
-    time: '1h ago',
-    icon: CheckCircle,
+    title: 'Read Chapter 3 of Science book',
+    category: 'Science',
+    time: '45m ago',
+    icon: Book,
   },
   {
-    title: 'Live class "Optics" scheduled for 5 PM',
-    category: 'Physics',
-    time: 'Today',
+    title: 'Watched "Algebraic Expressions" class',
+    category: 'Maths',
+    time: '2h ago',
     icon: Presentation,
   },
   {
-    title: 'Submitted "Chemical Reactions" assignment',
-    category: 'Chemistry',
+    title: 'Finished notes on "The Indian Constitution"',
+    category: 'Civics',
     time: 'Yesterday',
-    icon: BookOpen,
+    icon: PenSquare,
   },
    {
-    title: 'New announcement from your batch',
-    category: 'General',
+    title: 'Solved practice problems for "Integers"',
+    category: 'Maths',
     time: '2d ago',
-    icon: Annoyed,
+    icon: CheckCircle,
   },
 ];
 
 const motivationalQuote = {
-  quote: "Success is the sum of small efforts, repeated day in and day out.",
-  author: "Robert Collier"
+  quote: "The beautiful thing about learning is that no one can take it away from you.",
+  author: "B.B. King"
 }
 
 export default function DashboardPage() {
@@ -91,9 +90,9 @@ export default function DashboardPage() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <Card className="md:col-span-2 lg:col-span-3 bg-card border shadow-sm">
             <CardHeader>
-              <CardTitle className="font-headline text-3xl">Welcome Back, Aspirant!</CardTitle>
+              <CardTitle className="font-headline text-3xl">Welcome Back, Student!</CardTitle>
               <CardDescription className="text-lg text-muted-foreground">
-                Stay focused and keep up the hard work.
+                A new day to learn something amazing.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -117,10 +116,10 @@ export default function DashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="font-headline flex items-center gap-2">
-                  <span>Quick Actions</span>
+                  <span>Quick Access</span>
                 </CardTitle>
                 <CardDescription>
-                  Your essential tools for exam preparation.
+                  Jump right back into your learning journey.
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-4 sm:grid-cols-2">
@@ -148,11 +147,10 @@ export default function DashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="font-headline flex items-center gap-2">
-                    <CalendarDays />
                     <span>Recent Activity</span>
                 </CardTitle>
                 <CardDescription>
-                  Here's a summary of your recent progress.
+                  Here's what you've been up to.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -173,9 +171,6 @@ export default function DashboardPage() {
                   ))}
                 </div>
               </CardContent>
-               <CardContent>
-                 <Button variant="outline" className="w-full">View Full Timeline <ArrowRight className="ml-2 h-4 w-4" /></Button>
-               </CardContent>
             </Card>
           </div>
         </div>
