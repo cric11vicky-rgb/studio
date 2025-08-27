@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import {
   Card,
@@ -7,9 +8,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Upload, Video, MessageSquareWarning, BarChart, Users, BookOpen } from "lucide-react";
+import { Upload, Video, MessageSquareWarning, BarChart, Users, BookOpen, Clock, CheckCircle,ClipboardList } from "lucide-react";
 
 export default function TeacherDashboardPage() {
+    const summaryStats = [
+    { title: "Active Students", value: "125", icon: Users },
+    { title: "Pending Doubts", value: "12", icon: MessageSquareWarning },
+    { title: "Classes Today", value: "4", icon: Clock },
+    { title: "Assignments to Grade", value: "8", icon: CheckCircle },
+  ];
+
   const features = [
     {
       title: "Manage Content",
@@ -56,18 +64,35 @@ export default function TeacherDashboardPage() {
   ];
 
   return (
-    <div className="flex-1 space-y-4 p-8 pt-6">
+    <div className="flex-1 space-y-6 p-4 md:p-8">
       <div className="flex items-center justify-between space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">Teacher Dashboard</h2>
       </div>
+
+       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {summaryStats.map((stat) => (
+          <Card key={stat.title}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                {stat.title}
+              </CardTitle>
+              <stat.icon className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stat.value}</div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {features.map((feature) => (
-          <Card key={feature.title}>
+          <Card key={feature.title} className="flex flex-col">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-lg font-semibold">{feature.title}</CardTitle>
               <feature.icon className="h-6 w-6 text-muted-foreground" />
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-1">
               <CardDescription>{feature.description}</CardDescription>
             </CardContent>
             <CardContent>
