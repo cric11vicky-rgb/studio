@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 
 import { AppHeader } from '@/app/(app)/layout';
@@ -14,60 +15,88 @@ import {
 
 const books = [
   {
-    title: 'Ganit (Mathematics) Class 8',
+    title: 'गणित (Ganit) - कक्षा 8',
     subject: 'Mathematics',
     class: '8',
     imageUrl: 'https://picsum.photos/300/400?subject=math',
     aiHint: 'math textbook',
   },
   {
-    title: 'Vigyan (Science) Class 8',
+    title: 'विज्ञान (Vigyan) - कक्षा 8',
     subject: 'Science',
     class: '8',
     imageUrl: 'https://picsum.photos/300/400?subject=science',
     aiHint: 'science textbook',
   },
   {
-    title: 'Honeydew - English Reader',
+    title: 'वसंत (Vasant) - कक्षा 8',
+    subject: 'Hindi',
+    class: '8',
+    imageUrl: 'https://picsum.photos/300/400?subject=hindi',
+    aiHint: 'hindi textbook',
+  },
+  {
+    title: 'Honeydew - Class 8',
     subject: 'English',
     class: '8',
     imageUrl: 'https://picsum.photos/300/400?subject=english',
     aiHint: 'english textbook',
   },
   {
-    title: 'Vasant - Hindi',
-    subject: 'Hindi',
-    class: '7',
-    imageUrl: 'https://picsum.photos/300/400?subject=hindi',
-    aiHint: 'hindi textbook',
-  },
-  {
-    title: 'Ruchira - Sanskrit',
+    title: 'रुचिरा (Ruchira) - कक्षा 7',
     subject: 'Sanskrit',
-    class: '6',
+    class: '7',
     imageUrl: 'https://picsum.photos/300/400?subject=sanskrit',
     aiHint: 'sanskrit textbook',
   },
   {
-    title: 'Our Pasts III - Social Science',
+    title: 'हमारे अतीत - III (Itihas) - कक्षा 8',
     subject: 'Social Science',
     class: '8',
-    imageUrl: 'https://picsum.photos/300/400?subject=social',
+    imageUrl: 'https://picsum.photos/300/400?subject=history',
     aiHint: 'history book',
   },
   {
-    title: 'Our Environment',
+    title: 'हमारा पर्यावरण (Paryavaran) - कक्षा 7',
     subject: 'Environment Studies',
     class: '7',
     imageUrl: 'https://picsum.photos/300/400?subject=environment',
     aiHint: 'environment textbook',
   },
   {
-    title: 'General Knowledge 2024',
+    title: 'सामान्य ज्ञान (Samanya Gyan) 2024',
     subject: 'General Knowledge',
     class: 'All',
     imageUrl: 'https://picsum.photos/300/400?subject=gk',
     aiHint: 'knowledge book',
+  },
+  {
+    title: 'सामाजिक एवं राजनीतिक जीवन - I - कक्षा 6',
+    subject: 'Social Science',
+    class: '6',
+    imageUrl: 'https://picsum.photos/300/400?subject=civics',
+    aiHint: 'civics textbook',
+  },
+  {
+    title: 'पृथ्वी: हमारा आवास (Bhugol) - कक्षा 6',
+    subject: 'Social Science',
+    class: '6',
+    imageUrl: 'https://picsum.photos/300/400?subject=geography',
+    aiHint: 'geography textbook',
+  },
+  {
+    title: 'गणित (Ganit) - कक्षा 7',
+    subject: 'Mathematics',
+    class: '7',
+    imageUrl: 'https://picsum.photos/300/400?subject=math2',
+    aiHint: 'math textbook',
+  },
+  {
+    title: 'विज्ञान (Vigyan) - कक्षा 7',
+    subject: 'Science',
+    class: '7',
+    imageUrl: 'https://picsum.photos/300/400?subject=science2',
+    aiHint: 'science textbook',
   },
 ];
 
