@@ -22,20 +22,22 @@ import {
 } from '@/components/ui/card';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/context/language-context';
 
 const menuItems = [
-  { href: '/books', label: 'Digital Books', icon: Book },
-  { href: '/solutions', label: 'Solutions', icon: FileText },
-  { href: '/classes', label: 'Recorded Classes', icon: Video },
-  { href: '/live-class', label: 'Live Classes', icon: Tv },
-  { href: '/notes', label: 'Notes', icon: StickyNote },
-  { href: '/doubts', label: 'Doubt Section', icon: HelpCircle },
-  { href: '/generate-paper', label: 'AI Paper Generator', icon: Sparkles },
-  { href: '/tests', label: 'Tests', icon: ClipboardList },
-  { href: '/contact', label: 'Help & Contact', icon: Mail },
+  { href: '/books', label: 'Digital Books', labelHi: 'डिजिटल किताबें', icon: Book },
+  { href: '/solutions', label: 'Solutions', labelHi: 'समाधान', icon: FileText },
+  { href: '/classes', label: 'Recorded Classes', labelHi: 'रिकॉर्डेड कक्षाएं', icon: Video },
+  { href: '/live-class', label: 'Live Classes', labelHi: 'लाइव कक्षाएं', icon: Tv },
+  { href: '/notes', label: 'Notes', labelHi: 'नोट्स', icon: StickyNote },
+  { href: '/doubts', label: 'Doubt Section', labelHi: 'संदेह अनुभाग', icon: HelpCircle },
+  { href: '/generate-paper', label: 'AI Paper Generator', labelHi: 'एआई पेपर जेनरेटर', icon: Sparkles },
+  { href: '/tests', label: 'Tests', labelHi: 'टेस्ट', icon: ClipboardList },
+  { href: '/contact', label: 'Help & Contact', labelHi: 'सहायता और संपर्क', icon: Mail },
 ];
 
 export default function DashboardPage() {
+  const { language } = useLanguage();
   return (
     <div className="flex h-full flex-col bg-background">
       <AppHeader title="Dashboard" />
@@ -45,7 +47,9 @@ export default function DashboardPage() {
             <Link href={item.href} key={item.href}>
               <Card className="aspect-square flex flex-col items-center justify-center p-4 text-center hover:bg-secondary hover:border-primary transition-colors">
                 <item.icon className="h-8 w-8 text-primary mb-2" />
-                <CardTitle className="text-sm font-medium">{item.label}</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  {language === 'English' ? item.label : item.labelHi}
+                </CardTitle>
               </Card>
             </Link>
           ))}

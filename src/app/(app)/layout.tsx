@@ -46,22 +46,24 @@ import {
 } from '@/components/ui/sidebar';
 import { Logo } from '@/components/logo';
 import { cn } from '@/lib/utils';
+import { LanguageProvider, useLanguage } from '@/context/language-context';
 
 const menuItems = [
-  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/books', label: 'Digital Books', icon: Book },
-  { href: '/solutions', label: 'Solutions', icon: FileText },
-  { href: '/classes', label: 'Recorded Classes', icon: Video },
-  { href: '/live-class', label: 'Live Classes', icon: Tv },
-  { href: '/notes', label: 'Notes', icon: StickyNote },
-  { href: '/doubts', label: 'Doubt Section', icon: HelpCircle },
-  { href: '/generate-paper', label: 'AI Paper Generator', icon: Sparkles },
-  { href: '/tests', label: 'Tests', icon: ClipboardList },
-  { href: '/contact', label: 'Help & Contact', icon: Mail },
+  { href: '/dashboard', label: 'Dashboard', labelHi: 'डैशबोर्ड', icon: LayoutDashboard },
+  { href: '/books', label: 'Digital Books', labelHi: 'डिजिटल किताबें', icon: Book },
+  { href: '/solutions', label: 'Solutions', labelHi: 'समाधान', icon: FileText },
+  { href: '/classes', label: 'Recorded Classes', labelHi: 'रिकॉर्डेड कक्षाएं', icon: Video },
+  { href: '/live-class', label: 'Live Classes', labelHi: 'लाइव कक्षाएं', icon: Tv },
+  { href: '/notes', label: 'Notes', labelHi: 'नोट्स', icon: StickyNote },
+  { href: '/doubts', label: 'Doubt Section', labelHi: 'संदेह अनुभाग', icon: HelpCircle },
+  { href: '/generate-paper', label: 'AI Paper Generator', labelHi: 'एआई पेपर जेनरेटर', icon: Sparkles },
+  { href: '/tests', label: 'Tests', labelHi: 'टेस्ट', icon: ClipboardList },
+  { href: '/contact', label: 'Help & Contact', labelHi: 'सहायता और संपर्क', icon: Mail },
 ];
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+function AppLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { language } = useLanguage();
 
   return (
     <SidebarProvider>
@@ -79,10 +81,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <Link href={item.href}>
                   <SidebarMenuButton
                     isActive={pathname === item.href}
-                    tooltip={item.label}
+                    tooltip={language === 'English' ? item.label : item.labelHi}
                   >
                     <item.icon />
-                    <span>{item.label}</span>
+                    <span>{language === 'English' ? item.label : item.labelHi}</span>
                   </SidebarMenuButton>
                 </Link>
               </SidebarMenuItem>
@@ -97,7 +99,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <AvatarFallback>U</AvatarFallback>
               </Avatar>
               <div className="flex flex-col text-sm">
-                <span className="font-semibold">Student</span>
+                <span className="font-semibold">{language === 'English' ? 'Student' : 'विद्यार्थी'}</span>
                 <span className="text-muted-foreground">student@edu.com</span>
               </div>
             </div>
@@ -108,19 +110,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56 mb-2">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>{language === 'English' ? 'My Account' : 'मेरा खाता'}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                   <User className="mr-2 h-4 w-4" />
-                  <span>Profile</span>
+                  <span>{language === 'English' ? 'Profile' : 'प्रोफ़ाइल'}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
+                  <span>{language === 'English' ? 'Settings' : 'सेटिंग्स'}</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <span>Log out</span>
+                  <span>{language === 'English' ? 'Log out' : 'लॉग आउट'}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -132,16 +134,25 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
+export default function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <LanguageProvider>
+      <AppLayoutContent>{children}</AppLayoutContent>
+    </LanguageProvider>
+  );
+}
+
+
 export function AppHeader({ title }: { title: string }) {
   const { isMobile } = useSidebar();
-  const [language, setLanguage] = React.useState('English');
+  const { language, setLanguage, getTranslation } = useLanguage();
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-card px-4 sm:px-6">
       <SidebarTrigger className={cn('md:hidden', { hidden: !isMobile })}>
         <Menu />
       </SidebarTrigger>
-      <h1 className="font-headline text-lg font-semibold md:text-xl flex-1">{title}</h1>
+      <h1 className="font-headline text-lg font-semibold md:text-xl flex-1">{getTranslation(title)}</h1>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm">

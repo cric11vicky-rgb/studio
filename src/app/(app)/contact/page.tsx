@@ -15,7 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 export default function ContactPage() {
   return (
     <div className="flex h-full flex-col">
-      <AppHeader title="Help &amp; Contact" />
+      <AppHeader title="Help & Contact" />
       <main className="flex-1 p-4 md:p-8">
         <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2">
           <div>
