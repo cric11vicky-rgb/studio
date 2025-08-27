@@ -19,6 +19,7 @@ import {
   Video,
   Tv,
   Globe,
+  TrendingUp,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -50,15 +51,13 @@ import { LanguageProvider, useLanguage } from '@/context/language-context';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', labelHi: 'डैशबोर्ड', icon: LayoutDashboard },
-  { href: '/books', label: 'Digital Books', labelHi: 'डिजिटल किताबें', icon: Book },
-  { href: '/solutions', label: 'Solutions', labelHi: 'समाधान', icon: FileText },
-  { href: '/classes', label: 'Recorded Classes', labelHi: 'रिकॉर्डेड कक्षाएं', icon: Video },
+  { href: '/books', label: 'Books', labelHi: 'किताबें', icon: Book },
   { href: '/live-class', label: 'Live Classes', labelHi: 'लाइव कक्षाएं', icon: Tv },
   { href: '/notes', label: 'Notes', labelHi: 'नोट्स', icon: StickyNote },
-  { href: '/doubts', label: 'Doubt Section', labelHi: 'संदेह अनुभाग', icon: HelpCircle },
-  { href: '/generate-paper', label: 'AI Paper Generator', labelHi: 'एआई पेपर जेनरेटर', icon: Sparkles },
   { href: '/tests', label: 'Tests', labelHi: 'टेस्ट', icon: ClipboardList },
-  { href: '/contact', label: 'Help & Contact', labelHi: 'सहायता और संपर्क', icon: Mail },
+  { href: '/doubts', label: 'Doubts', labelHi: 'संदेह', icon: HelpCircle },
+  { href: '/progress', label: 'Progress', labelHi: 'प्रगति', icon: TrendingUp },
+  { href: '/contact', label: 'Help', labelHi: 'सहायता', icon: Mail },
 ];
 
 function AppLayoutContent({ children }: { children: React.ReactNode }) {
@@ -80,7 +79,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
               <SidebarMenuItem key={item.href}>
                 <Link href={item.href}>
                   <SidebarMenuButton
-                    isActive={pathname === item.href}
+                    isActive={pathname.startsWith(item.href)}
                     tooltip={language === 'English' ? item.label : item.labelHi}
                   >
                     <item.icon />
@@ -147,6 +146,12 @@ export function AppHeader({ title }: { title: string }) {
   const { isMobile } = useSidebar();
   const { language, setLanguage, getTranslation } = useLanguage();
 
+  // Hide the default header on the dashboard page
+  const pathname = usePathname();
+  if (pathname === '/dashboard') {
+    return null;
+  }
+  
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-card px-4 sm:px-6">
       <SidebarTrigger className={cn('md:hidden', { hidden: !isMobile })}>

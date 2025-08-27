@@ -11,50 +11,46 @@ interface LanguageContextType {
 }
 
 const translations: Record<string, Record<string, string>> = {
-  'Dashboard': {
-    'English': 'Dashboard',
-    'हिन्दी': 'डैशबोर्ड',
-  },
-  'Digital Books': {
-    'English': 'Digital Books',
-    'हिन्दी': 'डिजिटल किताबें',
-  },
-  'Solutions': {
-    'English': 'Textbook Solutions',
-    'हिन्दी': 'पाठ्यपुस्तक समाधान',
-  },
-    'Textbook Solutions': {
-    'English': 'Textbook Solutions',
-    'हिन्दी': 'पाठ्यपुस्तक समाधान',
-  },
-  'Recorded Classes': {
-    'English': 'Recorded Classes',
-    'हिन्दी': 'रिकॉर्डेड कक्षाएं',
-  },
-  'Live Classes': {
-    'English': 'Live Classes',
-    'हिन्दी': 'लाइव कक्षाएं',
-  },
-  'My Notes': {
-    'English': 'My Notes',
-    'हिन्दी': 'मेरे नोट्स',
-  },
-  'Doubt Section': {
-    'English': 'Doubt Section',
-    'हिन्दी': 'संदेह अनुभाग',
-  },
-  'AI Paper Generator': {
-    'English': 'AI Paper Generator',
-    'हिन्दी': 'एआई पेपर जेनरेटर',
-  },
-  'Practice Tests': {
-    'English': 'Practice Tests',
-    'हिन्दी': 'अभ्यास परीक्षण',
-  },
-  'Help & Contact': {
-    'English': 'Help & Contact',
-    'हिन्दी': 'सहायता और संपर्क',
-  },
+  'Dashboard': { 'English': 'Dashboard', 'हिन्दी': 'डैशबोर्ड' },
+  'Books': { 'English': 'Books', 'हिन्दी': 'किताबें' },
+  'Live Classes': { 'English': 'Live Classes', 'हिन्दी': 'लाइव कक्षाएं' },
+  'Notes': { 'English': 'Notes', 'हिन्दी': 'नोट्स' },
+  'Tests': { 'English': 'Tests', 'हिन्दी': 'टेस्ट' },
+  'Doubts': { 'English': 'Doubts', 'हिन्दी': 'संदेह' },
+  'Progress': { 'English': 'Progress', 'हिन्दी': 'प्रगति' },
+  'Help': { 'English': 'Help', 'हिन्दी': 'सहायता' },
+  'Welcome Back': { 'English': 'Welcome Back', 'हिन्दी': 'वापस स्वागत है' },
+  'Let\'s make today productive.': { 'English': 'Let\'s make today productive.', 'हिन्दी': 'चलिए आज का दिन उत्पादक बनाते हैं।' },
+  'Completed Tests': { 'English': 'Completed Tests', 'हिन्दी': 'पूर्ण परीक्षण' },
+  'from last month': { 'English': 'from last month', 'हिन्दी': 'पिछले महीने से' },
+  'Attendance': { 'English': 'Attendance', 'हिन्दी': 'उपस्थिति' },
+  'in live classes': { 'English': 'in live classes', 'हिन्दी': 'लाइव कक्षाओं में' },
+  'Average Score': { 'English': 'Average Score', 'हिन्दी': 'औसत अंक' },
+  'across all subjects': { 'English': 'across all subjects', 'हिन्दी': 'सभी विषयों में' },
+  'Next Live Class': { 'English': 'Next Live Class', 'हिन्दी': 'अगली लाइव कक्षा' },
+  'Your Progress': { 'English': 'Your Progress', 'हिन्दी': 'आपकी प्रगति' },
+  'Track your scores across different subjects.': { 'English': 'Track your scores across different subjects.', 'हिन्दी': 'विभिन्न विषयों में अपने स्कोर को ट्रैक करें।' },
+  'Mathematics': { 'English': 'Mathematics', 'हिन्दी': 'गणित' },
+  'Science': { 'English': 'Science', 'हिन्दी': 'विज्ञान' },
+  'English': { 'English': 'English', 'हिन्दी': 'अंग्रेज़ी' },
+  'Social Science': { 'English': 'Social Science', 'हिन्दी': 'सामाजिक विज्ञान' },
+  'Quick Access': { 'English': 'Quick Access', 'हिन्दी': 'त्वरित ऐक्सेस' },
+  'Upcoming Live Class': { 'English': 'Upcoming Live Class', 'हिन्दी': 'आगामी लाइव कक्षा' },
+  'Recent Test Result': { 'English': 'Recent Test Result', 'हिन्दी': 'हालिया परीक्षा परिणाम' },
+  'New Notes Available': { 'English': 'New Notes Available', 'हिन्दी': 'नए नोट्स उपलब्ध हैं' },
+  'Mathematics - Algebra Basics': { 'English': 'Mathematics - Algebra Basics', 'हिन्दी': 'गणित - बीजगणित की मूल बातें' },
+  'Science - Chapter 5 Test': { 'English': 'Science - Chapter 5 Test', 'हिन्दी': 'विज्ञान - अध्याय 5 टेस्ट' },
+  'History - The Mauryan Empire': { 'English': 'History - The Mauryan Empire', 'हिन्दी': 'इतिहास - मौर्य साम्राज्य' },
+  'Digital Books': {'English': 'Digital Books', 'हिन्दी': 'डिजिटल किताबें'},
+  'Solutions': {'English': 'Textbook Solutions', 'हिन्दी': 'पाठ्यपुस्तक समाधान'},
+  'Textbook Solutions': {'English': 'Textbook Solutions', 'हिन्दी': 'पाठ्यपुस्तक समाधान'},
+  'Recorded Classes': {'English': 'Recorded Classes', 'हिन्दी': 'रिकॉर्डेड कक्षाएं'},
+  'My Notes': {'English': 'My Notes', 'हिन्दी': 'मेरे नोट्स'},
+  'Doubt Section': {'English': 'Doubt Section', 'हिन्दी': 'संदेह अनुभाग'},
+  'AI Paper Generator': {'English': 'AI Paper Generator', 'हिन्दी': 'एआई पेपर जेनरेटर'},
+  'Practice Tests': {'English': 'Practice Tests', 'हिन्दी': 'अभ्यास परीक्षण'},
+  'Help & Contact': {'English': 'Help & Contact', 'हिन्दी': 'सहायता और संपर्क'},
+  'Progress Report': {'English': 'Progress Report', 'हिन्दी': 'प्रगति रिपोर्ट'},
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
