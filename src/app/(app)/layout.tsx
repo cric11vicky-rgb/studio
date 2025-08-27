@@ -18,6 +18,7 @@ import {
   User,
   Video,
   Tv,
+  Globe,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -133,12 +134,30 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
 export function AppHeader({ title }: { title: string }) {
   const { isMobile } = useSidebar();
+  const [language, setLanguage] = React.useState('English');
+
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-card px-4 sm:px-6">
       <SidebarTrigger className={cn('md:hidden', { hidden: !isMobile })}>
         <Menu />
       </SidebarTrigger>
-      <h1 className="font-headline text-lg font-semibold md:text-xl">{title}</h1>
+      <h1 className="font-headline text-lg font-semibold md:text-xl flex-1">{title}</h1>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="sm">
+            <Globe className="mr-2 h-4 w-4" />
+            <span>{language}</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem onSelect={() => setLanguage('English')}>
+            English
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => setLanguage('हिन्दी')}>
+            हिन्दी
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </header>
   );
 }
