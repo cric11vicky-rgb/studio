@@ -12,11 +12,11 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const GeneratePracticePaperInputSchema = z.object({
-  subject: z.string().describe('The subject for which to generate the practice paper.'),
+  subject: z.string().describe('The subject for which to generate the practice paper (e.g., Physics, History).'),
   topics: z
     .string()
     .describe(
-      'The topics to include in the practice paper.  Separate multiple topics with commas.'
+      'The specific topics or chapters to cover in the practice paper. Separate multiple topics with commas.'
     ),
   numberOfMcq: z
     .number()
@@ -30,14 +30,16 @@ const GeneratePracticePaperInputSchema = z.object({
     .max(10)
     .default(3)
     .describe('The number of long answer questions to include.'),
+    difficulty: z.enum(['Easy', 'Medium', 'Hard']).default('Medium').describe('The difficulty level of the questions.'),
+    syllabus: z.enum(['CBSE', 'RBSE', 'NCERT', 'Other']).default('NCERT').describe('The syllabus to align with (e.g., CBSE, RBSE, NCERT).'),
 });
 export type GeneratePracticePaperInput = z.infer<typeof GeneratePracticePaperInputSchema>;
 
 const GeneratePracticePaperOutputSchema = z.object({
-  mcqQuestions: z.array(z.string()).describe('The generated multiple-choice questions.'),
+  mcqQuestions: z.array(z.string()).describe('An array of generated multiple-choice questions. Each question should have 4 options.'),
   longAnswerQuestions: z
     .array(z.string())
-    .describe('The generated long answer questions.'),
+    .describe('An array of generated long answer questions.'),
 });
 export type GeneratePracticePaperOutput = z.infer<typeof GeneratePracticePaperOutputSchema>;
 
@@ -51,21 +53,18 @@ const generatePracticePaperPrompt = ai.definePrompt({
   name: 'generatePracticePaperPrompt',
   input: {schema: GeneratePracticePaperInputSchema},
   output: {schema: GeneratePracticePaperOutputSchema},
-  prompt: `You are an expert educator creating a practice paper for Class 3-10 students.
+  prompt: `You are an expert educator creating a practice paper for Class 3-10 students in India. Your task is to generate a set of questions based on the user's specifications.
 
-The subject is: {{{subject}}}
+Syllabus: {{{syllabus}}}
+Difficulty Level: {{{difficulty}}}
+Subject: {{{subject}}}
+Topics: {{{topics}}}
 
-The topics to cover are: {{{topics}}}
+Please generate {{{numberOfMcq}}} multiple-choice questions (MCQs) and {{{numberOfLongAnswer}}} long answer questions.
 
-Generate {{{numberOfMcq}}} multiple-choice questions and {{{numberOfLongAnswer}}} long answer questions covering the specified topics.  Each MCQ question should have 4 possible answers.
+Ensure the questions are clear, relevant to the topics, and appropriate for the specified difficulty and syllabus. Each MCQ must have four distinct options.
 
-MCQ Questions:
-{{#each mcqQuestions}}- {{this}}
-{{/each}}
-
-Long Answer Questions:
-{{#each longAnswerQuestions}}- {{this}}
-{{/each}}`,
+Format the output as specified in the output schema.`,
 });
 
 const generatePracticePaperFlow = ai.defineFlow(

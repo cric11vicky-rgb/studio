@@ -1,3 +1,5 @@
+'use client';
+
 import { AppHeader } from '@/app/(app)/layout';
 import {
   Accordion,
@@ -8,6 +10,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { ImageIcon, Mic, Send } from 'lucide-react';
+import React from 'react';
 
 const doubts = [
   {
@@ -18,6 +22,7 @@ const doubts = [
     answer:
       'Speed is a scalar quantity that refers to "how fast an object is moving." Velocity is a vector quantity that refers to "the rate at which an object changes its position." So, velocity includes direction, while speed does not.',
     answeredBy: 'Physics Expert',
+    answerType: 'teacher',
   },
   {
     id: '2',
@@ -26,7 +31,8 @@ const doubts = [
     timestamp: '1 day ago',
     answer:
       'It depends on the sound of the first letter, not the letter itself. "Hour" starts with a vowel sound (ow-er), so we use "an". "House" starts with a consonant sound (h-ouse), so we use "a".',
-    answeredBy: 'English Teacher',
+    answeredBy: 'AI Assistant',
+    answerType: 'ai',
   },
   {
     id: '3',
@@ -43,15 +49,30 @@ export default function DoubtsPage() {
       <AppHeader title="Doubt Section" />
       <main className="flex-1 space-y-6 p-4 md:p-8">
         <div className="mx-auto max-w-4xl">
-          <div className="mb-8 space-y-2">
+          <div className="mb-8 space-y-3">
             <h2 className="font-headline text-2xl font-semibold">
-              Have a question? Ask away!
+              Have a question? Ask the community!
             </h2>
-            <Textarea
-              placeholder="Type your question here..."
-              className="min-h-[100px]"
-            />
-            <Button>Post Question</Button>
+            <p className="text-muted-foreground">
+              Post your doubts via text, image, or voice. Get instant help from AI or have it escalated to a teacher.
+            </p>
+            <div className="relative">
+              <Textarea
+                placeholder="Type your question here..."
+                className="min-h-[100px] resize-none pr-24"
+              />
+              <div className="absolute bottom-2 right-2 flex gap-1">
+                <Button variant="ghost" size="icon" aria-label="Upload image">
+                  <ImageIcon />
+                </Button>
+                <Button variant="ghost" size="icon" aria-label="Record voice">
+                  <Mic />
+                </Button>
+              </div>
+            </div>
+            <Button>
+              <Send className="mr-2" /> Post Question
+            </Button>
           </div>
 
           <h3 className="font-headline text-xl font-semibold mb-4">
@@ -72,14 +93,19 @@ export default function DoubtsPage() {
                   {doubt.answer ? (
                     <div className="rounded-md border bg-card p-4">
                       <div className="flex items-start gap-4">
-                        <Avatar className="h-9 w-9">
-                          <AvatarImage src={`https://picsum.photos/100?q=${doubt.answeredBy}`} data-ai-hint="teacher avatar" />
+                        <Avatar className="h-9 w-9 border">
+                           <AvatarImage src={`https://picsum.photos/100?q=${doubt.answeredBy}`} data-ai-hint={doubt.answerType === 'teacher' ? "teacher avatar" : "robot avatar"} />
                           <AvatarFallback>
                             {doubt.answeredBy?.charAt(0)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="grid gap-1">
-                          <div className="font-semibold">{doubt.answeredBy}</div>
+                          <div className="font-semibold flex items-center gap-2">
+                            {doubt.answeredBy}
+                            {doubt.answerType === 'ai' && (
+                               <span className="text-xs font-normal px-2 py-0.5 rounded-full bg-primary/10 text-primary">AI-Generated</span>
+                            )}
+                          </div>
                           <p className="text-sm text-muted-foreground">
                             {doubt.answer}
                           </p>
