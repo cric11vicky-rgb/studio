@@ -67,6 +67,17 @@ const quickAccessItems = [
   },
 ];
 
+const menuItems = [
+    { href: '/books', label: 'Books', labelHi: 'किताबें', icon: Book },
+    { href: '/live-class', label: 'Live Classes', labelHi: 'लाइव कक्षाएं', icon: Tv },
+    { href: '/notes', label: 'Notes', labelHi: 'नोट्स', icon: StickyNote },
+    { href: '/tests', label: 'Tests', labelHi: 'टेस्ट', icon: ClipboardList },
+    { href: '/doubts', label: 'Doubts', labelHi: 'संदेह', icon: HelpCircle },
+    { href: '/progress', label: 'Progress', labelHi: 'प्रगति', icon: TrendingUp },
+    { href: '/contact', label: 'Help', labelHi: 'सहायता', icon: Mail },
+];
+
+
 export default function DashboardPage() {
   const { language, getTranslation } = useLanguage();
   return (
@@ -82,7 +93,7 @@ export default function DashboardPage() {
               {getTranslation('Welcome Back')}, Student!
             </h1>
             <p className="text-sm text-muted-foreground">
-              {getTranslation('Let\'s make today productive.')}
+              {getTranslation("Let's make today productive.")}
             </p>
           </div>
         </div>
@@ -207,6 +218,25 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           </div>
+        </div>
+
+        <div>
+            <CardHeader className="p-0 mb-4">
+                <CardTitle className="font-headline">Quick Actions</CardTitle>
+                <CardDescription>Explore all the features of the app.</CardDescription>
+            </CardHeader>
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-7">
+                {menuItems.map((item) => (
+                    <Link href={item.href} key={item.href}>
+                    <Card className="flex h-full flex-col items-center justify-center p-4 text-center hover:bg-secondary transition-colors aspect-square">
+                        <item.icon className="mb-2 h-8 w-8 text-primary" />
+                        <CardTitle className="font-headline text-sm leading-tight">
+                            {language === 'English' ? item.label : item.labelHi}
+                        </CardTitle>
+                    </Card>
+                    </Link>
+                ))}
+            </div>
         </div>
       </main>
     </div>
