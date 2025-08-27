@@ -20,6 +20,7 @@ import {
   Tv,
   Globe,
   TrendingUp,
+  BookCheck,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -52,8 +53,11 @@ import { LanguageProvider, useLanguage } from '@/context/language-context';
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', labelHi: 'डैशबोर्ड', icon: LayoutDashboard },
   { href: '/books', label: 'Books', labelHi: 'किताबें', icon: Book },
+  { href: '/solutions', label: 'Solutions', labelHi: 'समाधान', icon: BookCheck },
   { href: '/live-class', label: 'Live Classes', labelHi: 'लाइव कक्षाएं', icon: Tv },
+  { href: '/classes', label: 'Recorded Classes', labelHi: 'रिकॉर्डेड कक्षाएं', icon: Video },
   { href: '/notes', label: 'Notes', labelHi: 'नोट्स', icon: StickyNote },
+  { href: '/generate-paper', label: 'AI Paper Generator', labelHi: 'एआई पेपर जेनरेटर', icon: Sparkles },
   { href: '/tests', label: 'Tests', labelHi: 'टेस्ट', icon: ClipboardList },
   { href: '/doubts', label: 'Doubts', labelHi: 'संदेह', icon: HelpCircle },
   { href: '/progress', label: 'Progress', labelHi: 'प्रगति', icon: TrendingUp },

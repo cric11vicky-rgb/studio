@@ -20,6 +20,7 @@ import {
   Clock,
   CheckCircle,
   BarChart2,
+  BookCheck,
 } from 'lucide-react';
 import { AppHeader } from '@/app/(app)/layout';
 import {
@@ -69,8 +70,11 @@ const quickAccessItems = [
 
 const menuItems = [
     { href: '/books', label: 'Books', labelHi: 'किताबें', icon: Book },
+    { href: '/solutions', label: 'Solutions', labelHi: 'समाधान', icon: BookCheck },
     { href: '/live-class', label: 'Live Classes', labelHi: 'लाइव कक्षाएं', icon: Tv },
+    { href: '/classes', label: 'Recorded Classes', labelHi: 'रिकॉर्डेड कक्षाएं', icon: Video },
     { href: '/notes', label: 'Notes', labelHi: 'नोट्स', icon: StickyNote },
+    { href: '/generate-paper', label: 'AI Paper Generator', labelHi: 'एआई पेपर जेनरेटर', icon: Sparkles },
     { href: '/tests', label: 'Tests', labelHi: 'टेस्ट', icon: ClipboardList },
     { href: '/doubts', label: 'Doubts', labelHi: 'संदेह', icon: HelpCircle },
     { href: '/progress', label: 'Progress', labelHi: 'प्रगति', icon: TrendingUp },
@@ -222,10 +226,10 @@ export default function DashboardPage() {
 
         <div>
             <CardHeader className="p-0 mb-4">
-                <CardTitle className="font-headline">Quick Actions</CardTitle>
-                <CardDescription>Explore all the features of the app.</CardDescription>
+                <CardTitle className="font-headline">Explore EduVerse</CardTitle>
+                <CardDescription>All your learning tools in one place.</CardDescription>
             </CardHeader>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-7">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 {menuItems.map((item) => (
                     <Link href={item.href} key={item.href}>
                     <Card className="flex h-full flex-col items-center justify-center p-4 text-center hover:bg-secondary transition-colors aspect-square">
