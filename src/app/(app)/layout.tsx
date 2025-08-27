@@ -21,6 +21,7 @@ import {
   Globe,
   TrendingUp,
   BookCheck,
+  GraduationCap
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -122,6 +123,12 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
                 <DropdownMenuItem>
                   <Settings className="mr-2 h-4 w-4" />
                   <span>{language === 'English' ? 'Settings' : 'सेटिंग्स'}</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <Link href="/teacher-dashboard" className='flex items-center w-full'>
+                      <GraduationCap className="mr-2 h-4 w-4" />
+                      <span>Teacher Portal</span>
+                    </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>

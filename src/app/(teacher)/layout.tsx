@@ -1,0 +1,122 @@
+'use client';
+
+import * as React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {
+  LayoutDashboard,
+  Upload,
+  Video,
+  MessageSquareWarning,
+  BarChart,
+  Users,
+  BookOpen,
+  LogOut,
+  MoreHorizontal
+} from 'lucide-react';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarProvider,
+} from '@/components/ui/sidebar';
+import { Logo } from '@/components/logo';
+
+const menuItems = [
+  { href: '/teacher-dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/teacher/content', label: 'Manage Content', icon: Upload },
+  { href: '/teacher/schedule', label: 'Schedule Classes', icon: Video },
+  { href: '/teacher/doubts', label: 'Manage Doubts', icon: MessageSquareWarning },
+  { href: '/teacher/performance', label: 'Student Performance', icon: BarChart },
+  { href: '/teacher/students', label: 'Manage Students', icon: Users },
+  { href: '/teacher/curriculum', label: 'Curriculum', icon: BookOpen },
+];
+
+export default function TeacherLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
+  return (
+    <SidebarProvider>
+      <Sidebar>
+        <SidebarHeader>
+          <div className="flex items-center gap-2">
+            <Logo />
+            <div className="flex flex-col">
+              <span className="font-headline text-xl font-semibold">EduVerse</span>
+              <span className="text-sm text-muted-foreground">Teacher Portal</span>
+            </div>
+          </div>
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarMenu>
+            {menuItems.map((item) => (
+              <SidebarMenuItem key={item.href}>
+                <Link href={item.href}>
+                  <SidebarMenuButton
+                    isActive={pathname.startsWith(item.href)}
+                    tooltip={item.label}
+                  >
+                    <item.icon />
+                    <span>{item.label}</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarContent>
+        <SidebarFooter>
+          <div className="flex items-center justify-between p-2">
+            <div className="flex items-center gap-2">
+              <Avatar className="size-8">
+                <AvatarImage src="https://picsum.photos/100?teacher" alt="Teacher" data-ai-hint="teacher avatar" />
+                <AvatarFallback>T</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col text-sm">
+                <span className="font-semibold">Teacher Name</span>
+                <span className="text-muted-foreground">teacher@edu.com</span>
+              </div>
+            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="size-8">
+                  <MoreHorizontal />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56 mb-2">
+                <DropdownMenuLabel>Teacher Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                 <DropdownMenuItem>
+                    <Link href="/dashboard" className='flex items-center w-full'>
+                      <LayoutDashboard className="mr-2 h-4 w-4" />
+                      <span>Student View</span>
+                    </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </SidebarFooter>
+      </Sidebar>
+      <SidebarInset>{children}</SidebarInset>
+    </SidebarProvider>
+  );
+}
