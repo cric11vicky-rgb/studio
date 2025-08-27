@@ -3,14 +3,14 @@
 import * as React from 'react';
 import {
   ArrowRight,
-  Book,
-  FileText,
-  Lightbulb,
-  Sparkles,
-  Target,
-  File,
-  MessageSquare,
-  ClipboardList
+  ClipboardEdit,
+  Presentation,
+  CheckCircle,
+  BarChart,
+  FileQuestion,
+  BookOpen,
+  CalendarDays,
+  Annoyed,
 } from 'lucide-react';
 import { AppHeader } from '@/app/(app)/layout';
 import { Button } from '@/components/ui/button';
@@ -26,57 +26,61 @@ import Link from 'next/link';
 
 const quickAccessItems = [
   {
-    title: 'Generate Practice Paper',
-    description: 'Create a custom test with AI',
-    icon: Sparkles,
+    title: 'Start Mock Test',
+    description: 'Practice with a full-length test',
+    icon: ClipboardEdit,
     href: '/generate-paper',
   },
   {
-    title: 'My Notes',
-    description: 'Review your study notes',
-    icon: ClipboardList,
-    href: '/notes',
+    title: 'Daily Practice Problems',
+    description: 'Solve curated daily questions',
+    icon: CheckCircle,
+    href: '#',
   },
   {
-    title: 'Ask a Doubt',
-    description: 'Get help from experts',
-    icon: MessageSquare,
-    href: '/doubts',
+    title: 'Performance Analysis',
+    description: 'Track your progress and scores',
+    icon: BarChart,
+    href: '#',
   },
    {
-    title: 'Textbook Solutions',
-    description: 'Find answers to exercises',
-    icon: FileText,
-    href: '/solutions',
+    title: 'Previous Year Questions',
+    description: 'Review past exam papers',
+    icon: FileQuestion,
+    href: '#',
   },
 ];
 
 const recentActivity = [
   {
-    title: 'Finished "Cell Structure" chapter',
-    category: 'Science',
-    time: '2h ago',
-  },
-  {
-    title: 'Took a practice test on "Algebra"',
+    title: 'Scored 85% in "Trigonometry" mock test',
     category: 'Maths',
-    time: '5h ago',
+    time: '1h ago',
+    icon: CheckCircle,
   },
   {
-    title: 'Added new notes on "The Mauryan Empire"',
-    category: 'History',
-    time: '1d ago',
+    title: 'Live class "Optics" scheduled for 5 PM',
+    category: 'Physics',
+    time: 'Today',
+    icon: Presentation,
+  },
+  {
+    title: 'Submitted "Chemical Reactions" assignment',
+    category: 'Chemistry',
+    time: 'Yesterday',
+    icon: BookOpen,
   },
    {
-    title: 'Asked a doubt about "Tenses"',
-    category: 'English',
+    title: 'New announcement from your batch',
+    category: 'General',
     time: '2d ago',
+    icon: Annoyed,
   },
 ];
 
 const motivationalQuote = {
-  quote: "The secret of getting ahead is getting started.",
-  author: "Mark Twain"
+  quote: "Success is the sum of small efforts, repeated day in and day out.",
+  author: "Robert Collier"
 }
 
 export default function DashboardPage() {
@@ -85,11 +89,11 @@ export default function DashboardPage() {
       <AppHeader title="Dashboard" />
       <main className="flex-1 space-y-6 p-4 md:p-8 pt-6">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <Card className="md:col-span-2 lg:col-span-3 bg-secondary border-0 shadow-none">
+          <Card className="md:col-span-2 lg:col-span-3 bg-card border shadow-sm">
             <CardHeader>
-              <CardTitle className="font-headline text-3xl">Welcome Back, Student!</CardTitle>
+              <CardTitle className="font-headline text-3xl">Welcome Back, Aspirant!</CardTitle>
               <CardDescription className="text-lg text-muted-foreground">
-                Ready to conquer your goals today?
+                Stay focused and keep up the hard work.
               </CardDescription>
             </CardHeader>
           </Card>
@@ -100,8 +104,7 @@ export default function DashboardPage() {
              <Card>
               <CardHeader>
                 <CardTitle className="font-headline flex items-center gap-2">
-                  <Lightbulb className="text-primary" />
-                  <span>Quote of the Day</span>
+                   <span>Thought for the Day</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -114,17 +117,16 @@ export default function DashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="font-headline flex items-center gap-2">
-                  <Target />
-                  <span>Quick Access</span>
+                  <span>Quick Actions</span>
                 </CardTitle>
                 <CardDescription>
-                  Jump right back into your learning journey.
+                  Your essential tools for exam preparation.
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-4 sm:grid-cols-2">
                 {quickAccessItems.map((item) => (
                    <Link href={item.href} key={item.title}>
-                    <Card className="hover:bg-secondary hover:border-primary transition-colors">
+                    <Card className="hover:bg-secondary hover:border-primary transition-colors h-full">
                         <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-2">
                             <div className="p-2 bg-primary/10 rounded-lg">
                                 <item.icon className="h-6 w-6 text-primary" />
@@ -145,9 +147,12 @@ export default function DashboardPage() {
           <div className="lg:col-span-1 space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="font-headline">Recent Activity</CardTitle>
+                <CardTitle className="font-headline flex items-center gap-2">
+                    <CalendarDays />
+                    <span>Recent Activity</span>
+                </CardTitle>
                 <CardDescription>
-                  Here's what you've been up to.
+                  Here's a summary of your recent progress.
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -155,7 +160,7 @@ export default function DashboardPage() {
                   {recentActivity.map((activity) => (
                     <div key={activity.title} className="flex items-start gap-4">
                        <div className="p-2 bg-secondary rounded-full">
-                         <File className="h-4 w-4 text-muted-foreground" />
+                         <activity.icon className="h-4 w-4 text-muted-foreground" />
                        </div>
                        <div className="flex-1">
                           <p className="text-sm font-medium">{activity.title}</p>
@@ -169,7 +174,7 @@ export default function DashboardPage() {
                 </div>
               </CardContent>
                <CardContent>
-                 <Button variant="outline" className="w-full">View All Activity <ArrowRight className="ml-2 h-4 w-4" /></Button>
+                 <Button variant="outline" className="w-full">View Full Timeline <ArrowRight className="ml-2 h-4 w-4" /></Button>
                </CardContent>
             </Card>
           </div>
