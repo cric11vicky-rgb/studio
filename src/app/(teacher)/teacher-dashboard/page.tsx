@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Upload, Video, MessageSquareWarning, BarChart, Users, BookOpen, Clock, CheckCircle,ClipboardList } from "lucide-react";
+import { Upload, Video, MessageSquareWarning, BarChart, Users, BookOpen, Clock, CheckCircle } from "lucide-react";
 
 export default function TeacherDashboardPage() {
     const summaryStats = [
