@@ -78,17 +78,18 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   React.useEffect(() => {
-    if (!isLoading) {
-      if (!user) {
-        router.push('/login');
-      } else if (user.role === 'teacher') {
-        router.push('/teacher-dashboard');
-      }
+    if (!isLoading && !user) {
+      router.push('/student/login');
     }
   }, [isLoading, user, router]);
 
-  if (isLoading || !user || user.role !== 'student') {
+  if (isLoading || !user) {
     return null; // or a loading spinner
+  }
+  
+  if (user.role === 'teacher') {
+      router.push('/teacher-dashboard');
+      return null;
   }
 
   return (
@@ -147,7 +148,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
                   <Settings className="mr-2 h-4 w-4" />
                   <span>{language === 'English' ? 'Settings' : 'सेटिंग्स'}</span>
                 </DropdownMenuItem>
-                {user.username === 'admin' && (
+                {user.role === 'admin' && (
                   <DropdownMenuItem>
                       <Link href="/teacher-dashboard" className='flex items-center w-full'>
                         <GraduationCap className="mr-2 h-4 w-4" />

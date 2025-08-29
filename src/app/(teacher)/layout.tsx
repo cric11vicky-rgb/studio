@@ -58,7 +58,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
   React.useEffect(() => {
     if (!isLoading) {
       if (!user) {
-        router.push('/login');
+        router.push('/student/login');
       } else if (user.role === 'student') {
         router.push('/dashboard');
       }
@@ -119,12 +119,14 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
               <DropdownMenuContent className="w-56 mb-2">
                 <DropdownMenuLabel>{user.name} Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                 <DropdownMenuItem>
-                    <Link href="/dashboard" className='flex items-center w-full'>
-                      <LayoutDashboard className="mr-2 h-4 w-4" />
-                      <span>Student View</span>
-                    </Link>
-                </DropdownMenuItem>
+                 {user.role === 'admin' && (
+                    <DropdownMenuItem>
+                        <Link href="/dashboard" className='flex items-center w-full'>
+                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                        <span>Student View</span>
+                        </Link>
+                    </DropdownMenuItem>
+                 )}
                 <DropdownMenuItem onClick={logout}>
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>

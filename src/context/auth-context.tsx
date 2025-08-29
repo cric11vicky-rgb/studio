@@ -43,16 +43,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const loggedInUser = session ? (JSON.parse(session) as User) : null;
         setUser(loggedInUser);
         
-        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student');
+        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact';
         if (!loggedInUser && !isAuthPage) {
-          router.push('/login');
+          router.push('/student/login');
         }
       } catch (error) {
         console.error("Failed to parse user from session storage", error);
         setUser(null);
-        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student');
+        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact';
         if (!isAuthPage) {
-          router.push('/login');
+          router.push('/student/login');
         }
       } finally {
         setIsLoading(false);
@@ -97,27 +97,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     sessionStorage.removeItem('eduverseUser');
     setUser(null);
-    router.push('/login');
+    router.push('/student/login');
   };
-
-  const contextValue: AuthContextType = {
-    user: user,
-    login,
-    studentLogin,
-    logout,
-    isLoading
-  };
-  
-   if (user?.role === 'admin') {
-    contextValue.user = {
-      ...user,
-      role: pathname.startsWith('/teacher') ? 'teacher' : 'student'
-    };
-  }
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {isLoading ? null : children}
+    <AuthContext.Provider value={{ user, login, studentLogin, logout, isLoading }}>
+      {children}
     </AuthContext.Provider>
   );
 };
