@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Book,
   ClipboardList,
@@ -24,6 +24,7 @@ import {
   BookCheck,
   GraduationCap,
   ChevronDown,
+  LogOut,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -54,6 +55,7 @@ import { cn } from '@/lib/utils';
 import { LanguageProvider, useLanguage } from '@/context/language-context';
 import { ClassProvider, useClass } from '@/context/class-context';
 import ClassSelector from '@/components/class-selector';
+import { useAuth } from '@/context/auth-context';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', labelHi: 'डैशबोर्ड', icon: LayoutDashboard },
@@ -72,6 +74,18 @@ const menuItems = [
 function AppLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { language } = useLanguage();
+  const { isAuthenticated, logout } = useAuth();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login');
+    }
+  }, [isAuthenticated, router]);
+  
+  if (!isAuthenticated) {
+    return null; // or a loading spinner
+  }
 
   return (
     <SidebarProvider>
@@ -105,11 +119,11 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-2">
               <Avatar className="size-8">
                 <AvatarImage src="https://picsum.photos/100" alt="User" data-ai-hint="student avatar" />
-                <AvatarFallback>U</AvatarFallback>
+                <AvatarFallback>A</AvatarFallback>
               </Avatar>
               <div className="flex flex-col text-sm">
-                <span className="font-semibold">{language === 'English' ? 'Student' : 'विद्यार्थी'}</span>
-                <span className="text-muted-foreground">student@edu.com</span>
+                <span className="font-semibold">{language === 'English' ? 'Admin' : 'एडमिन'}</span>
+                <span className="text-muted-foreground">admin@edu.com</span>
               </div>
             </div>
             <DropdownMenu>
@@ -136,7 +150,8 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={logout}>
+                  <LogOut className="mr-2 h-4 w-4" />
                   <span>{language === 'English' ? 'Log out' : 'लॉग आउट'}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>

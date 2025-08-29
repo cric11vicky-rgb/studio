@@ -1,8 +1,9 @@
+
 'use client';
 
 import * as React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
   Upload,
@@ -37,6 +38,7 @@ import {
   SidebarProvider,
 } from '@/components/ui/sidebar';
 import { Logo } from '@/components/logo';
+import { useAuth } from '@/context/auth-context';
 
 const menuItems = [
   { href: '/teacher-dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -50,6 +52,18 @@ const menuItems = [
 
 export default function TeacherLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { isAuthenticated, logout } = useAuth();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!isAuthenticated) {
+      router.push('/login');
+    }
+  }, [isAuthenticated, router]);
+
+  if (!isAuthenticated) {
+    return null; // Or a loading spinner
+  }
 
   return (
     <SidebarProvider>
@@ -85,11 +99,11 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
             <div className="flex items-center gap-2">
               <Avatar className="size-8">
                 <AvatarImage src="https://picsum.photos/100?teacher" alt="Teacher" data-ai-hint="teacher avatar" />
-                <AvatarFallback>T</AvatarFallback>
+                <AvatarFallback>A</AvatarFallback>
               </Avatar>
               <div className="flex flex-col text-sm">
-                <span className="font-semibold">Teacher Name</span>
-                <span className="text-muted-foreground">teacher@edu.com</span>
+                <span className="font-semibold">Admin</span>
+                <span className="text-muted-foreground">admin@edu.com</span>
               </div>
             </div>
             <DropdownMenu>
@@ -99,7 +113,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56 mb-2">
-                <DropdownMenuLabel>Teacher Account</DropdownMenuLabel>
+                <DropdownMenuLabel>Admin Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                  <DropdownMenuItem>
                     <Link href="/dashboard" className='flex items-center w-full'>
@@ -107,7 +121,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
                       <span>Student View</span>
                     </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={logout}>
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>
                 </DropdownMenuItem>
