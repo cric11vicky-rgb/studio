@@ -22,13 +22,15 @@ export const ClassProvider = ({ children }: { children: ReactNode }) => {
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    const storedClass = localStorage.getItem('selectedClass');
-    if (storedClass && AVAILABLE_CLASSES.includes(storedClass)) {
-      setSelectedClassState(storedClass);
-    } else {
-      setModalOpen(true);
+    if (typeof window !== 'undefined') {
+      const storedClass = localStorage.getItem('selectedClass');
+      if (storedClass && AVAILABLE_CLASSES.includes(storedClass)) {
+        setSelectedClassState(storedClass);
+      } else {
+        setModalOpen(true);
+      }
+      setIsInitialized(true);
     }
-    setIsInitialized(true);
   }, []);
 
   const setSelectedClass = (newClass: string) => {
