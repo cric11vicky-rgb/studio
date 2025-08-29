@@ -5,7 +5,7 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 import { usePathname, useRouter } from 'next/navigation';
 
 // In a real application, this would be handled by a proper authentication service.
-const ADMIN_PASSWORD = 'password'; // Hardcoded for demonstration purposes
+const ADMIN_PASSWORD = 'Vikas@3415'; // Hardcoded for demonstration purposes
 
 interface AuthContextType {
   isAuthenticated: boolean;
