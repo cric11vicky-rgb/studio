@@ -78,28 +78,11 @@ const initialNotes: Note[] = [
 ];
 
 export default function NotesPage() {
-  const { selectedClass, isInitialized: classIsInitialized } = useClass();
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [isClient, setIsClient] = useState(false);
+  const { selectedClass } = useClass();
+  const [notes, setNotes] = useState<Note[]>(initialNotes);
   const [newNoteTitle, setNewNoteTitle] = useState('');
   const [newNoteContent, setNewNoteContent] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-
-  useEffect(() => {
-    setIsClient(true);
-    const savedNotes = localStorage.getItem('userNotes');
-    if (savedNotes) {
-      setNotes(JSON.parse(savedNotes));
-    } else {
-      setNotes(initialNotes);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isClient) {
-      localStorage.setItem('userNotes', JSON.stringify(notes));
-    }
-  }, [notes, isClient]);
 
   const handleAddNote = () => {
     if (newNoteTitle.trim() && newNoteContent.trim() && selectedClass !== 'All') {
@@ -130,9 +113,6 @@ export default function NotesPage() {
     return classMatch && searchMatch;
   });
 
-  if (!isClient || !classIsInitialized) {
-      return null;
-  }
 
   return (
     <div className="flex h-full flex-col">
@@ -142,7 +122,7 @@ export default function NotesPage() {
           <CardHeader>
             <CardTitle className="font-headline">Create a New Note</CardTitle>
             <CardDescription>
-              Jot down important points for Class {selectedClass}. Your notes are saved to your device.
+              Jot down important points for Class {selectedClass}. Your notes are saved automatically.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -151,18 +131,16 @@ export default function NotesPage() {
               value={newNoteTitle}
               onChange={(e) => setNewNoteTitle(e.target.value)}
               className="font-semibold"
-              disabled={selectedClass === 'All'}
             />
             <Textarea
               placeholder="Start writing your note here..."
               className="min-h-[120px]"
               value={newNoteContent}
               onChange={(e) => setNewNoteContent(e.target.value)}
-              disabled={selectedClass === 'All'}
             />
-            <Button onClick={handleAddNote} disabled={selectedClass === 'All' || !newNoteTitle.trim() || !newNoteContent.trim()}>
+            <Button onClick={handleAddNote} disabled={selectedClass === 'All'}>
               <PlusCircle className="mr-2 h-4 w-4" />
-              {selectedClass === 'All' ? 'Select a class to add a note' : 'Save Note'}
+              {selectedClass === 'All' ? 'Select a class to add note' : 'Save Note'}
             </Button>
           </CardContent>
         </Card>
@@ -202,7 +180,6 @@ export default function NotesPage() {
                   </CardHeader>
                   <CardContent className="flex-1">
                     <p className="text-sm text-muted-foreground line-clamp-4">{note.content}</p>
-
                   </CardContent>
                    <CardFooter>
                     <p className="text-xs text-muted-foreground">{note.timestamp}</p>
