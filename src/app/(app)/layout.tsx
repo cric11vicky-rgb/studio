@@ -74,16 +74,20 @@ const menuItems = [
 function AppLayoutContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { language } = useLanguage();
-  const { isAuthenticated, logout } = useAuth();
+  const { user, logout, isLoading } = useAuth();
   const router = useRouter();
 
   React.useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
+    if (!isLoading) {
+      if (!user) {
+        router.push('/login');
+      } else if (user.role === 'teacher') {
+        router.push('/teacher-dashboard');
+      }
     }
-  }, [isAuthenticated, router]);
-  
-  if (!isAuthenticated) {
+  }, [isLoading, user, router]);
+
+  if (isLoading || !user || user.role !== 'student') {
     return null; // or a loading spinner
   }
 
@@ -119,11 +123,11 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-2">
               <Avatar className="size-8">
                 <AvatarImage src="https://picsum.photos/100" alt="User" data-ai-hint="student avatar" />
-                <AvatarFallback>A</AvatarFallback>
+                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col text-sm">
-                <span className="font-semibold">{language === 'English' ? 'Admin' : 'एडमिन'}</span>
-                <span className="text-muted-foreground">admin@edu.com</span>
+                <span className="font-semibold">{user.name}</span>
+                <span className="text-muted-foreground">{user.email}</span>
               </div>
             </div>
             <DropdownMenu>
@@ -143,12 +147,14 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
                   <Settings className="mr-2 h-4 w-4" />
                   <span>{language === 'English' ? 'Settings' : 'सेटिंग्स'}</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                    <Link href="/teacher-dashboard" className='flex items-center w-full'>
-                      <GraduationCap className="mr-2 h-4 w-4" />
-                      <span>Teacher Portal</span>
-                    </Link>
-                </DropdownMenuItem>
+                {user.role === 'admin' && (
+                  <DropdownMenuItem>
+                      <Link href="/teacher-dashboard" className='flex items-center w-full'>
+                        <GraduationCap className="mr-2 h-4 w-4" />
+                        <span>Teacher Portal</span>
+                      </Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={logout}>
                   <LogOut className="mr-2 h-4 w-4" />

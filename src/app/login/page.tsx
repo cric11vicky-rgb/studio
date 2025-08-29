@@ -19,16 +19,22 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 
 export default function LoginPage() {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useAuth();
   const router = useRouter();
 
   const handleLogin = () => {
-    if (login(password)) {
-      router.push('/dashboard');
+    const user = login(username, password);
+    if (user) {
+      if (user.role === 'student') {
+        router.push('/dashboard');
+      } else {
+        router.push('/teacher-dashboard');
+      }
     } else {
-      setError('Invalid password. Please try again.');
+      setError('Invalid username or password. Please try again.');
     }
   };
 
@@ -40,10 +46,10 @@ export default function LoginPage() {
             <Logo />
           </div>
           <CardTitle className="font-headline text-2xl">
-            Admin Access Required
+            Welcome to EduVerse
           </CardTitle>
           <CardDescription>
-            Please enter the admin password to access the platform.
+            Please enter your credentials to access the platform.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -54,6 +60,16 @@ export default function LoginPage() {
             }}
             className="space-y-4"
           >
+            <div className="space-y-2">
+              <Label htmlFor="username">Username</Label>
+              <Input
+                id="username"
+                placeholder="Enter username (admin, teacher, or student)"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input

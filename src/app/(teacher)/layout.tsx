@@ -52,16 +52,20 @@ const menuItems = [
 
 export default function TeacherLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { isAuthenticated, logout } = useAuth();
+  const { user, logout, isLoading } = useAuth();
   const router = useRouter();
 
   React.useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
+    if (!isLoading) {
+      if (!user) {
+        router.push('/login');
+      } else if (user.role === 'student') {
+        router.push('/dashboard');
+      }
     }
-  }, [isAuthenticated, router]);
+  }, [isLoading, user, router]);
 
-  if (!isAuthenticated) {
+  if (isLoading || !user || user.role === 'student') {
     return null; // Or a loading spinner
   }
 
@@ -99,11 +103,11 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
             <div className="flex items-center gap-2">
               <Avatar className="size-8">
                 <AvatarImage src="https://picsum.photos/100?teacher" alt="Teacher" data-ai-hint="teacher avatar" />
-                <AvatarFallback>A</AvatarFallback>
+                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col text-sm">
-                <span className="font-semibold">Admin</span>
-                <span className="text-muted-foreground">admin@edu.com</span>
+                <span className="font-semibold">{user.name}</span>
+                <span className="text-muted-foreground">{user.email}</span>
               </div>
             </div>
             <DropdownMenu>
@@ -113,7 +117,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56 mb-2">
-                <DropdownMenuLabel>Admin Account</DropdownMenuLabel>
+                <DropdownMenuLabel>{user.name} Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                  <DropdownMenuItem>
                     <Link href="/dashboard" className='flex items-center w-full'>
