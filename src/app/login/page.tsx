@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle, ArrowRight } from 'lucide-react';
+import { AlertCircle, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 export default function LoginPage() {
@@ -43,13 +43,6 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-secondary p-4">
-      <div className="absolute top-4 right-4">
-        <Button asChild>
-            <Link href="/student/login">
-                Student Login <ArrowRight className="ml-2"/>
-            </Link>
-        </Button>
-      </div>
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4">
@@ -103,6 +96,14 @@ export default function LoginPage() {
             </Button>
           </form>
         </CardContent>
+        <CardFooter className="justify-center">
+             <Button asChild variant="outline">
+                <Link href="/student/login">
+                    <ArrowLeft className="mr-2"/>
+                    Back to Student Login
+                </Link>
+            </Button>
+        </CardFooter>
       </Card>
     </main>
   );

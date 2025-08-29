@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle, HelpCircle } from 'lucide-react';
+import { AlertCircle, HelpCircle, UserCog } from 'lucide-react';
 import Link from 'next/link';
 
 export default function StudentLoginPage() {
@@ -38,6 +38,14 @@ export default function StudentLoginPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-secondary p-4">
+      <div className="absolute top-4 left-4">
+         <Button variant="outline" size="icon" asChild>
+            <Link href="/login">
+                <UserCog/>
+                 <span className="sr-only">Admin/Teacher Login</span>
+            </Link>
+        </Button>
+      </div>
       <div className="absolute top-4 right-4">
         <Button variant="outline" asChild>
             <Link href="/contact">
