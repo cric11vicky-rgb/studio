@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 type Role = 'admin' | 'teacher' | 'student';
 
-interface User {
+export interface User {
   username: string;
   name: string;
   email: string;
@@ -14,7 +14,7 @@ interface User {
 }
 
 // In a real application, this would be handled by a proper authentication service.
-const users: Record<string, { password: string; name: string; email: string; role: Role }> = {
+const staticUsers: Record<string, { password: string; name: string; email: string; role: Role }> = {
   admin: { password: 'Vikas@3415', name: 'Admin', email: 'admin@eduverse.com', role: 'admin' },
   teacher: { password: 'teacher123', name: 'Teacher', email: 'teacher@eduverse.com', role: 'teacher' },
   student: { password: 'student123', name: 'Student', email: 'student@eduverse.com', role: 'student' },
@@ -23,6 +23,7 @@ const users: Record<string, { password: string; name: string; email: string; rol
 interface AuthContextType {
   user: User | null;
   login: (username: string, password: string) => User | null;
+  studentLogin: (username: string, password: string) => User | null;
   logout: () => void;
   isLoading: boolean;
 }
@@ -42,13 +43,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const loggedInUser = session ? (JSON.parse(session) as User) : null;
         setUser(loggedInUser);
         
-        if (!loggedInUser && pathname !== '/login') {
+        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student');
+        if (!loggedInUser && !isAuthPage) {
           router.push('/login');
         }
       } catch (error) {
         console.error("Failed to parse user from session storage", error);
         setUser(null);
-        if (pathname !== '/login') {
+        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student');
+        if (!isAuthPage) {
           router.push('/login');
         }
       } finally {
@@ -59,17 +62,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [pathname, router]);
 
   const login = (username: string, password: string): User | null => {
-    const userData = users[username.toLowerCase()];
+    const userData = staticUsers[username.toLowerCase()];
     if (userData && password === userData.password) {
       const loggedInUser: User = {
         username: username.toLowerCase(),
         name: userData.name,
         email: userData.email,
-        role: userData.role === 'admin' ? 'student' : userData.role, // Admin logs into student view by default
+        role: userData.role,
       };
-       if(userData.role === 'admin') {
-        loggedInUser.role = 'admin'
-      }
+      sessionStorage.setItem('eduverseUser', JSON.stringify(loggedInUser));
+      setUser(loggedInUser);
+      return loggedInUser;
+    }
+    return null;
+  };
+  
+  const studentLogin = (username: string, password: string): User | null => {
+    const studentUsers = JSON.parse(localStorage.getItem('studentUsers') || '{}');
+    const userData = studentUsers[username.toLowerCase()];
+    if (userData && password === userData.password) {
+      const loggedInUser: User = {
+        username: username.toLowerCase(),
+        name: userData.name,
+        email: `${username}@eduverse.com`,
+        role: 'student',
+      };
       sessionStorage.setItem('eduverseUser', JSON.stringify(loggedInUser));
       setUser(loggedInUser);
       return loggedInUser;
@@ -83,9 +100,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     router.push('/login');
   };
 
-  const contextValue = {
-    user: user?.role === 'admin' ? { ...user, role: pathname.startsWith('/teacher') ? 'teacher' : 'student' } : user,
+  const contextValue: AuthContextType = {
+    user: user,
     login,
+    studentLogin,
     logout,
     isLoading
   };
@@ -93,8 +111,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
    if (user?.role === 'admin') {
     contextValue.user = {
       ...user,
-      name: user.name,
-      email: user.email,
       role: pathname.startsWith('/teacher') ? 'teacher' : 'student'
     };
   }

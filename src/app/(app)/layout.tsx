@@ -123,7 +123,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
             <div className="flex items-center gap-2">
               <Avatar className="size-8">
                 <AvatarImage src="https://picsum.photos/100" alt="User" data-ai-hint="student avatar" />
-                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                <AvatarFallback>{user.name ? user.name.charAt(0) : 'S'}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col text-sm">
                 <span className="font-semibold">{user.name}</span>
@@ -147,7 +147,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
                   <Settings className="mr-2 h-4 w-4" />
                   <span>{language === 'English' ? 'Settings' : 'सेटिंग्स'}</span>
                 </DropdownMenuItem>
-                {user.role === 'admin' && (
+                {user.username === 'admin' && (
                   <DropdownMenuItem>
                       <Link href="/teacher-dashboard" className='flex items-center w-full'>
                         <GraduationCap className="mr-2 h-4 w-4" />

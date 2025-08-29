@@ -17,49 +17,37 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle, ArrowRight } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 
-export default function LoginPage() {
+export default function StudentLoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const { studentLogin } = useAuth();
   const router = useRouter();
 
   const handleLogin = () => {
-    const user = login(username, password);
+    const user = studentLogin(username, password);
     if (user) {
-      if (user.role === 'teacher') {
-        router.push('/teacher-dashboard');
-      } else {
-        // Admin logs into student view
-        router.push('/dashboard');
-      }
+      router.push('/dashboard');
     } else {
-      setError('Invalid username or password. For student access, please use the student login.');
+      setError('Invalid username or password. Please try again.');
     }
   };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-secondary p-4">
-      <div className="absolute top-4 right-4">
-        <Button asChild>
-            <Link href="/student/login">
-                Student Login <ArrowRight className="ml-2"/>
-            </Link>
-        </Button>
-      </div>
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4">
             <Logo />
           </div>
           <CardTitle className="font-headline text-2xl">
-            Admin & Teacher Login
+            Student Login
           </CardTitle>
           <CardDescription>
-            Welcome to the EduVerse Portal.
+            Enter your credentials to access your learning portal.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -74,7 +62,7 @@ export default function LoginPage() {
               <Label htmlFor="username">Username</Label>
               <Input
                 id="username"
-                placeholder="Enter admin or teacher username"
+                placeholder="Enter your username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -85,7 +73,7 @@ export default function LoginPage() {
               <Input
                 id="password"
                 type="password"
-                placeholder="Enter password"
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -103,6 +91,21 @@ export default function LoginPage() {
             </Button>
           </form>
         </CardContent>
+        <CardFooter className="flex-col gap-4 text-sm">
+          <Link href="/student/forgot-password" passHref>
+             <span className="cursor-pointer text-primary hover:underline">
+              Forgot your password?
+             </span>
+          </Link>
+           <p className="text-muted-foreground">
+            {"Don't have an account?"}{" "}
+            <Link href="/student/register" passHref>
+                <span className="cursor-pointer font-semibold text-primary hover:underline">
+                    Register here
+                </span>
+            </Link>
+          </p>
+        </CardFooter>
       </Card>
     </main>
   );
