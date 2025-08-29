@@ -30,6 +30,9 @@ export default function StudentRegisterPage() {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [dob, setDob] = useState('');
+  const [studentClass, setStudentClass] = useState('');
   const [securityQuestion, setSecurityQuestion] = useState('');
   const [securityAnswer, setSecurityAnswer] = useState('');
   const [error, setError] = useState('');
@@ -37,7 +40,7 @@ export default function StudentRegisterPage() {
   const router = useRouter();
 
   const handleRegister = () => {
-    if (!name || !username || !password || !securityQuestion || !securityAnswer) {
+    if (!name || !username || !password || !mobileNumber || !dob || !studentClass || !securityQuestion || !securityAnswer) {
       setError('All fields are required.');
       return;
     }
@@ -52,11 +55,15 @@ export default function StudentRegisterPage() {
     studentUsers[username.toLowerCase()] = {
       name,
       password,
+      mobileNumber,
+      dob,
+      class: studentClass,
       securityQuestion,
       securityAnswer: securityAnswer.toLowerCase(),
     };
 
     localStorage.setItem('studentUsers', JSON.stringify(studentUsers));
+    localStorage.setItem('selectedClass', studentClass); // Set class preference
     setSuccess('Registration successful! You can now log in.');
     setError('');
     setTimeout(() => router.push('/student/login'), 2000);
@@ -92,38 +99,74 @@ export default function StudentRegisterPage() {
             }}
             className="space-y-4"
           >
-            <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                placeholder="Enter your full name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input
+                  id="name"
+                  placeholder="Enter your full name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  id="username"
+                  placeholder="Choose a username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+               <div className="space-y-2">
+                <Label htmlFor="mobileNumber">Mobile Number</Label>
+                <Input
+                  id="mobileNumber"
+                  type="tel"
+                  placeholder="Enter your mobile number"
+                  value={mobileNumber}
+                  onChange={(e) => setMobileNumber(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="dob">Date of Birth</Label>
+                <Input
+                  id="dob"
+                  type="date"
+                  value={dob}
+                  onChange={(e) => setDob(e.target.value)}
+                  required
+                />
+              </div>
+                <div className="space-y-2">
+                    <Label htmlFor="class">Class</Label>
+                    <Select value={studentClass} onValueChange={setStudentClass}>
+                        <SelectTrigger id="class">
+                            <SelectValue placeholder="Select your class" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {[...Array(8)].map((_, i) => (
+                                <SelectItem key={i+3} value={`${i + 3}`}>{`Class ${i + 3}`}</SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Create a strong password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="username">Username</Label>
-              <Input
-                id="username"
-                placeholder="Choose a username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Create a strong password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
+             <div className="space-y-2">
               <Label htmlFor="securityQuestion">Security Question</Label>
                <Select value={securityQuestion} onValueChange={setSecurityQuestion}>
                   <SelectTrigger id="securityQuestion">
@@ -141,7 +184,7 @@ export default function StudentRegisterPage() {
               <Label htmlFor="securityAnswer">Security Answer</Label>
               <Input
                 id="securityAnswer"
-                placeholder="Your answer"
+                placeholder="Your answer (case-insensitive)"
                 value={securityAnswer}
                 onChange={(e) => setSecurityAnswer(e.target.value)}
                 required
