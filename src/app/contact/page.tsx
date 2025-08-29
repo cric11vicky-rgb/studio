@@ -1,5 +1,7 @@
-import { Mail, Phone, MessageSquare } from 'lucide-react';
-import { AppHeader } from '@/app/(app)/layout';
+
+'use client';
+
+import { Mail, Phone, MessageSquare, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -11,11 +13,30 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import Link from 'next/link';
+import { Logo } from '@/components/logo';
+
+export function ContactHeader() {
+    return (
+     <header className="flex h-16 items-center justify-between border-b bg-card px-4 sm:px-6">
+        <Link href="/" className="flex items-center gap-2">
+            <Logo />
+            <span className="font-headline text-xl font-semibold">EduVerse</span>
+        </Link>
+        <Button asChild>
+            <Link href="/student/login">
+                Back to Login
+            </Link>
+        </Button>
+    </header>
+    )
+}
+
 
 export default function ContactPage() {
   return (
-    <div className="flex h-full flex-col">
-      <AppHeader title="Help & Contact" />
+    <div className="flex h-full min-h-screen flex-col bg-secondary">
+      <ContactHeader/>
       <main className="flex-1 p-4 md:p-8">
         <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2">
           <div>
