@@ -1,6 +1,7 @@
 
 'use client';
 
+import * as React from 'react';
 import { ArrowRight, BookCheck } from 'lucide-react';
 import { AppHeader } from '@/app/(app)/layout';
 import { Badge } from '@/components/ui/badge';
@@ -14,6 +15,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { useLanguage } from '@/context/language-context';
+import { useClass } from '@/context/class-context';
 
 const solutions = [
     {
@@ -116,6 +118,12 @@ const solutions = [
 
 export default function SolutionsPage() {
   const { language } = useLanguage();
+  const { selectedClass } = useClass();
+
+  const filteredSolutions = solutions.filter(
+    (solution) => selectedClass === 'All' || solution.class === selectedClass || solution.class === 'All'
+  );
+
   return (
     <div className="flex h-full flex-col">
       <AppHeader title="Textbook Solutions" />
@@ -128,33 +136,40 @@ export default function SolutionsPage() {
                 </CardDescription>
             </CardHeader>
         </Card>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {solutions.map((solution) => (
-            <Card key={solution.title} className="flex flex-col">
-              <CardHeader>
-                <div className="flex items-start justify-between gap-2">
-                   <Badge variant="secondary">Class {solution.class}</Badge>
-                   <Badge variant="outline">{solution.type}</Badge>
-                </div>
-                <CardTitle className="font-headline text-lg pt-2">
-                    {language === 'English' ? solution.title : solution.titleHi}
-                </CardTitle>
-                <CardDescription>{solution.subject}</CardDescription>
-              </CardHeader>
-              <CardContent className="flex-1">
-                <div className="flex items-center text-sm text-muted-foreground">
-                    <BookCheck className="mr-2"/>
-                    <span>{solution.exercises} {language === 'English' ? 'exercises with detailed solutions.' : 'विस्तृत समाधान के साथ अभ्यास।'}</span>
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button variant="outline" className="w-full">
-                  {language === 'English' ? 'View Solutions' : 'समाधान देखें'} <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+        {filteredSolutions.length > 0 ? (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {filteredSolutions.map((solution) => (
+              <Card key={solution.title} className="flex flex-col">
+                <CardHeader>
+                  <div className="flex items-start justify-between gap-2">
+                    <Badge variant="secondary">Class {solution.class}</Badge>
+                    <Badge variant="outline">{solution.type}</Badge>
+                  </div>
+                  <CardTitle className="font-headline text-lg pt-2">
+                      {language === 'English' ? solution.title : solution.titleHi}
+                  </CardTitle>
+                  <CardDescription>{solution.subject}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <div className="flex items-center text-sm text-muted-foreground">
+                      <BookCheck className="mr-2"/>
+                      <span>{solution.exercises} {language === 'English' ? 'exercises with detailed solutions.' : 'विस्तृत समाधान के साथ अभ्यास।'}</span>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button variant="outline" className="w-full">
+                    {language === 'English' ? 'View Solutions' : 'समाधान देखें'} <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-64 border rounded-lg">
+            <p className="font-semibold">No solutions found for Class {selectedClass}.</p>
+            <p className="text-sm mt-1">Please select a different class.</p>
+          </div>
+        )}
       </main>
     </div>
   );

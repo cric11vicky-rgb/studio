@@ -1,4 +1,7 @@
 
+'use client';
+
+import * as React from 'react';
 import Image from 'next/image';
 import { Calendar, Clock, Video } from 'lucide-react';
 
@@ -13,6 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { useClass } from '@/context/class-context';
 
 const liveClasses = [
     {
@@ -98,61 +102,74 @@ const liveClasses = [
 ];
 
 export default function LiveClassPage() {
+  const { selectedClass } = useClass();
+
+  const filteredClasses = liveClasses.filter(
+    (cls) => selectedClass === 'All' || cls.class === selectedClass
+  );
+
   return (
     <div className="flex h-full flex-col">
       <AppHeader title="Live Classes" />
       <main className="flex-1 space-y-6 p-4 md:p-8">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {liveClasses.map((cls) => (
-            <Card
-              key={cls.title}
-              className="flex flex-col overflow-hidden"
-            >
-              <CardHeader className="p-0">
-                <div className="relative aspect-video w-full">
-                  <Image
-                    src={cls.imageUrl}
-                    alt={cls.title}
-                    fill
-                    className="object-cover"
-                    data-ai-hint={cls.aiHint}
-                  />
-                  <Badge className="absolute left-2 top-2">
-                    Live
+        {filteredClasses.length > 0 ? (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {filteredClasses.map((cls) => (
+              <Card
+                key={cls.title}
+                className="flex flex-col overflow-hidden"
+              >
+                <CardHeader className="p-0">
+                  <div className="relative aspect-video w-full">
+                    <Image
+                      src={cls.imageUrl}
+                      alt={cls.title}
+                      fill
+                      className="object-cover"
+                      data-ai-hint={cls.aiHint}
+                    />
+                    <Badge className="absolute left-2 top-2">
+                      Live
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="flex-1 p-4">
+                  <Badge variant="outline" className="mb-2">
+                    Class {cls.class}
                   </Badge>
-                </div>
-              </CardHeader>
-              <CardContent className="flex-1 p-4">
-                <Badge variant="outline" className="mb-2">
-                  Class {cls.class}
-                </Badge>
-                <CardTitle className="font-headline text-lg">
-                  {cls.title}
-                </CardTitle>
-                <CardDescription>{cls.subject}</CardDescription>
-                <div className="mt-4 flex flex-col space-y-2 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    <span>{cls.date}</span>
+                  <CardTitle className="font-headline text-lg">
+                    {cls.title}
+                  </CardTitle>
+                  <CardDescription>{cls.subject}</CardDescription>
+                  <div className="mt-4 flex flex-col space-y-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4" />
+                      <span>{cls.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-4 w-4" />
+                      <span>{cls.time}</span>
+                    </div>
+                    <div className="flex items-center gap-2 font-medium">
+                      <span>by {cls.teacher}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
-                    <span>{cls.time}</span>
-                  </div>
-                   <div className="flex items-center gap-2 font-medium">
-                    <span>by {cls.teacher}</span>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter className="p-4 pt-0">
-                <Button className="w-full">
-                  <Video className="mr-2 h-4 w-4" />
-                  Join Now
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+                </CardContent>
+                <CardFooter className="p-4 pt-0">
+                  <Button className="w-full">
+                    <Video className="mr-2 h-4 w-4" />
+                    Join Now
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-64 border rounded-lg">
+            <p className="font-semibold">No live classes scheduled for Class {selectedClass}.</p>
+            <p className="text-sm mt-1">Please select a different class.</p>
+          </div>
+        )}
       </main>
     </div>
   );

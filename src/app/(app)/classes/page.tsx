@@ -1,15 +1,18 @@
 
+'use client';
+
+import * as React from 'react';
 import Image from 'next/image';
 import { PlayCircle } from 'lucide-react';
 import { AppHeader } from '@/app/(app)/layout';
 import { Badge } from '@/components/ui/badge';
 import {
   Card,
-  CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
+  CardDescription,
 } from '@/components/ui/card';
+import { useClass } from '@/context/class-context';
 
 const classes = [
   {
@@ -95,41 +98,54 @@ const classes = [
 ];
 
 export default function ClassesPage() {
+  const { selectedClass } = useClass();
+
+  const filteredClasses = classes.filter(
+    (cls) => selectedClass === 'All' || cls.class === selectedClass || cls.class === 'All'
+  );
+
   return (
     <div className="flex h-full flex-col">
       <AppHeader title="Recorded Classes" />
       <main className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {classes.map((cls) => (
-            <Card key={cls.title} className="overflow-hidden group">
-              <div className="relative">
-                <div className="aspect-video w-full overflow-hidden">
-                  <Image
-                    src={cls.imageUrl}
-                    alt={cls.title}
-                    width={600}
-                    height={400}
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    data-ai-hint={cls.aiHint}
-                  />
+        {filteredClasses.length > 0 ? (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {filteredClasses.map((cls) => (
+              <Card key={cls.title} className="overflow-hidden group">
+                <div className="relative">
+                  <div className="aspect-video w-full overflow-hidden">
+                    <Image
+                      src={cls.imageUrl}
+                      alt={cls.title}
+                      width={600}
+                      height={400}
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      data-ai-hint={cls.aiHint}
+                    />
+                  </div>
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                    <PlayCircle className="h-12 w-12 text-white/80 group-hover:text-white group-hover:scale-110 transition-all" />
+                  </div>
+                  <Badge className="absolute top-2 right-2">{cls.duration}</Badge>
                 </div>
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <PlayCircle className="h-12 w-12 text-white/80 group-hover:text-white group-hover:scale-110 transition-all" />
-                </div>
-                <Badge className="absolute top-2 right-2">{cls.duration}</Badge>
-              </div>
-              <CardHeader>
-                <Badge variant="secondary" className="w-fit mb-1">
-                  Class {cls.class}
-                </Badge>
-                <CardTitle className="font-headline text-lg">
-                  {cls.title}
-                </CardTitle>
-                <CardDescription>{cls.subject}</CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
+                <CardHeader>
+                  <Badge variant="secondary" className="w-fit mb-1">
+                    Class {cls.class}
+                  </Badge>
+                  <CardTitle className="font-headline text-lg">
+                    {cls.title}
+                  </CardTitle>
+                  <CardDescription>{cls.subject}</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        ) : (
+           <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-64 border rounded-lg">
+            <p className="font-semibold">No recorded classes found for Class {selectedClass}.</p>
+            <p className="text-sm mt-1">Please select a different class.</p>
+          </div>
+        )}
       </main>
     </div>
   );

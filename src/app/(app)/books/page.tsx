@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
+import { useClass } from '@/context/class-context';
 
 const allBooks = [
   // CBSE Books
@@ -56,7 +57,7 @@ const allBooks = [
 ];
 
 export default function BooksPage() {
-  const [selectedClass, setSelectedClass] = React.useState('All');
+  const { selectedClass, setSelectedClass, availableClasses } = useClass();
   const [selectedBoard, setSelectedBoard] = React.useState('All');
 
   const filteredBooks = allBooks.filter((book) => {
@@ -65,7 +66,6 @@ export default function BooksPage() {
     return classMatch && boardMatch;
   });
 
-  const classes = ['All', ...Array.from(new Set(allBooks.map(b => b.class)))].sort((a,b) => a === 'All' ? -1 : b === 'All' ? 1 : Number(a) - Number(b));
   const boards = ['All', ...Array.from(new Set(allBooks.map(b => b.board)))];
 
   return (
@@ -104,7 +104,7 @@ export default function BooksPage() {
                     <SelectValue placeholder="Select Class" />
                   </SelectTrigger>
                   <SelectContent>
-                    {classes.map((c) => (
+                    {availableClasses.map((c) => (
                       <SelectItem key={c} value={c}>
                         {c === 'All' ? 'All Classes' : `Class ${c}`}
                       </SelectItem>

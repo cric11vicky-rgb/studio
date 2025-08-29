@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -21,7 +22,8 @@ import {
   Globe,
   TrendingUp,
   BookCheck,
-  GraduationCap
+  GraduationCap,
+  ChevronDown,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -50,6 +52,8 @@ import {
 import { Logo } from '@/components/logo';
 import { cn } from '@/lib/utils';
 import { LanguageProvider, useLanguage } from '@/context/language-context';
+import { ClassProvider, useClass } from '@/context/class-context';
+import ClassSelector from '@/components/class-selector';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', labelHi: 'डैशबोर्ड', icon: LayoutDashboard },
@@ -71,6 +75,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
 
   return (
     <SidebarProvider>
+       <ClassSelector />
       <Sidebar>
         <SidebarHeader>
           <div className="flex items-center gap-2">
@@ -147,7 +152,9 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <LanguageProvider>
-      <AppLayoutContent>{children}</AppLayoutContent>
+      <ClassProvider>
+        <AppLayoutContent>{children}</AppLayoutContent>
+      </ClassProvider>
     </LanguageProvider>
   );
 }
@@ -156,8 +163,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 export function AppHeader({ title }: { title: string }) {
   const { isMobile } = useSidebar();
   const { language, setLanguage, getTranslation } = useLanguage();
+  const { selectedClass, setModalOpen } = useClass();
 
-  // Hide the default header on the dashboard page
   const pathname = usePathname();
   if (pathname === '/dashboard') {
     return null;
@@ -169,6 +176,12 @@ export function AppHeader({ title }: { title: string }) {
         <Menu />
       </SidebarTrigger>
       <h1 className="font-headline text-lg font-semibold md:text-xl flex-1">{getTranslation(title)}</h1>
+      
+      <Button variant="outline" size="sm" onClick={() => setModalOpen(true)}>
+          Class: {selectedClass}
+          <ChevronDown className="ml-2 h-4 w-4" />
+      </Button>
+      
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm">
