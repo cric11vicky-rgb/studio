@@ -1,20 +1,143 @@
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+
+'use client';
+
+import * as React from 'react';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { PlusCircle, BookOpen, Trash2 } from 'lucide-react';
+
+const lessonPlans = [
+    { id: 1, class: '10', subject: 'Physics', topic: 'Light - Reflection and Refraction', objectives: 'Understand laws of reflection. Learn about spherical mirrors.', duration: '2 weeks' },
+    { id: 2, class: '9', subject: 'History', topic: 'The French Revolution', objectives: 'Causes, events, and consequences of the revolution.', duration: '3 weeks' },
+    { id: 3, class: '8', subject: 'Mathematics', topic: 'Linear Equations in One Variable', objectives: 'Solving linear equations. Application in real-world problems.', duration: '2 weeks' },
+];
 
 export default function CurriculumPage() {
-    return (
-        <div className="flex-1 space-y-4 p-8 pt-6">
-            <div className="flex items-center justify-between space-y-2">
-                <h2 className="text-3xl font-bold tracking-tight">Curriculum Planning</h2>
+  return (
+    <div className="flex-1 space-y-6 p-4 md:p-8">
+      <header>
+        <h2 className="text-3xl font-bold tracking-tight">Curriculum Planning</h2>
+        <p className="text-muted-foreground">
+          Design and organize your lesson plans for the academic year.
+        </p>
+      </header>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Create a New Lesson Plan</CardTitle>
+          <CardDescription>
+            Structure your teaching by creating a detailed lesson plan.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label htmlFor="topic">Topic / Chapter Name</label>
+              <Input id="topic" placeholder="e.g., The Solar System" />
             </div>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Curriculum Planner</CardTitle>
-                    <CardDescription>This is where teachers can plan and structure course curriculum.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <p>Feature coming soon.</p>
-                </CardContent>
+             <div className="space-y-2">
+              <label htmlFor="subject">Subject</label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Subject" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="maths">Mathematics</SelectItem>
+                  <SelectItem value="science">Science</SelectItem>
+                  <SelectItem value="english">English</SelectItem>
+                  <SelectItem value="history">History</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+             <div className="space-y-2">
+              <label htmlFor="class">Class</label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select Class" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[...Array(8)].map((_, i) => (
+                    <SelectItem key={i+3} value={`${i + 3}`}>{`Class ${i + 3}`}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+             <div className="space-y-2">
+              <label htmlFor="duration">Estimated Duration</label>
+              <Input id="duration" placeholder="e.g., 2 Weeks" />
+            </div>
+            <div className="space-y-2 md:col-span-2">
+              <label htmlFor="objectives">Learning Objectives</label>
+              <Textarea
+                id="objectives"
+                placeholder="List the key learning outcomes for this topic..."
+                className="min-h-[100px]"
+              />
+            </div>
+             <div className="space-y-2 md:col-span-2">
+              <label htmlFor="activities">Teaching Activities & Resources</label>
+              <Textarea
+                id="activities"
+                placeholder="Describe activities, assessments, and resources to be used..."
+                 className="min-h-[100px]"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <Button>
+                <PlusCircle className="mr-2 h-4 w-4" />
+                Add Lesson Plan
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Existing Lesson Plans</CardTitle>
+          <CardDescription>
+            Here are the lesson plans you have created.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {lessonPlans.map(plan => (
+            <Card key={plan.id} className="p-4 flex justify-between items-start">
+              <div className="grid gap-1">
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="h-5 w-5 text-primary"/>
+                    <h3 className="font-semibold">{plan.topic}</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-medium">Class:</span> {plan.class} | <span className="font-medium">Subject:</span> {plan.subject} | <span className="font-medium">Duration:</span> {plan.duration}
+                  </p>
+                   <p className="text-sm text-muted-foreground">
+                    <span className="font-medium">Objectives:</span> {plan.objectives}
+                  </p>
+              </div>
+              <div>
+                  <Button variant="ghost" size="icon" className="text-destructive hover:text-destructive">
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+              </div>
             </Card>
-        </div>
-    );
+          ))}
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
