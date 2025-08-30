@@ -13,7 +13,8 @@ import {
   Users,
   BookOpen,
   LogOut,
-  MoreHorizontal
+  MoreHorizontal,
+  GraduationCap
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -50,6 +51,10 @@ const menuItems = [
   { href: '/teacher/curriculum', label: 'Curriculum', icon: BookOpen },
 ];
 
+const adminOnlyMenuItems = [
+    { href: '/teacher/teachers', label: 'Manage Teachers', icon: GraduationCap },
+];
+
 export default function TeacherLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { user, logout, isLoading } = useAuth();
@@ -69,6 +74,11 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
     return null; // Or a loading spinner
   }
 
+  const allMenuItems = [...menuItems];
+  if(user.role === 'admin') {
+      allMenuItems.push(...adminOnlyMenuItems);
+  }
+
   return (
     <SidebarProvider>
       <Sidebar>
@@ -83,7 +93,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
-            {menuItems.map((item) => (
+            {allMenuItems.map((item) => (
               <SidebarMenuItem key={item.href}>
                 <Link href={item.href}>
                   <SidebarMenuButton
