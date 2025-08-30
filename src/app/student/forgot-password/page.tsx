@@ -23,10 +23,15 @@ import Link from 'next/link';
 const MOCK_OTP = '123456';
 
 export default function ForgotPasswordPage() {
-  const [step, setStep] = useState(1); // 1: Enter username, 2: OTP, 3: Reset password
+  const [step, setStep] = useState(1); // 1: Username, 2: Choose method, 3: Verify, 4: Reset
+  const [recoveryMethod, setRecoveryMethod] = useState<'otp' | 'question' | null>(null);
+  
   const [username, setUsername] = useState('');
+  const [securityQuestion, setSecurityQuestion] = useState('');
+  const [securityAnswer, setSecurityAnswer] = useState('');
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
+
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const router = useRouter();
@@ -36,24 +41,43 @@ export default function ForgotPasswordPage() {
     const userData = studentUsers[username.toLowerCase()];
     if (userData) {
       setError('');
-      // In a real app, you would trigger an API call to send the OTP here.
-      setSuccess(`An OTP has been sent to the registered mobile number.`);
+      setSecurityQuestion(userData.securityQuestion);
       setStep(2);
     } else {
       setError('Username not found.');
     }
   };
-  
-  const handleOtpVerification = () => {
+
+  const handleMethodSelect = (method: 'otp' | 'question') => {
+      setRecoveryMethod(method);
       setError('');
-      if (otp === MOCK_OTP) {
-          setSuccess('OTP verified successfully! Please set your new password.');
-          setStep(3);
-      } else {
-          setError('Invalid OTP. Please try again.');
+      if (method === 'otp') {
+          setSuccess('An OTP has been sent to the registered mobile number.');
+      }
+      setStep(3);
+  }
+  
+  const handleVerification = () => {
+      setError('');
+      const studentUsers = JSON.parse(localStorage.getItem('studentUsers') || '{}');
+      const userData = studentUsers[username.toLowerCase()];
+
+      if (recoveryMethod === 'otp') {
+        if (otp === MOCK_OTP) {
+            setSuccess('OTP verified successfully! Please set your new password.');
+            setStep(4);
+        } else {
+            setError('Invalid OTP. Please try again.');
+        }
+      } else if (recoveryMethod === 'question') {
+          if (userData && securityAnswer.toLowerCase() === userData.securityAnswer) {
+              setSuccess('Security question answered correctly! Please set your new password.');
+              setStep(4);
+          } else {
+              setError('Incorrect answer. Please try again.');
+          }
       }
   };
-
 
   const handlePasswordReset = () => {
     if (!newPassword) {
@@ -87,9 +111,11 @@ export default function ForgotPasswordPage() {
             Reset Your Password
           </CardTitle>
           <CardDescription>
-            {step === 1 && "Enter your username to receive an OTP."}
-            {step === 2 && "Enter the OTP sent to your mobile."}
-            {step === 3 && "Set your new password."}
+            {step === 1 && "Enter your username to begin."}
+            {step === 2 && "Choose a recovery method."}
+            {step === 3 && recoveryMethod === 'otp' && "Enter the OTP sent to your mobile."}
+            {step === 3 && recoveryMethod === 'question' && "Answer your security question."}
+            {step === 4 && "Set your new password."}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -124,34 +150,59 @@ export default function ForgotPasswordPage() {
                 />
               </div>
               <Button type="submit" className="w-full">
-                Send OTP
+                Next
               </Button>
             </form>
           )}
-
+          
           {step === 2 && (
-            <form
-              onSubmit={(e) => { e.preventDefault(); handleOtpVerification(); }}
-              className="space-y-4"
-            >
-              <div className="space-y-2">
-                <Label htmlFor="otp">Enter OTP</Label>
-                <Input
-                  id="otp"
-                  placeholder="Enter the 6-digit code"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  required
-                />
+              <div className="space-y-4">
+                <Button className="w-full" onClick={() => handleMethodSelect('otp')}>
+                    Verify with OTP
+                </Button>
+                <Button variant="outline" className="w-full" onClick={() => handleMethodSelect('question')}>
+                    Answer Security Question
+                </Button>
+                <Button variant="link" size="sm" className="w-full" onClick={() => setStep(1)}>Back to username</Button>
               </div>
-              <Button type="submit" className="w-full">
-                Verify OTP
-              </Button>
-               <Button variant="link" size="sm" className="w-full" onClick={() => setStep(1)}>Back to username</Button>
-            </form>
           )}
 
           {step === 3 && (
+            <form
+              onSubmit={(e) => { e.preventDefault(); handleVerification(); }}
+              className="space-y-4"
+            >
+              {recoveryMethod === 'otp' ? (
+                <div className="space-y-2">
+                    <Label htmlFor="otp">Enter OTP</Label>
+                    <Input
+                    id="otp"
+                    placeholder="Enter the 6-digit code"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    required
+                    />
+                </div>
+              ) : (
+                <div className="space-y-2">
+                    <Label htmlFor="securityAnswer">{securityQuestion}</Label>
+                    <Input
+                    id="securityAnswer"
+                    placeholder="Your answer"
+                    value={securityAnswer}
+                    onChange={(e) => setSecurityAnswer(e.target.value)}
+                    required
+                    />
+                </div>
+              )}
+              <Button type="submit" className="w-full">
+                Verify
+              </Button>
+               <Button variant="link" size="sm" className="w-full" onClick={() => setStep(2)}>Choose other method</Button>
+            </form>
+          )}
+
+          {step === 4 && (
             <form
               onSubmit={(e) => { e.preventDefault(); handlePasswordReset(); }}
               className="space-y-4"
