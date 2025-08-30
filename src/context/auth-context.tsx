@@ -23,10 +23,14 @@ export interface TeacherUser {
 
 const MOCK_OTP = '123456';
 
-// In a real application, this would be handled by a proper authentication service.
-const staticUsers: Record<string, { password?: string; name: string; email: string; role: Role; mobileNumber?: string }> = {
-  admin: { password: 'Vikas@3415', name: 'Admin', email: 'admin@eduverse.com', role: 'admin', mobileNumber: '9876543210' },
+const initialAdminState = {
+    password: 'Vikas@3415',
+    name: 'Admin',
+    email: 'admin@eduverse.com',
+    role: 'admin' as Role,
+    mobileNumber: '9876543210',
 };
+
 
 type LoginType = 'password' | 'otp' | 'check_user';
 
@@ -38,6 +42,7 @@ interface AuthContextType {
   isLoading: boolean;
   addTeacher: (teacher: TeacherUser) => boolean;
   getTeachers: () => TeacherUser[];
+  updateAdminCredentials: (data: { password?: string, mobileNumber?: string }) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -46,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [teachers, setTeachers] = useState<Record<string, TeacherUser>>({});
+  const [adminUser, setAdminUser] = useState(initialAdminState);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -55,11 +61,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (savedTeachers) {
             setTeachers(JSON.parse(savedTeachers));
         }
+        const savedAdmin = localStorage.getItem('adminUser');
+        if (savedAdmin) {
+            setAdminUser(JSON.parse(savedAdmin));
+        } else {
+             localStorage.setItem('adminUser', JSON.stringify(initialAdminState));
+        }
     }
   }, []);
+  
+  const updateAdminCredentials = (data: { password?: string, mobileNumber?: string }) => {
+      const newAdminData = { ...adminUser, ...data };
+      setAdminUser(newAdminData);
+      localStorage.setItem('adminUser', JSON.stringify(newAdminData));
+  };
+
 
   const getCombinedUsers = () => {
-    const combined = { ...staticUsers };
+    const combined: Record<string, any> = { admin: adminUser };
     Object.values(teachers).forEach(t => {
       combined[t.username.toLowerCase()] = { ...t, email: `${t.username}@eduverse.com` };
     });
@@ -88,14 +107,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const loggedInUser = session ? (JSON.parse(session) as User) : null;
         setUser(loggedInUser);
         
-        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact';
+        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/teacher/admin');
         if (!loggedInUser && !isAuthPage) {
           router.push('/student/login');
         }
       } catch (error) {
         console.error("Failed to parse user from session storage", error);
         setUser(null);
-        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact';
+        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/teacher/admin');
         if (!isAuthPage) {
           router.push('/student/login');
         }
@@ -163,7 +182,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, studentLogin, logout, isLoading, addTeacher, getTeachers }}>
+    <AuthContext.Provider value={{ user, login, studentLogin, logout, isLoading, addTeacher, getTeachers, updateAdminCredentials }}>
       {children}
     </AuthContext.Provider>
   );

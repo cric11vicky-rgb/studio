@@ -14,7 +14,8 @@ import {
   BookOpen,
   LogOut,
   MoreHorizontal,
-  GraduationCap
+  GraduationCap,
+  UserCog,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -53,6 +54,7 @@ const menuItems = [
 
 const adminOnlyMenuItems = [
     { href: '/teacher/teachers', label: 'Manage Teachers', icon: GraduationCap },
+    { href: '/teacher/admin/manage', label: 'Manage Admin', icon: UserCog },
 ];
 
 export default function TeacherLayout({ children }: { children: React.ReactNode }) {
