@@ -24,7 +24,7 @@ export interface TeacherUser {
 const MOCK_OTP = '123456';
 
 const initialAdminState = {
-    password: 'Vikas@3415',
+    password: 'Vikas@2012',
     name: 'Admin',
     email: 'admin@eduverse.com',
     role: 'admin' as Role,
