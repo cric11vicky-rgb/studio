@@ -19,11 +19,13 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, CheckCircle, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
 
+// Mock OTP for demonstration. In a real app, this would be generated and sent via a service.
+const MOCK_OTP = '123456';
+
 export default function ForgotPasswordPage() {
-  const [step, setStep] = useState(1); // 1: Enter username, 2: Answer question, 3: Reset password
+  const [step, setStep] = useState(1); // 1: Enter username, 2: OTP, 3: Reset password
   const [username, setUsername] = useState('');
-  const [securityQuestion, setSecurityQuestion] = useState('');
-  const [securityAnswer, setSecurityAnswer] = useState('');
+  const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -33,24 +35,25 @@ export default function ForgotPasswordPage() {
     const studentUsers = JSON.parse(localStorage.getItem('studentUsers') || '{}');
     const userData = studentUsers[username.toLowerCase()];
     if (userData) {
-      setSecurityQuestion(userData.securityQuestion);
-      setStep(2);
       setError('');
+      // In a real app, you would trigger an API call to send the OTP here.
+      setSuccess(`An OTP has been sent to the registered mobile number.`);
+      setStep(2);
     } else {
       setError('Username not found.');
     }
   };
-
-  const handleAnswerSubmit = () => {
-    const studentUsers = JSON.parse(localStorage.getItem('studentUsers') || '{}');
-    const userData = studentUsers[username.toLowerCase()];
-    if (userData && userData.securityAnswer === securityAnswer.toLowerCase()) {
-      setStep(3);
+  
+  const handleOtpVerification = () => {
       setError('');
-    } else {
-      setError('Incorrect answer. Please try again.');
-    }
+      if (otp === MOCK_OTP) {
+          setSuccess('OTP verified successfully! Please set your new password.');
+          setStep(3);
+      } else {
+          setError('Invalid OTP. Please try again.');
+      }
   };
+
 
   const handlePasswordReset = () => {
     if (!newPassword) {
@@ -64,16 +67,6 @@ export default function ForgotPasswordPage() {
     setError('');
     setTimeout(() => router.push('/student/login'), 2000);
   };
-  
-  const getQuestionText = (key: string) => {
-    const questions: Record<string, string> = {
-        "pet": "What is the name of your first pet?",
-        "birthplace": "What is your city of birth?",
-        "mother_maiden": "What is your mother's maiden name?",
-        "favorite_book": "What is your favorite book?"
-    };
-    return questions[key] || "Your security question";
-  }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-secondary p-4">
@@ -94,7 +87,9 @@ export default function ForgotPasswordPage() {
             Reset Your Password
           </CardTitle>
           <CardDescription>
-            Follow the steps to regain access to your account.
+            {step === 1 && "Enter your username to receive an OTP."}
+            {step === 2 && "Enter the OTP sent to your mobile."}
+            {step === 3 && "Set your new password."}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -129,29 +124,30 @@ export default function ForgotPasswordPage() {
                 />
               </div>
               <Button type="submit" className="w-full">
-                Next
+                Send OTP
               </Button>
             </form>
           )}
 
           {step === 2 && (
             <form
-              onSubmit={(e) => { e.preventDefault(); handleAnswerSubmit(); }}
+              onSubmit={(e) => { e.preventDefault(); handleOtpVerification(); }}
               className="space-y-4"
             >
               <div className="space-y-2">
-                <Label htmlFor="securityAnswer">{getQuestionText(securityQuestion)}</Label>
+                <Label htmlFor="otp">Enter OTP</Label>
                 <Input
-                  id="securityAnswer"
-                  placeholder="Enter your answer"
-                  value={securityAnswer}
-                  onChange={(e) => setSecurityAnswer(e.target.value)}
+                  id="otp"
+                  placeholder="Enter the 6-digit code"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
                   required
                 />
               </div>
               <Button type="submit" className="w-full">
-                Verify Answer
+                Verify OTP
               </Button>
+               <Button variant="link" size="sm" className="w-full" onClick={() => setStep(1)}>Back to username</Button>
             </form>
           )}
 
