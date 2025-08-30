@@ -18,7 +18,7 @@ import { Save } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function ManageAdminPage() {
-  const { user, updateAdminCredentials } = useAuth();
+  const { user, adminUser, updateAdminCredentials } = useAuth();
   const { toast } = useToast();
   const router = useRouter();
 
@@ -26,16 +26,11 @@ export default function ManageAdminPage() {
   const [mobileNumber, setMobileNumber] = React.useState('');
 
   React.useEffect(() => {
-    // In a real app, you wouldn't expose this, but for the prototype we will.
-    // This pre-fills the form with current data from local storage.
-    const adminData = JSON.parse(localStorage.getItem('adminUser') || '{}');
-    if (adminData.mobileNumber) {
-        setMobileNumber(adminData.mobileNumber);
+    if (adminUser) {
+      setMobileNumber(adminUser.mobileNumber || '');
+      setPassword(adminUser.password || '');
     }
-     if (adminData.password) {
-        setPassword(adminData.password);
-    }
-  }, []);
+  }, [adminUser]);
 
   // Protect the route for admin only
   React.useEffect(() => {
