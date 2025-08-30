@@ -24,7 +24,7 @@ export default function ClassSelector() {
     <Dialog open={isModalOpen} onOpenChange={setModalOpen}>
       <DialogContent className="sm:max-w-[425px]" onInteractOutside={(e) => e.preventDefault()}>
         <DialogHeader>
-          <DialogTitle className="font-headline text-2xl text-center">Welcome to EduVerse!</DialogTitle>
+          <DialogTitle className="font-headline text-2xl text-center">Welcome to Smart Vidya!</DialogTitle>
           <DialogDescription className="text-center">
             Please select your class to get started.
           </DialogDescription>

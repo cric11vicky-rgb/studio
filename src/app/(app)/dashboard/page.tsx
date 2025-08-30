@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -226,7 +227,7 @@ export default function DashboardPage() {
 
         <div>
             <CardHeader className="p-0 mb-4">
-                <CardTitle className="font-headline">Explore EduVerse</CardTitle>
+                <CardTitle className="font-headline">Explore Smart Vidya</CardTitle>
                 <CardDescription>All your learning tools in one place.</CardDescription>
             </CardHeader>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">

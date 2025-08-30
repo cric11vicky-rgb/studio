@@ -21,7 +21,7 @@ export function ContactHeader() {
      <header className="flex h-16 items-center justify-between border-b bg-card px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-2">
             <Logo />
-            <span className="font-headline text-xl font-semibold">EduVerse</span>
+            <span className="font-headline text-xl font-semibold">Smart Vidya</span>
         </Link>
         <Button asChild>
             <Link href="/student/login">
@@ -54,10 +54,10 @@ export default function ContactPage() {
                   <h3 className="font-semibold">Email Us</h3>
                   <p className="text-muted-foreground">
                     <a
-                      href="mailto:support@eduverse.com"
+                      href="mailto:support@smartvidya.com"
                       className="hover:underline"
                     >
-                      support@eduverse.com
+                      support@smartvidya.com
                     </a>
                   </p>
                 </div>

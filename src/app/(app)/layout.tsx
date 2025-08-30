@@ -99,7 +99,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
         <SidebarHeader>
           <div className="flex items-center gap-2">
             <Logo />
-            <span className="font-headline text-xl font-semibold">EduVerse</span>
+            <span className="font-headline text-xl font-semibold">Smart Vidya</span>
           </div>
         </SidebarHeader>
         <SidebarContent>

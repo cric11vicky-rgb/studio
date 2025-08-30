@@ -6,7 +6,7 @@ import './globals.css';
 import { AuthProvider } from '@/context/auth-context';
 
 export const metadata: Metadata = {
-  title: 'EduVerse',
+  title: 'Smart Vidya',
   description: 'An education app for Class 3-10 students in India.',
 };
 

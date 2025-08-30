@@ -26,7 +26,7 @@ const MOCK_OTP = '123456';
 const initialAdminState = {
     password: 'Vikas@2012',
     name: 'Admin',
-    email: 'admin@eduverse.com',
+    email: 'admin@smartvidya.com',
     role: 'admin' as Role,
     mobileNumber: '9549543576',
 };
@@ -84,7 +84,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const getCombinedUsers = () => {
     const combined: Record<string, any> = { admin: adminUser };
     Object.values(teachers).forEach(t => {
-      combined[t.username.toLowerCase()] = { ...t, email: `${t.username}@eduverse.com` };
+      combined[t.username.toLowerCase()] = { ...t, email: `${t.username}@smartvidya.com` };
     });
     return combined;
   };
@@ -107,7 +107,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const checkAuth = () => {
       try {
-        const session = sessionStorage.getItem('eduverseUser');
+        const session = sessionStorage.getItem('smartVidyaUser');
         const loggedInUser = session ? (JSON.parse(session) as User) : null;
         setUser(loggedInUser);
         
@@ -142,7 +142,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             email: userData.email,
             role: userData.role,
         };
-        sessionStorage.setItem('eduverseUser', JSON.stringify(loggedInUser));
+        sessionStorage.setItem('smartVidyaUser', JSON.stringify(loggedInUser));
         setUser(loggedInUser);
         return loggedInUser;
     }
@@ -169,10 +169,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const loggedInUser: User = {
         username: username.toLowerCase(),
         name: userData.name,
-        email: `${username}@eduverse.com`,
+        email: `${username}@smartvidya.com`,
         role: 'student',
       };
-      sessionStorage.setItem('eduverseUser', JSON.stringify(loggedInUser));
+      sessionStorage.setItem('smartVidyaUser', JSON.stringify(loggedInUser));
       setUser(loggedInUser);
       return loggedInUser;
     }
@@ -180,7 +180,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    sessionStorage.removeItem('eduverseUser');
+    sessionStorage.removeItem('smartVidyaUser');
     setUser(null);
     router.push('/student/login');
   };

@@ -88,7 +88,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
           <div className="flex items-center gap-2">
             <Logo />
             <div className="flex flex-col">
-              <span className="font-headline text-xl font-semibold">EduVerse</span>
+              <span className="font-headline text-xl font-semibold">Smart Vidya</span>
               <span className="text-sm text-muted-foreground">Teacher Portal</span>
             </div>
           </div>
