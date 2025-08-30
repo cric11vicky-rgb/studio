@@ -17,13 +17,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Logo } from '@/components/logo';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle, ArrowLeft, CheckCircle } from 'lucide-react';
+import { AlertCircle, ArrowLeft, CheckCircle, KeyRound, MessageSquareText } from 'lucide-react';
 import Link from 'next/link';
 
 const MOCK_OTP = '123456';
 
+type LoginStep = 'username' | 'method_choice' | 'password' | 'otp';
+
 export default function LoginPage() {
-  const [step, setStep] = useState(1); // 1: Credentials, 2: OTP
+  const [step, setStep] = useState<LoginStep>('username');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
@@ -32,31 +34,50 @@ export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
 
-  const handleCredentialsSubmit = () => {
+  const handleUsernameSubmit = () => {
     setError('');
-    const userExists = login(username, password, false);
+    // Check if user exists without logging them in
+    const userExists = login(username, '', false, 'check_user');
     if (userExists) {
-        setSuccess('Credentials verified. An OTP has been sent to your registered mobile number.');
-        setStep(2);
+        setStep('method_choice');
     } else {
-        setError('Invalid username or password. For student access, please use the student login.');
+        setError('Invalid username. For student access, please use the student login.');
     }
   };
 
-  const handleOtpVerification = () => {
+  const handleMethodSelect = (method: 'password' | 'otp') => {
+      setError('');
+      setSuccess('');
+      if (method === 'otp') {
+          setSuccess('An OTP has been sent to your registered mobile number.');
+          setStep('otp');
+      } else {
+          setStep('password');
+      }
+  }
+
+  const handleLogin = (method: 'password' | 'otp') => {
     setError('');
-    if (otp === MOCK_OTP) {
-        const user = login(username, password, true);
-        if (user) {
-            if (user.role === 'teacher' || user.role === 'admin') {
-                router.push('/teacher-dashboard');
-            } else {
-                router.push('/dashboard');
-            }
+    const credentials = method === 'password' ? password : otp;
+    const user = login(username, credentials, true, method);
+
+    if (user) {
+        if (user.role === 'teacher' || user.role === 'admin') {
+            router.push('/teacher-dashboard');
+        } else {
+            router.push('/dashboard'); // Fallback, though should not happen for this login
         }
     } else {
-        setError('Invalid OTP. Please try again.');
+        setError(method === 'password' ? 'Invalid password.' : 'Invalid OTP.');
     }
+  }
+
+  const resetFlow = () => {
+      setStep('username');
+      setPassword('');
+      setOtp('');
+      setError('');
+      setSuccess('');
   }
 
   return (
@@ -70,8 +91,10 @@ export default function LoginPage() {
             Admin & Teacher Login
           </CardTitle>
           <CardDescription>
-            {step === 1 && "Welcome to the EduVerse Portal."}
-            {step === 2 && "Please enter the OTP to continue."}
+            {step === 'username' && "Enter your username to continue."}
+            {step === 'method_choice' && `Welcome, ${username}. Choose your login method.`}
+            {step === 'password' && `Enter your password.`}
+            {step === 'otp' && `Enter the OTP sent to your mobile.`}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -82,7 +105,7 @@ export default function LoginPage() {
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
           )}
-          {success && step === 2 && (
+          {success && (
               <Alert variant="default" className="bg-green-100 border-green-400 text-green-800 mb-4">
                 <CheckCircle className="h-4 w-4 text-green-800" />
                 <AlertTitle>Success</AlertTitle>
@@ -90,12 +113,9 @@ export default function LoginPage() {
             </Alert>
           )}
 
-          {step === 1 && (
+          {step === 'username' && (
             <form
-                onSubmit={(e) => {
-                e.preventDefault();
-                handleCredentialsSubmit();
-                }}
+                onSubmit={(e) => { e.preventDefault(); handleUsernameSubmit(); }}
                 className="space-y-4"
             >
                 <div className="space-y-2">
@@ -108,6 +128,33 @@ export default function LoginPage() {
                     required
                 />
                 </div>
+                <Button type="submit" className="w-full">
+                    Next
+                </Button>
+            </form>
+          )}
+
+          {step === 'method_choice' && (
+              <div className="space-y-4">
+                  <Button className="w-full" onClick={() => handleMethodSelect('password')}>
+                      <KeyRound className="mr-2"/>
+                      Login with Password
+                  </Button>
+                  <Button variant="outline" className="w-full" onClick={() => handleMethodSelect('otp')}>
+                      <MessageSquareText className="mr-2"/>
+                      Login with OTP
+                  </Button>
+                  <Button variant="link" size="sm" className="w-full" onClick={resetFlow}>
+                      Back to username
+                  </Button>
+              </div>
+          )}
+
+          {step === 'password' && (
+            <form
+                onSubmit={(e) => { e.preventDefault(); handleLogin('password'); }}
+                className="space-y-4"
+            >
                 <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <Input
@@ -120,16 +167,15 @@ export default function LoginPage() {
                 />
                 </div>
                 <Button type="submit" className="w-full">
-                    Verify & Send OTP
+                    Log In
                 </Button>
+                <Button variant="link" size="sm" className="w-full" onClick={() => setStep('method_choice')}>Back to method choice</Button>
             </form>
           )}
-          {step === 2 && (
+
+          {step === 'otp' && (
              <form
-                onSubmit={(e) => {
-                e.preventDefault();
-                handleOtpVerification();
-                }}
+                onSubmit={(e) => { e.preventDefault(); handleLogin('otp'); }}
                 className="space-y-4"
             >
                 <div className="space-y-2">
@@ -143,11 +189,12 @@ export default function LoginPage() {
                 />
                 </div>
                  <Button type="submit" className="w-full">
-                    Log In
+                    Verify & Log In
                 </Button>
-                <Button variant="link" size="sm" className="w-full" onClick={() => { setStep(1); setError(''); setSuccess(''); }}>Back to login</Button>
+                <Button variant="link" size="sm" className="w-full" onClick={() => setStep('method_choice')}>Back to method choice</Button>
             </form>
           )}
+
         </CardContent>
         <CardFooter className="justify-center">
              <Button asChild variant="outline">

@@ -21,15 +21,18 @@ export interface TeacherUser {
   role: 'teacher';
 }
 
+const MOCK_OTP = '123456';
 
 // In a real application, this would be handled by a proper authentication service.
 const staticUsers: Record<string, { password?: string; name: string; email: string; role: Role; mobileNumber?: string }> = {
   admin: { password: 'Vikas@3415', name: 'Admin', email: 'admin@eduverse.com', role: 'admin', mobileNumber: '9876543210' },
 };
 
+type LoginType = 'password' | 'otp' | 'check_user';
+
 interface AuthContextType {
   user: User | null;
-  login: (username: string, password: string, otpVerified: boolean) => User | null;
+  login: (username: string, credentials: string, otpVerified: boolean, method: LoginType) => User | null;
   studentLogin: (username: string, password: string) => User | null;
   logout: () => void;
   isLoading: boolean;
@@ -103,25 +106,36 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     checkAuth();
   }, [pathname, router]);
 
-  const login = (username: string, password: string, otpVerified: boolean): User | null => {
+  const login = (username: string, credentials: string, otpVerified: boolean, method: LoginType): User | null => {
     const allUsers = getCombinedUsers();
     const userData = allUsers[username.toLowerCase()];
     
-    if (userData && password === userData.password) {
-      if (!otpVerified) {
-        // This is a check to see if user exists, before OTP step.
-        return { username: 'exists', name: '', email: '', role: 'student' }; // Return a dummy user to indicate success
-      }
-      const loggedInUser: User = {
-        username: username.toLowerCase(),
-        name: userData.name,
-        email: userData.email,
-        role: userData.role,
-      };
-      sessionStorage.setItem('eduverseUser', JSON.stringify(loggedInUser));
-      setUser(loggedInUser);
-      return loggedInUser;
+    if (!userData) return null;
+
+    const doLogin = () => {
+        const loggedInUser: User = {
+            username: username.toLowerCase(),
+            name: userData.name,
+            email: userData.email,
+            role: userData.role,
+        };
+        sessionStorage.setItem('eduverseUser', JSON.stringify(loggedInUser));
+        setUser(loggedInUser);
+        return loggedInUser;
     }
+
+    if (method === 'check_user') {
+        return { username: 'exists', name: '', email: '', role: 'student' }; // Dummy user
+    }
+    
+    if (method === 'password' && credentials === userData.password) {
+        return doLogin();
+    }
+
+    if (method === 'otp' && credentials === MOCK_OTP) {
+        return doLogin();
+    }
+
     return null;
   };
   
