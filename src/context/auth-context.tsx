@@ -28,7 +28,7 @@ const initialAdminState = {
     name: 'Admin',
     email: 'admin@eduverse.com',
     role: 'admin' as Role,
-    mobileNumber: '9876543210',
+    mobileNumber: '9549543576',
 };
 
 
