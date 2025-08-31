@@ -21,8 +21,6 @@ export interface TeacherUser {
   role: 'teacher';
 }
 
-const MOCK_OTP = '123456';
-
 const initialAdminState = {
     password: 'Vikas@2012',
     name: 'Admin',
@@ -31,13 +29,10 @@ const initialAdminState = {
     mobileNumber: '9549543576',
 };
 
-
-type LoginType = 'password' | 'otp' | 'check_user';
-
 interface AuthContextType {
   user: User | null;
   adminUser: typeof initialAdminState | null;
-  login: (username: string, credentials: string, otpVerified: boolean, method: LoginType) => User | null;
+  login: (username: string, credentials: string) => User | null;
   studentLogin: (username: string, password: string) => User | null;
   logout: () => void;
   isLoading: boolean;
@@ -129,7 +124,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     checkAuth();
   }, [pathname, router]);
 
-  const login = (username: string, credentials: string, otpVerified: boolean, method: LoginType): User | null => {
+  const login = (username: string, password: string): User | null => {
     const allUsers = getCombinedUsers();
     const userData = allUsers[username.toLowerCase()];
     
@@ -146,16 +141,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(loggedInUser);
         return loggedInUser;
     }
-
-    if (method === 'check_user') {
-        return { username: 'exists', name: '', email: '', role: 'student' }; // Dummy user
-    }
     
-    if (method === 'password' && credentials === userData.password) {
-        return doLogin();
-    }
-
-    if (method === 'otp' && credentials === MOCK_OTP) {
+    if (password === userData.password) {
         return doLogin();
     }
 
