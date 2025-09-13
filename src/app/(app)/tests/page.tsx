@@ -80,6 +80,48 @@ const tests = [
     questions: 50,
     duration: '60 mins',
   },
+    {
+    title: 'Physics Mock Test - Units & Dimensions',
+    subject: 'Physics (Science)',
+    class: '11',
+    questions: 30,
+    duration: '45 mins',
+  },
+  {
+    title: 'Commerce Aptitude Test',
+    subject: 'Business Studies (Commerce)',
+    class: '11',
+    questions: 40,
+    duration: '60 mins',
+  },
+    {
+    title: 'Arts & Humanities Quiz',
+    subject: 'History (Arts)',
+    class: '11',
+    questions: 25,
+    duration: '30 mins',
+  },
+    {
+    title: 'NEET Biology Mock Test',
+    subject: 'Biology (Science)',
+    class: '12',
+    questions: 90,
+    duration: '90 mins',
+  },
+  {
+    title: 'Economics Board Exam Practice',
+    subject: 'Economics (Commerce)',
+    class: '12',
+    questions: 50,
+    duration: '180 mins',
+  },
+    {
+    title: 'Political Science Mock Test',
+    subject: 'Political Science (Arts)',
+    class: '12',
+    questions: 50,
+    duration: '120 mins',
+  },
 ];
 
 export default function TestsPage() {

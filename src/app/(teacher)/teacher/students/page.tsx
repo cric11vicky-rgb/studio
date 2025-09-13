@@ -35,6 +35,8 @@ const students = [
   { id: 3, name: 'Karan Patel', class: '10', email: 'karan.p@example.com', joinDate: '2023-01-18', avatar: 'https://picsum.photos/100?student=3' },
   { id: 4, name: 'Sneha Reddy', class: '8', email: 'sneha.r@example.com', joinDate: '2023-03-10', avatar: 'https://picsum.photos/100?student=4' },
   { id: 5, name: 'Vikram Singh', class: '7', email: 'vikram.s@example.com', joinDate: '2023-04-05', avatar: 'https://picsum.photos/100?student=5' },
+  { id: 6, name: 'Isha Verma', class: '11', stream: 'Science', email: 'isha.v@example.com', joinDate: '2023-04-12', avatar: 'https://picsum.photos/100?student=6' },
+  { id: 7, name: 'Rohan Mehra', class: '12', stream: 'Commerce', email: 'rohan.m@example.com', joinDate: '2023-04-15', avatar: 'https://picsum.photos/100?student=7' },
 ];
 
 export default function StudentsPage() {
@@ -82,7 +84,7 @@ export default function StudentsPage() {
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="All">All Classes</SelectItem>
-                        {[...Array(8)].map((_, i) => (
+                        {[...Array(10)].map((_, i) => (
                             <SelectItem key={i+3} value={`${i + 3}`}>{`Class ${i + 3}`}</SelectItem>
                         ))}
                     </SelectContent>

@@ -114,6 +114,54 @@ const solutions = [
     exercises: 1,
     type: 'Worksheet'
   },
+    {
+    title: 'Chapter 1: Sets',
+    titleHi: 'अध्याय 1: समुच्चय',
+    subject: 'Mathematics (Science)',
+    class: '11',
+    exercises: 6,
+    type: 'NCERT'
+  },
+  {
+    title: 'Chapter 1: Introduction to Accounting',
+    titleHi: 'अध्याय 1: लेखांकन का परिचय',
+    subject: 'Accountancy (Commerce)',
+    class: '11',
+    exercises: 4,
+    type: 'NCERT'
+  },
+  {
+    title: 'Chapter 1: The Living World',
+    titleHi: 'अध्याय 1: जीव जगत',
+    subject: 'Biology (Science)',
+    class: '11',
+    exercises: 5,
+    type: 'NCERT'
+  },
+  {
+    title: 'Chapter 1: Relations and Functions',
+    titleHi: 'अध्याय 1: संबंध और फलन',
+    subject: 'Mathematics (Science)',
+    class: '12',
+    exercises: 4,
+    type: 'NCERT'
+  },
+  {
+    title: 'Chapter 1: Accounting for Not-for-Profit Organization',
+    titleHi: 'अध्याय 1: गैर-लाभकारी संगठन के लिए लेखांकन',
+    subject: 'Accountancy (Commerce)',
+    class: '12',
+    exercises: 7,
+    type: 'NCERT'
+  },
+  {
+    title: 'Chapter 1: Reproduction in Organisms',
+    titleHi: 'अध्याय 1: जीवों में जनन',
+    subject: 'Biology (Science)',
+    class: '12',
+    exercises: 5,
+    type: 'NCERT'
+  },
 ];
 
 export default function SolutionsPage() {

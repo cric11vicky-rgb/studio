@@ -54,6 +54,23 @@ const allBooks = [
   { board: 'RBSE', title: 'गणित - कक्षा 8', subject: 'Mathematics', class: '8', imageUrl: 'https://picsum.photos/300/400?book=rbse-math-8', aiHint: 'math textbook' },
   { board: 'RBSE', title: 'Golden Rays - Class 9', subject: 'English', class: '9', imageUrl: 'https://picsum.photos/300/400?book=rbse-eng-9', aiHint: 'english textbook' },
   { board: 'RBSE', title: 'विज्ञान - कक्षा 10', subject: 'Science', class: '10', imageUrl: 'https://picsum.photos/300/400?book=rbse-science-10', aiHint: 'science textbook' },
+  // Class 11
+  { board: 'CBSE', title: 'Physics Part I - Class 11', subject: 'Physics (Science)', class: '11', imageUrl: 'https://picsum.photos/300/400?book=cbse-phy-11', aiHint: 'physics textbook' },
+  { board: 'CBSE', title: 'Chemistry Part I - Class 11', subject: 'Chemistry (Science)', class: '11', imageUrl: 'https://picsum.photos/300/400?book=cbse-chem-11', aiHint: 'chemistry textbook' },
+  { board: 'CBSE', title: 'Mathematics - Class 11', subject: 'Mathematics (Science)', class: '11', imageUrl: 'https://picsum.photos/300/400?book=cbse-math-11', aiHint: 'math textbook' },
+  { board: 'CBSE', title: 'Accountancy - Class 11', subject: 'Accountancy (Commerce)', class: '11', imageUrl: 'https://picsum.photos/300/400?book=cbse-acc-11', aiHint: 'commerce textbook' },
+  { board: 'CBSE', title: 'Business Studies - Class 11', subject: 'Business Studies (Commerce)', class: '11', imageUrl: 'https://picsum.photos/300/400?book=cbse-bstd-11', aiHint: 'business textbook' },
+  { board: 'CBSE', title: 'Themes in World History - Class 11', subject: 'History (Arts)', class: '11', imageUrl: 'https://picsum.photos/300/400?book=cbse-hist-11', aiHint: 'history textbook' },
+  { board: 'CBSE', title: 'Political Theory - Class 11', subject: 'Political Science (Arts)', class: '11', imageUrl: 'https://picsum.photos/300/400?book=cbse-polsci-11', aiHint: 'politics textbook' },
+
+  // Class 12
+  { board: 'CBSE', title: 'Physics Part I - Class 12', subject: 'Physics (Science)', class: '12', imageUrl: 'https://picsum.photos/300/400?book=cbse-phy-12', aiHint: 'physics textbook' },
+  { board: 'CBSE', title: 'Chemistry Part I - Class 12', subject: 'Chemistry (Science)', class: '12', imageUrl: 'https://picsum.photos/300/400?book=cbse-chem-12', aiHint: 'chemistry textbook' },
+  { board: 'CBSE', title: 'Mathematics Part I - Class 12', subject: 'Mathematics (Science)', class: '12', imageUrl: 'https://picsum.photos/300/400?book=cbse-math-12', aiHint: 'math textbook' },
+  { board: 'CBSE', title: 'Accountancy Part 1 - Class 12', subject: 'Accountancy (Commerce)', class: '12', imageUrl: 'https://picsum.photos/300/400?book=cbse-acc-12', aiHint: 'commerce textbook' },
+  { board: 'CBSE', title: 'Principles of Management - Class 12', subject: 'Business Studies (Commerce)', class: '12', imageUrl: 'https://picsum.photos/300/400?book=cbse-bstd-12', aiHint: 'business textbook' },
+  { board: 'CBSE', title: 'Themes in Indian History Part I - Class 12', subject: 'History (Arts)', class: '12', imageUrl: 'https://picsum.photos/300/400?book=cbse-hist-12', aiHint: 'history textbook' },
+  { board: 'CBSE', title: 'Contemporary World Politics - Class 12', subject: 'Political Science (Arts)', class: '12', imageUrl: 'https://picsum.photos/300/400?book=cbse-polsci-12', aiHint: 'politics textbook' },
 ];
 
 export default function BooksPage() {

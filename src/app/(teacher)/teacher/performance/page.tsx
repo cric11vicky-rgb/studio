@@ -54,6 +54,8 @@ const studentData = [
     { id: 3, name: 'Karan Patel', class: 10, overallScore: 78, lastTest: '75% (Chemistry)', attendance: '92%' },
     { id: 4, name: 'Sneha Reddy', class: 8, overallScore: 95, lastTest: '98% (English)', attendance: '100%' },
     { id: 5, name: 'Vikram Singh', class: 7, overallScore: 72, lastTest: '70% (History)', attendance: '85%' },
+    { id: 6, name: 'Isha Verma', class: 11, overallScore: 88, lastTest: '91% (Biology)', attendance: '96%' },
+    { id: 7, name: 'Rohan Mehra', class: 12, overallScore: 82, lastTest: '85% (Accounts)', attendance: '94%' },
 ]
 
 export default function PerformancePage() {
@@ -106,7 +108,7 @@ export default function PerformancePage() {
                             <SelectValue placeholder="Select Class" />
                         </SelectTrigger>
                         <SelectContent>
-                            {[...Array(8)].map((_, i) => (
+                            {[...Array(10)].map((_, i) => (
                                 <SelectItem key={i+3} value={`${i + 3}`}>{`Class ${i + 3}`}</SelectItem>
                             ))}
                         </SelectContent>

@@ -28,6 +28,7 @@ const upcomingClasses = [
     { id: 1, title: 'Introduction to Trigonometry', class: '10', subject: 'Mathematics', date: '2023-11-05', time: '4:00 PM' },
     { id: 2, title: 'Chemical Reactions and Equations', class: '10', subject: 'Science', date: '2023-11-06', time: '5:30 PM' },
     { id: 3, title: 'The Rise of Nationalism in Europe', class: '9', subject: 'History', date: '2023-11-07', time: '3:00 PM' },
+    { id: 4, title: 'Vectors and 3D Geometry', class: '12', subject: 'Mathematics', date: '2023-11-08', time: '6:00 PM' },
 ]
 
 export default function SchedulePage() {
@@ -64,6 +65,13 @@ export default function SchedulePage() {
                   <SelectItem value="science">Science</SelectItem>
                   <SelectItem value="english">English</SelectItem>
                   <SelectItem value="history">History</SelectItem>
+                  <SelectItem value="physics">Physics</SelectItem>
+                  <SelectItem value="chemistry">Chemistry</SelectItem>
+                  <SelectItem value="biology">Biology</SelectItem>
+                  <SelectItem value="accountancy">Accountancy</SelectItem>
+                  <SelectItem value="business_studies">Business Studies</SelectItem>
+                  <SelectItem value="economics">Economics</SelectItem>
+                  <SelectItem value="political_science">Political Science</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -74,7 +82,7 @@ export default function SchedulePage() {
                   <SelectValue placeholder="Select Class" />
                 </SelectTrigger>
                 <SelectContent>
-                  {[...Array(8)].map((_, i) => (
+                  {[...Array(10)].map((_, i) => (
                     <SelectItem key={i+3} value={`${i + 3}`}>{`Class ${i + 3}`}</SelectItem>
                   ))}
                 </SelectContent>

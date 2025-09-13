@@ -169,7 +169,7 @@ export default function StudentRegisterPage() {
                             <SelectValue placeholder="Select your class" />
                         </SelectTrigger>
                         <SelectContent>
-                            {[...Array(8)].map((_, i) => (
+                            {[...Array(10)].map((_, i) => (
                                 <SelectItem key={i+3} value={`${i + 3}`}>{`Class ${i + 3}`}</SelectItem>
                             ))}
                         </SelectContent>

@@ -25,6 +25,8 @@ const lessonPlans = [
     { id: 1, class: '10', subject: 'Physics', topic: 'Light - Reflection and Refraction', objectives: 'Understand laws of reflection. Learn about spherical mirrors.', duration: '2 weeks' },
     { id: 2, class: '9', subject: 'History', topic: 'The French Revolution', objectives: 'Causes, events, and consequences of the revolution.', duration: '3 weeks' },
     { id: 3, class: '8', subject: 'Mathematics', topic: 'Linear Equations in One Variable', objectives: 'Solving linear equations. Application in real-world problems.', duration: '2 weeks' },
+    { id: 4, class: '11', subject: 'Physics', topic: 'Kinematics', objectives: 'Understanding motion in one and two dimensions.', duration: '3 weeks' },
+    { id: 5, class: '12', subject: 'Accountancy', topic: 'Partnership Fundamentals', objectives: 'Learn about partnership deeds and profit distribution.', duration: '2 weeks' },
 ];
 
 export default function CurriculumPage() {
@@ -61,6 +63,13 @@ export default function CurriculumPage() {
                   <SelectItem value="science">Science</SelectItem>
                   <SelectItem value="english">English</SelectItem>
                   <SelectItem value="history">History</SelectItem>
+                  <SelectItem value="physics">Physics</SelectItem>
+                  <SelectItem value="chemistry">Chemistry</SelectItem>
+                  <SelectItem value="biology">Biology</SelectItem>
+                  <SelectItem value="accountancy">Accountancy</SelectItem>
+                  <SelectItem value="business_studies">Business Studies</SelectItem>
+                  <SelectItem value="economics">Economics</SelectItem>
+                  <SelectItem value="political_science">Political Science</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -71,7 +80,7 @@ export default function CurriculumPage() {
                   <SelectValue placeholder="Select Class" />
                 </SelectTrigger>
                 <SelectContent>
-                  {[...Array(8)].map((_, i) => (
+                  {[...Array(10)].map((_, i) => (
                     <SelectItem key={i+3} value={`${i + 3}`}>{`Class ${i + 3}`}</SelectItem>
                   ))}
                 </SelectContent>
