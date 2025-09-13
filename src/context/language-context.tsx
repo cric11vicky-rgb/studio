@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { createContext, useState, useContext, ReactNode } from 'react';
@@ -51,6 +52,9 @@ const translations: Record<string, Record<string, string>> = {
   'Practice Tests': {'English': 'Practice Tests', 'हिन्दी': 'अभ्यास परीक्षण'},
   'Help & Contact': {'English': 'Help & Contact', 'हिन्दी': 'सहायता और संपर्क'},
   'Progress Report': {'English': 'Progress Report', 'हिन्दी': 'प्रगति रिपोर्ट'},
+  'Previous Papers': {'English': 'Previous Papers', 'हिन्दी': 'पिछले पेपर'},
+  'Previous Year Papers': {'English': 'Previous Year Papers', 'हिन्दी': 'पिछले वर्ष के पेपर'},
+  'AI Solutions': {'English': 'AI Solutions', 'हिन्दी': 'एआई समाधान'},
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);

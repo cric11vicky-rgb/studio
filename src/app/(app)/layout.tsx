@@ -25,6 +25,7 @@ import {
   GraduationCap,
   ChevronDown,
   LogOut,
+  BrainCircuit,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -65,6 +66,7 @@ const menuItems = [
   { href: '/classes', label: 'Recorded Classes', labelHi: 'रिकॉर्डेड कक्षाएं', icon: Video },
   { href: '/notes', label: 'Notes', labelHi: 'नोट्स', icon: StickyNote },
   { href: '/generate-paper', label: 'AI Paper Generator', labelHi: 'एआई पेपर जेनरेटर', icon: Sparkles },
+  { href: '/ai-solutions', label: 'AI Solutions', labelHi: 'एआई समाधान', icon: BrainCircuit },
   { href: '/previous-papers', label: 'Previous Papers', labelHi: 'पिछले पेपर', icon: FileText },
   { href: '/tests', label: 'Tests', labelHi: 'टेस्ट', icon: ClipboardList },
   { href: '/doubts', label: 'Doubts', labelHi: 'संदेह', icon: HelpCircle },
