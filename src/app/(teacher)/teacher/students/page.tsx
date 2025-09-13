@@ -28,6 +28,7 @@ import {
 } from '@/components/ui/select';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Search, UserPlus, FileDown } from 'lucide-react';
+import { useAuth } from '@/context/auth-context';
 
 const students = [
   { id: 1, name: 'Aarav Sharma', class: '10', email: 'aarav.s@example.com', joinDate: '2023-01-15', avatar: 'https://picsum.photos/100?student=1' },
@@ -40,6 +41,7 @@ const students = [
 ];
 
 export default function StudentsPage() {
+  const { user } = useAuth();
   const [searchTerm, setSearchTerm] = React.useState('');
   const [classFilter, setClassFilter] = React.useState('All');
 

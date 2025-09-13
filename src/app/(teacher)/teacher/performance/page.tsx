@@ -27,6 +27,7 @@ import {
 import { Progress } from '@/components/ui/progress';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartConfig } from '@/components/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
+import { useAuth } from '@/context/auth-context';
 
 const overallPerformanceData = [
   { subject: 'Maths', averageScore: 82, attendance: 95 },
@@ -49,16 +50,23 @@ const chartConfig: ChartConfig = {
 
 
 const studentData = [
-    { id: 1, name: 'Aarav Sharma', class: 10, overallScore: 92, lastTest: '95% (Physics)', attendance: '98%' },
-    { id: 2, name: 'Riya Gupta', class: 9, overallScore: 85, lastTest: '88% (Maths)', attendance: '95%' },
-    { id: 3, name: 'Karan Patel', class: 10, overallScore: 78, lastTest: '75% (Chemistry)', attendance: '92%' },
-    { id: 4, name: 'Sneha Reddy', class: 8, overallScore: 95, lastTest: '98% (English)', attendance: '100%' },
-    { id: 5, name: 'Vikram Singh', class: 7, overallScore: 72, lastTest: '70% (History)', attendance: '85%' },
-    { id: 6, name: 'Isha Verma', class: 11, overallScore: 88, lastTest: '91% (Biology)', attendance: '96%' },
-    { id: 7, name: 'Rohan Mehra', class: 12, overallScore: 82, lastTest: '85% (Accounts)', attendance: '94%' },
+    { id: 1, name: 'Aarav Sharma', class: '10', overallScore: 92, lastTest: '95% (Physics)', attendance: '98%' },
+    { id: 2, name: 'Riya Gupta', class: '9', overallScore: 85, lastTest: '88% (Maths)', attendance: '95%' },
+    { id: 3, name: 'Karan Patel', class: '10', overallScore: 78, lastTest: '75% (Chemistry)', attendance: '92%' },
+    { id: 4, name: 'Sneha Reddy', class: '8', overallScore: 95, lastTest: '98% (English)', attendance: '100%' },
+    { id: 5, name: 'Vikram Singh', class: '7', overallScore: 72, lastTest: '70% (History)', attendance: '85%' },
+    { id: 6, name: 'Isha Verma', class: '11', overallScore: 88, lastTest: '91% (Biology)', attendance: '96%' },
+    { id: 7, name: 'Rohan Mehra', class: '12', overallScore: 82, lastTest: '85% (Accounts)', attendance: '94%' },
 ]
 
 export default function PerformancePage() {
+    const { user } = useAuth();
+    const [classFilter, setClassFilter] = React.useState('All');
+
+    const filteredStudentData = studentData.filter(student => 
+        classFilter === 'All' || student.class === classFilter
+    );
+  
   return (
     <div className="flex-1 space-y-6 p-4 md:p-8">
       <header>
@@ -72,7 +80,7 @@ export default function PerformancePage() {
         <CardHeader>
           <CardTitle>Class-wise Performance</CardTitle>
           <CardDescription>
-            Average scores and attendance across all subjects for Class 10.
+            Average scores and attendance across all subjects for the selected class.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -103,11 +111,12 @@ export default function PerformancePage() {
                     <CardDescription>Drill down into individual student performance.</CardDescription>
                 </div>
                 <div className="flex gap-2">
-                    <Select>
+                    <Select value={classFilter} onValueChange={setClassFilter}>
                         <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder="Select Class" />
                         </SelectTrigger>
                         <SelectContent>
+                             <SelectItem value="All">All Classes</SelectItem>
                             {[...Array(10)].map((_, i) => (
                                 <SelectItem key={i+3} value={`${i + 3}`}>{`Class ${i + 3}`}</SelectItem>
                             ))}
@@ -128,7 +137,7 @@ export default function PerformancePage() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {studentData.map(student => (
+                    {filteredStudentData.map(student => (
                         <TableRow key={student.id}>
                             <TableCell className="font-medium">{student.name}</TableCell>
                             <TableCell>{student.class}</TableCell>
@@ -144,6 +153,11 @@ export default function PerformancePage() {
                     ))}
                 </TableBody>
               </Table>
+               {filteredStudentData.length === 0 && (
+                <div className="text-center p-8 text-muted-foreground">
+                    No students found for the selected filters.
+                </div>
+              )}
           </CardContent>
       </Card>
     </div>
