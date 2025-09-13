@@ -82,15 +82,22 @@ export default function LoginPage() {
                 />
                 </div>
                  <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                    id="password"
-                    type="password"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
+                    <div className="flex items-center justify-between">
+                        <Label htmlFor="password">Password</Label>
+                        <Link href="/admin/forgot-password" passHref>
+                            <span className="text-sm text-primary hover:underline cursor-pointer">
+                                Forgot password?
+                            </span>
+                        </Link>
+                    </div>
+                    <Input
+                        id="password"
+                        type="password"
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
                 </div>
                 <Button type="submit" className="w-full">
                     Log In

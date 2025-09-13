@@ -106,14 +106,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const loggedInUser = session ? (JSON.parse(session) as User) : null;
         setUser(loggedInUser);
         
-        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/teacher/admin');
+        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/admin');
         if (!loggedInUser && !isAuthPage) {
           router.push('/student/login');
         }
       } catch (error) {
         console.error("Failed to parse user from session storage", error);
         setUser(null);
-        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/teacher/admin');
+        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/admin');
         if (!isAuthPage) {
           router.push('/student/login');
         }
