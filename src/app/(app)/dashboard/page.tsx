@@ -38,9 +38,9 @@ import { Progress } from '@/components/ui/progress';
 import { useLanguage } from '@/context/language-context';
 
 const subjectProgress = [
-  { subject: 'Mathematics', progress: 85, color: 'bg-blue-500' },
+  { subject: 'Mathematics', progress: 85, color: 'bg-primary' },
   { subject: 'Science', progress: 72, color: 'bg-green-500' },
-  { subject: 'English', progress: 91, color: 'bg-purple-500' },
+  { subject: 'English', progress: 91, color: 'bg-blue-500' },
   { subject: 'Social Science', progress: 65, color: 'bg-yellow-500' },
 ];
 
