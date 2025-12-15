@@ -165,7 +165,7 @@ const solutions = [
 ];
 
 export default function SolutionsPage() {
-  const { language } = useLanguage();
+  const { language, getTranslation } = useLanguage();
   const { selectedClass } = useClass();
 
   const filteredSolutions = solutions.filter(
@@ -178,9 +178,9 @@ export default function SolutionsPage() {
       <main className="flex-1 space-y-6 p-4 md:p-8">
          <Card>
             <CardHeader>
-                <CardTitle className="font-headline">{language === 'English' ? 'Find Textbook Solutions' : 'पाठ्यपुस्तक समाधान खोजें'}</CardTitle>
+                <CardTitle className="font-headline">{getTranslation('Find Textbook Solutions')}</CardTitle>
                 <CardDescription>
-                {language === 'English' ? 'Get step-by-step solutions for textbook questions, including NCERT and sample papers, to help you understand concepts better and prepare for exams.' : 'अवधारणाओं को बेहतर ढंग से समझने और परीक्षा की तैयारी में मदद के लिए एनसीईआरटी और सैंपल पेपर सहित पाठ्यपुस्तक के प्रश्नों के लिए चरण-दर-चरण समाधान प्राप्त करें।'}
+                {getTranslation('Get step-by-step solutions for textbook questions, including NCERT and sample papers, to help you understand concepts better and prepare for exams.')}
                 </CardDescription>
             </CardHeader>
         </Card>
@@ -190,23 +190,23 @@ export default function SolutionsPage() {
               <Card key={solution.title} className="flex flex-col">
                 <CardHeader>
                   <div className="flex items-start justify-between gap-2">
-                    <Badge variant="secondary">Class {solution.class}</Badge>
+                    <Badge variant="secondary">{getTranslation('Class')} {solution.class}</Badge>
                     <Badge variant="outline">{solution.type}</Badge>
                   </div>
                   <CardTitle className="font-headline text-lg pt-2">
                       {language === 'English' ? solution.title : solution.titleHi}
                   </CardTitle>
-                  <CardDescription>{solution.subject}</CardDescription>
+                  <CardDescription>{getTranslation(solution.subject)}</CardDescription>
                 </CardHeader>
                 <CardContent className="flex-1">
                   <div className="flex items-center text-sm text-muted-foreground">
                       <BookCheck className="mr-2"/>
-                      <span>{solution.exercises} {language === 'English' ? 'exercises with detailed solutions.' : 'विस्तृत समाधान के साथ अभ्यास।'}</span>
+                      <span>{solution.exercises} {getTranslation('exercises with detailed solutions.')}</span>
                   </div>
                 </CardContent>
                 <CardFooter>
                   <Button variant="outline" className="w-full">
-                    {language === 'English' ? 'View Solutions' : 'समाधान देखें'} <ArrowRight className="ml-2 h-4 w-4" />
+                    {getTranslation('View Solutions')} <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </CardFooter>
               </Card>
@@ -214,8 +214,8 @@ export default function SolutionsPage() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-64 border rounded-lg">
-            <p className="font-semibold">No solutions found for Class {selectedClass}.</p>
-            <p className="text-sm mt-1">Please select a different class.</p>
+            <p className="font-semibold">{getTranslation('No solutions found for Class')} {selectedClass}.</p>
+            <p className="text-sm mt-1">{getTranslation('Please select a different class.')}</p>
           </div>
         )}
       </main>

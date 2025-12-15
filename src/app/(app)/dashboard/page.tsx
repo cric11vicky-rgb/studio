@@ -170,8 +170,8 @@ export default function DashboardPage() {
               <Clock className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-lg font-bold">Maths</div>
-              <p className="text-xs text-muted-foreground">Today, 4:00 PM</p>
+              <div className="text-lg font-bold">{getTranslation('Maths')}</div>
+              <p className="text-xs text-muted-foreground">{getTranslation('Today, 4:00 PM')}</p>
             </CardContent>
           </Card>
         </div>
@@ -230,8 +230,8 @@ export default function DashboardPage() {
 
         <div>
             <CardHeader className="p-0 mb-4">
-                <CardTitle className="font-headline">Explore Smart Vidya</CardTitle>
-                <CardDescription>All your learning tools in one place.</CardDescription>
+                <CardTitle className="font-headline">{getTranslation('Explore Smart Vidya')}</CardTitle>
+                <CardDescription>{getTranslation('All your learning tools in one place.')}</CardDescription>
             </CardHeader>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 {menuItems.map((item) => (
