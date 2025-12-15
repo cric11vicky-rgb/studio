@@ -1,7 +1,8 @@
+
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import React, { useEffect, useState, useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -43,7 +44,7 @@ function SubmitButton() {
 }
 
 export default function AISolutionsClient() {
-  const [state, formAction] = useFormState(getAIUpdate, initialState);
+  const [state, formAction] = useActionState(getAIUpdate, initialState);
   const { toast } = useToast();
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageDataUri, setImageDataUri] = useState<string>('');

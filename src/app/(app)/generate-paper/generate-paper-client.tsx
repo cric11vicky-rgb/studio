@@ -1,7 +1,8 @@
+
 'use client';
 
-import { useEffect } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useEffect, useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { createPracticePaper } from './actions';
 import { Button } from '@/components/ui/button';
 import {
@@ -49,7 +50,7 @@ function SubmitButton() {
 }
 
 export default function GeneratePaperClient() {
-  const [state, formAction] = useFormState(createPracticePaper, initialState);
+  const [state, formAction] = useActionState(createPracticePaper, initialState);
   const { toast } = useToast();
 
   useEffect(() => {
