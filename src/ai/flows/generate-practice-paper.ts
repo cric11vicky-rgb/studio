@@ -5,7 +5,7 @@
  *
  * - generatePracticePaper - A function that generates a practice paper based on the provided subjects and topics.
  * - GeneratePracticePaperInput - The input type for the generatePracticePaper function.
- * - GeneratePracticePaperOutput - The return type for the generatePracticePaper function.
+ * - GeneratePracticePaperOutput - The return type for the generatePracticepaper function.
  */
 
 import {ai} from '@/ai/genkit';
@@ -24,10 +24,22 @@ const GeneratePracticePaperInputSchema = z.object({
     .max(50)
     .default(10)
     .describe('The number of multiple-choice questions to include.'),
+  numberOfShortAnswer: z
+    .number()
+    .min(0)
+    .max(30)
+    .default(5)
+    .describe('The number of short answer questions to include.'),
+  numberOfMediumAnswer: z
+    .number()
+    .min(0)
+    .max(30)
+    .default(5)
+    .describe('The number of medium answer questions to include.'),
   numberOfLongAnswer: z
     .number()
     .min(0)
-    .max(10)
+    .max(20)
     .default(3)
     .describe('The number of long answer questions to include.'),
     difficulty: z.enum(['Easy', 'Medium', 'Hard']).default('Medium').describe('The difficulty level of the questions.'),
@@ -37,6 +49,12 @@ export type GeneratePracticePaperInput = z.infer<typeof GeneratePracticePaperInp
 
 const GeneratePracticePaperOutputSchema = z.object({
   mcqQuestions: z.array(z.string()).describe('An array of generated multiple-choice questions. Each question should have 4 options.'),
+  shortAnswerQuestions: z
+    .array(z.string())
+    .describe('An array of generated short answer questions.'),
+  mediumAnswerQuestions: z
+    .array(z.string())
+    .describe('An array of generated medium answer questions.'),
   longAnswerQuestions: z
     .array(z.string())
     .describe('An array of generated long answer questions.'),
@@ -60,9 +78,13 @@ Difficulty Level: {{{difficulty}}}
 Subject: {{{subject}}}
 Topics: {{{topics}}}
 
-Please generate {{{numberOfMcq}}} multiple-choice questions (MCQs) and {{{numberOfLongAnswer}}} long answer questions.
+Please generate:
+- {{{numberOfMcq}}} multiple-choice questions (MCQs). Each MCQ must have four distinct options.
+- {{{numberOfShortAnswer}}} short answer questions.
+- {{{numberOfMediumAnswer}}} medium answer questions.
+- {{{numberOfLongAnswer}}} long answer questions.
 
-Ensure the questions are clear, relevant to the topics, and appropriate for the specified difficulty and syllabus. Each MCQ must have four distinct options.
+Ensure the questions are clear, relevant to the topics, and appropriate for the specified difficulty and syllabus.
 
 Format the output as specified in the output schema.`,
 });

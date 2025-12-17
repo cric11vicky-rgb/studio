@@ -109,13 +109,41 @@ export default function GeneratePaperClient() {
                 }}
               />
             </div>
+             <div className="space-y-4">
+              <Label htmlFor="numberOfShortAnswer">Number of Short Answer Questions: <span id="shortAnswerValue" className="font-bold">5</span></Label>
+              <Slider
+                id="numberOfShortAnswer"
+                name="numberOfShortAnswer"
+                defaultValue={[5]}
+                max={30}
+                step={1}
+                onValueChange={(value) => {
+                  const shortAnswerValueEl = document.getElementById('shortAnswerValue');
+                  if (shortAnswerValueEl) shortAnswerValueEl.innerText = value[0].toString();
+                }}
+              />
+            </div>
+             <div className="space-y-4">
+              <Label htmlFor="numberOfMediumAnswer">Number of Medium Answer Questions: <span id="mediumAnswerValue" className="font-bold">5</span></Label>
+              <Slider
+                id="numberOfMediumAnswer"
+                name="numberOfMediumAnswer"
+                defaultValue={[5]}
+                max={30}
+                step={1}
+                onValueChange={(value) => {
+                  const mediumAnswerValueEl = document.getElementById('mediumAnswerValue');
+                  if (mediumAnswerValueEl) mediumAnswerValueEl.innerText = value[0].toString();
+                }}
+              />
+            </div>
             <div className="space-y-4">
               <Label htmlFor="numberOfLongAnswer">Number of Long Answer Questions: <span id="longAnswerValue" className="font-bold">3</span></Label>
               <Slider
                 id="numberOfLongAnswer"
                 name="numberOfLongAnswer"
                 defaultValue={[3]}
-                max={10}
+                max={20}
                 step={1}
                 onValueChange={(value) => {
                   const longAnswerValueEl = document.getElementById('longAnswerValue');
@@ -155,6 +183,30 @@ export default function GeneratePaperClient() {
                     </ol>
                   ) : (
                     <p className="text-sm text-muted-foreground">No MCQs generated.</p>
+                  )}
+                </div>
+                 <div>
+                  <h3 className="font-headline font-semibold text-lg mb-2">
+                    Short Answer Questions
+                  </h3>
+                  {state.data.shortAnswerQuestions?.length > 0 ? (
+                    <ol className="list-decimal list-inside space-y-2 text-sm">
+                      {state.data.shortAnswerQuestions.map((q, i) => <li key={`short-${i}`}>{q}</li>)}
+                    </ol>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">No short answer questions generated.</p>
+                  )}
+                </div>
+                 <div>
+                  <h3 className="font-headline font-semibold text-lg mb-2">
+                    Medium Answer Questions
+                  </h3>
+                  {state.data.mediumAnswerQuestions?.length > 0 ? (
+                    <ol className="list-decimal list-inside space-y-2 text-sm">
+                      {state.data.mediumAnswerQuestions.map((q, i) => <li key={`medium-${i}`}>{q}</li>)}
+                    </ol>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">No medium answer questions generated.</p>
                   )}
                 </div>
                 <div>
