@@ -12,6 +12,7 @@ import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const GeneratePracticePaperInputSchema = z.object({
+  class: z.string().describe('The class for which to generate the paper (e.g., 10).'),
   subject: z.string().describe('The subject for which to generate the practice paper (e.g., Physics, History).'),
   topics: z
     .string()
@@ -71,8 +72,9 @@ const generatePracticePaperPrompt = ai.definePrompt({
   name: 'generatePracticePaperPrompt',
   input: {schema: GeneratePracticePaperInputSchema},
   output: {schema: GeneratePracticePaperOutputSchema},
-  prompt: `You are an expert educator creating a practice paper for Class 3-10 students in India. Your task is to generate a set of questions based on the user's specifications.
+  prompt: `You are an expert educator creating a practice paper for students in India. Your task is to generate a set of questions based on the user's specifications.
 
+Class: {{{class}}}
 Syllabus: {{{syllabus}}}
 Difficulty Level: {{{difficulty}}}
 Subject: {{{subject}}}
@@ -84,7 +86,7 @@ Please generate:
 - {{{numberOfMediumAnswer}}} medium answer questions.
 - {{{numberOfLongAnswer}}} long answer questions.
 
-Ensure the questions are clear, relevant to the topics, and appropriate for the specified difficulty and syllabus.
+Ensure the questions are clear, relevant to the topics, and appropriate for the specified class, difficulty and syllabus.
 
 Format the output as specified in the output schema.`,
 });

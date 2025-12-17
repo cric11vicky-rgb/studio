@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useEffect, useActionState } from 'react';
+import React, { useEffect, useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { createPracticePaper } from './actions';
 import { Button } from '@/components/ui/button';
@@ -18,11 +18,13 @@ import { Slider } from '@/components/ui/slider';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Sparkles } from 'lucide-react';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useClass } from '@/context/class-context';
 
 const initialState = {
   success: false,
@@ -52,6 +54,14 @@ function SubmitButton() {
 export default function GeneratePaperClient() {
   const [state, formAction] = useActionState(createPracticePaper, initialState);
   const { toast } = useToast();
+  const { selectedClass, availableClasses } = useClass();
+  const [currentClass, setCurrentClass] = React.useState(selectedClass);
+
+  useEffect(() => {
+    if (selectedClass !== 'All') {
+      setCurrentClass(selectedClass);
+    }
+  }, [selectedClass]);
 
   useEffect(() => {
     if (state.error) {
@@ -62,6 +72,8 @@ export default function GeneratePaperClient() {
       });
     }
   }, [state, toast]);
+
+  const classOptions = availableClasses.filter(c => c !== 'All');
 
   return (
     <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
@@ -74,14 +86,31 @@ export default function GeneratePaperClient() {
         </CardHeader>
         <CardContent>
           <form action={formAction} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="subject">Subject</Label>
-              <Input
-                id="subject"
-                name="subject"
-                placeholder="e.g., Science"
-                required
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="class">Class</Label>
+                <Select name="class" value={currentClass} onValueChange={setCurrentClass} required>
+                  <SelectTrigger id="class">
+                    <SelectValue placeholder="Select Class" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {classOptions.map((c) => (
+                      <SelectItem key={c} value={c}>
+                        Class {c}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="subject">Subject</Label>
+                <Input
+                  id="subject"
+                  name="subject"
+                  placeholder="e.g., Science"
+                  required
+                />
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="topics">Topics</Label>
@@ -165,13 +194,18 @@ export default function GeneratePaperClient() {
             </CardDescription>
           </CardHeader>
           <CardContent className="min-h-[300px] max-h-[70vh] overflow-y-auto">
-            {!state.data && (
+            {useFormStatus().pending ? (
+               <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-full p-8">
+                <Loader2 className="h-12 w-12 mb-4 animate-spin" />
+                <p className="font-semibold">Our AI is preparing your paper...</p>
+                <p>Please wait a moment.</p>
+              </div>
+            ) : !state.data ? (
               <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-full p-8">
                 <Sparkles className="h-12 w-12 mb-4" />
                 <p>Your practice paper is waiting to be created!</p>
               </div>
-            )}
-            {state.data && (
+            ) : (
               <div className="space-y-6">
                 <div>
                   <h3 className="font-headline font-semibold text-lg mb-2">

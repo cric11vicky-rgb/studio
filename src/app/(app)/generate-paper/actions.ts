@@ -4,6 +4,7 @@ import { generatePracticePaper } from '@/ai/flows/generate-practice-paper';
 import { z } from 'zod';
 
 const paperSchema = z.object({
+  class: z.string().min(1, 'Class is required.'),
   subject: z.string().min(1, 'Subject is required.'),
   topics: z.string().min(1, 'Topics are required.'),
   numberOfMcq: z.number().min(0).max(50),
@@ -28,6 +29,7 @@ export async function createPracticePaper(
   formData: FormData
 ): Promise<PaperResult> {
   const validatedFields = paperSchema.safeParse({
+    class: formData.get('class'),
     subject: formData.get('subject'),
     topics: formData.get('topics'),
     numberOfMcq: Number(formData.get('numberOfMcq')),
