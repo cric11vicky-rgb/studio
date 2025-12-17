@@ -1,3 +1,4 @@
+
 'use server';
 
 import { generatePracticePaper } from '@/ai/flows/generate-practice-paper';
@@ -7,6 +8,7 @@ const paperSchema = z.object({
   class: z.string().min(1, 'Class is required.'),
   subject: z.string().min(1, 'Subject is required.'),
   topics: z.string().min(1, 'Topics are required.'),
+  marksDistribution: z.string().optional(),
   numberOfMcq: z.number().min(0).max(50),
   numberOfShortAnswer: z.number().min(0).max(30),
   numberOfMediumAnswer: z.number().min(0).max(30),
@@ -34,6 +36,7 @@ export async function createPracticePaper(
     class: formData.get('class'),
     subject: formData.get('subject'),
     topics: formData.get('topics'),
+    marksDistribution: formData.get('marksDistribution'),
     numberOfMcq: Number(formData.get('numberOfMcq')),
     numberOfShortAnswer: Number(formData.get('numberOfShortAnswer')),
     numberOfMediumAnswer: Number(formData.get('numberOfMediumAnswer')),

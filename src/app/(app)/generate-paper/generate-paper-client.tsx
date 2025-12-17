@@ -25,6 +25,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useClass } from '@/context/class-context';
+import { Textarea } from '@/components/ui/textarea';
 
 const initialState = {
   success: false,
@@ -113,7 +114,7 @@ export default function GeneratePaperClient() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="topics">Topics</Label>
+              <Label htmlFor="topics">Topics / Chapters</Label>
               <Input
                 id="topics"
                 name="topics"
@@ -121,7 +122,18 @@ export default function GeneratePaperClient() {
                 required
               />
               <p className="text-sm text-muted-foreground">
-                Separate multiple topics with a comma.
+                For a mixed paper, separate multiple topics with a comma.
+              </p>
+            </div>
+             <div className="space-y-2">
+              <Label htmlFor="marksDistribution">Marks Distribution (Optional)</Label>
+              <Textarea
+                id="marksDistribution"
+                name="marksDistribution"
+                placeholder="e.g., Light: 10 marks, Photosynthesis: 15 marks"
+              />
+              <p className="text-sm text-muted-foreground">
+                Specify marks for each chapter to generate a weighted paper.
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

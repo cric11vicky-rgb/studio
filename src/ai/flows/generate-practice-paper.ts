@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -19,6 +20,7 @@ const GeneratePracticePaperInputSchema = z.object({
     .describe(
       'The specific topics or chapters to cover in the practice paper. Separate multiple topics with commas.'
     ),
+  marksDistribution: z.string().optional().describe('The mark distribution for each topic, e.g., "Chapter 1: 10 marks, Chapter 2: 15 marks".'),
   numberOfMcq: z
     .number()
     .min(0)
@@ -79,6 +81,12 @@ Syllabus: {{{syllabus}}}
 Difficulty Level: {{{difficulty}}}
 Subject: {{{subject}}}
 Topics: {{{topics}}}
+
+{{#if marksDistribution}}
+The paper should be generated according to the following marks distribution:
+Marks Distribution: {{{marksDistribution}}}
+Ensure that the questions for each topic approximately add up to the specified marks.
+{{/if}}
 
 Please generate:
 - {{{numberOfMcq}}} multiple-choice questions (MCQs). Each MCQ must have four distinct options.
