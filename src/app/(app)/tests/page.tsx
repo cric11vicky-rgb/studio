@@ -122,6 +122,20 @@ const tests = [
     questions: 50,
     duration: '120 mins',
   },
+  {
+    title: 'JEE Mains - Chemistry Practice',
+    subject: 'Chemistry (Science)',
+    class: '12',
+    questions: 30,
+    duration: '60 mins',
+  },
+  {
+    title: 'CA Foundation - Principles of Accounting',
+    subject: 'Accountancy (Commerce)',
+    class: '12',
+    questions: 60,
+    duration: '120 mins',
+  },
 ];
 
 export default function TestsPage() {

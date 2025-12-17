@@ -162,6 +162,22 @@ const solutions = [
     exercises: 5,
     type: 'NCERT'
   },
+  {
+    title: 'Chapter 2: Themes in Indian History Part-I',
+    titleHi: 'अध्याय 2: भारतीय इतिहास के कुछ विषय-I',
+    subject: 'History (Arts)',
+    class: '12',
+    exercises: 4,
+    type: 'NCERT'
+  },
+  {
+    title: 'Chapter 2: The End of Bipolarity',
+    titleHi: 'अध्याय 2: दो ध्रुवीयता का अंत',
+    subject: 'Political Science (Arts)',
+    class: '12',
+    exercises: 3,
+    type: 'NCERT'
+  },
 ];
 
 export default function SolutionsPage() {

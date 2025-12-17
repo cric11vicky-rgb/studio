@@ -143,6 +143,30 @@ const classes = [
     imageUrl: 'https://picsum.photos/600/400?rec=arts12',
     aiHint: 'history documentary',
   },
+  {
+    title: 'Wave Optics',
+    subject: 'Physics (Science)',
+    class: '12',
+    duration: '60 mins',
+    imageUrl: 'https://picsum.photos/600/400?rec=phy12',
+    aiHint: 'physics lesson waves',
+  },
+  {
+    title: 'Human Reproduction',
+    subject: 'Biology (Science)',
+    class: '12',
+    duration: '55 mins',
+    imageUrl: 'https://picsum.photos/600/400?rec=bio12',
+    aiHint: 'biology class human',
+  },
+  {
+    title: 'The P-Block Elements',
+    subject: 'Chemistry (Science)',
+    class: '11',
+    duration: '50 mins',
+    imageUrl: 'https://picsum.photos/600/400?rec=chem11',
+    aiHint: 'chemistry lesson periodic',
+  },
 ];
 
 export default function ClassesPage() {

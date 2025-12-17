@@ -45,6 +45,16 @@ const initialBooks: Book[] = [
   { id: '3', board: 'CBSE', title: 'Marigold - Class 3', subject: 'English', class: '3', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=cbse-eng-3', aiHint: 'english textbook' },
   { id: '4', board: 'CBSE', title: 'Looking Around - Class 3', subject: 'EVS', class: '3', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=cbse-evs-3', aiHint: 'evs textbook' },
   { id: '5', board: 'RBSE', title: 'गणित - कक्षा 3', subject: 'Mathematics', class: '3', medium: 'Hindi', imageUrl: 'https://picsum.photos/300/400?book=rbse-math-3', aiHint: 'math textbook' },
+  // Class 11
+  { id: '11-sci-phy', board: 'NCERT', title: 'Physics Part I', subject: 'Physics (Science)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-phy', aiHint: 'physics textbook' },
+  { id: '11-sci-chem', board: 'NCERT', title: 'Chemistry Part I', subject: 'Chemistry (Science)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-chem', aiHint: 'chemistry textbook' },
+  { id: '11-comm-acc', board: 'NCERT', title: 'Financial Accounting', subject: 'Accountancy (Commerce)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-acc', aiHint: 'accounting textbook' },
+  { id: '11-arts-hist', board: 'NCERT', title: 'Themes in World History', subject: 'History (Arts)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-hist', aiHint: 'history textbook' },
+  // Class 12
+  { id: '12-sci-bio', board: 'NCERT', title: 'Biology', subject: 'Biology (Science)', class: '12', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=12-bio', aiHint: 'biology textbook' },
+  { id: '12-comm-bs', board: 'NCERT', title: 'Business Studies Part I', subject: 'Business Studies (Commerce)', class: '12', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=12-bs', aiHint: 'business textbook' },
+  { id: '12-arts-eco', board: 'NCERT', title: 'Introductory Macroeconomics', subject: 'Economics (Arts)', class: '12', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=12-eco', aiHint: 'economics textbook' },
+  { id: '12-arts-ps', board: 'NCERT', title: 'Contemporary World Politics', subject: 'Political Science (Arts)', class: '12', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=12-ps', aiHint: 'politics textbook' },
 ];
 
 

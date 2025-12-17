@@ -149,6 +149,36 @@ const liveClasses = [
     imageUrl: 'https://picsum.photos/600/400?live=arts12',
     aiHint: 'history lecture',
   },
+  {
+    title: 'Organic Chemistry: Aldehydes & Ketones',
+    subject: 'Chemistry (Science)',
+    class: '12',
+    teacher: 'Dr. Verma',
+    date: 'Today',
+    time: '8:00 PM',
+    imageUrl: 'https://picsum.photos/600/400?live=chem12',
+    aiHint: 'chemistry online class',
+  },
+  {
+    title: 'Company Accounts',
+    subject: 'Accountancy (Commerce)',
+    class: '12',
+    teacher: 'Mr. Gupta',
+    date: 'Tomorrow',
+    time: '7:00 PM',
+    imageUrl: 'https://picsum.photos/600/400?live=acc12',
+    aiHint: 'accounting class',
+  },
+  {
+    title: 'Fundamentals of Human Geography',
+    subject: 'Geography (Arts)',
+    class: '11',
+    teacher: 'Ms. Sen',
+    date: 'Day after tomorrow',
+    time: '5:00 PM',
+    imageUrl: 'https://picsum.photos/600/400?live=geo11',
+    aiHint: 'geography lecture online',
+  },
 ];
 
 export default function LiveClassPage() {
