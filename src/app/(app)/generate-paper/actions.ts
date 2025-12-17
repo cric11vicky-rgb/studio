@@ -11,6 +11,8 @@ const paperSchema = z.object({
   numberOfShortAnswer: z.number().min(0).max(30),
   numberOfMediumAnswer: z.number().min(0).max(30),
   numberOfLongAnswer: z.number().min(0).max(20),
+  difficulty: z.enum(['Easy', 'Medium', 'Hard']),
+  syllabus: z.enum(['CBSE', 'RBSE', 'NCERT', 'Other']),
 });
 
 type PaperResult = {
@@ -36,6 +38,8 @@ export async function createPracticePaper(
     numberOfShortAnswer: Number(formData.get('numberOfShortAnswer')),
     numberOfMediumAnswer: Number(formData.get('numberOfMediumAnswer')),
     numberOfLongAnswer: Number(formData.get('numberOfLongAnswer')),
+    difficulty: formData.get('difficulty'),
+    syllabus: formData.get('syllabus'),
   });
 
   if (!validatedFields.success) {

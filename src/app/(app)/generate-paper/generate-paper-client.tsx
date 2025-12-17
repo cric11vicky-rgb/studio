@@ -124,6 +124,35 @@ export default function GeneratePaperClient() {
                 Separate multiple topics with a comma.
               </p>
             </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <Label htmlFor="difficulty">Difficulty</Label>
+                    <Select name="difficulty" defaultValue="Medium">
+                        <SelectTrigger id="difficulty">
+                            <SelectValue placeholder="Select Difficulty" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="Easy">Easy</SelectItem>
+                            <SelectItem value="Medium">Medium</SelectItem>
+                            <SelectItem value="Hard">Hard</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="syllabus">Syllabus</Label>
+                     <Select name="syllabus" defaultValue="NCERT">
+                        <SelectTrigger id="syllabus">
+                            <SelectValue placeholder="Select Syllabus" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="CBSE">CBSE</SelectItem>
+                            <SelectItem value="RBSE">RBSE</SelectItem>
+                            <SelectItem value="NCERT">NCERT</SelectItem>
+                            <SelectItem value="Other">Other</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+            </div>
             <div className="space-y-4">
               <Label htmlFor="numberOfMcq">Number of MCQs: <span id="mcqValue" className="font-bold">10</span></Label>
               <Slider
