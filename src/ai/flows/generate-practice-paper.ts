@@ -47,6 +47,7 @@ const GeneratePracticePaperInputSchema = z.object({
     .describe('The number of long answer questions to include.'),
     difficulty: z.enum(['Easy', 'Medium', 'Hard']).default('Medium').describe('The difficulty level of the questions.'),
     syllabus: z.enum(['CBSE', 'RBSE', 'NCERT', 'Other']).default('NCERT').describe('The syllabus to align with (e.g., CBSE, RBSE, NCERT).'),
+    language: z.string().optional().describe('The language of the paper (e.g., English, Hindi).'),
 });
 export type GeneratePracticePaperInput = z.infer<typeof GeneratePracticePaperInputSchema>;
 
@@ -81,6 +82,9 @@ Syllabus: {{{syllabus}}}
 Difficulty Level: {{{difficulty}}}
 Subject: {{{subject}}}
 Topics: {{{topics}}}
+{{#if language}}
+Language: {{{language}}}
+{{/if}}
 
 {{#if marksDistribution}}
 The paper should be generated according to the following marks distribution:

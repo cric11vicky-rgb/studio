@@ -57,6 +57,7 @@ export default function GeneratePaperClient() {
   const { toast } = useToast();
   const { selectedClass, availableClasses } = useClass();
   const [currentClass, setCurrentClass] = React.useState(selectedClass);
+  const [selectedSyllabus, setSelectedSyllabus] = React.useState('NCERT');
 
   useEffect(() => {
     if (selectedClass !== 'All') {
@@ -152,7 +153,7 @@ export default function GeneratePaperClient() {
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="syllabus">Syllabus</Label>
-                     <Select name="syllabus" defaultValue="NCERT">
+                     <Select name="syllabus" value={selectedSyllabus} onValueChange={setSelectedSyllabus}>
                         <SelectTrigger id="syllabus">
                             <SelectValue placeholder="Select Syllabus" />
                         </SelectTrigger>
@@ -165,6 +166,22 @@ export default function GeneratePaperClient() {
                     </Select>
                 </div>
             </div>
+
+            {selectedSyllabus === 'NCERT' && (
+              <div className="space-y-2">
+                <Label htmlFor="language">Language</Label>
+                <Select name="language" defaultValue="English">
+                  <SelectTrigger id="language">
+                    <SelectValue placeholder="Select Language" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="English">English</SelectItem>
+                    <SelectItem value="Hindi">Hindi</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
             <div className="space-y-4">
               <Label htmlFor="numberOfMcq">Number of MCQs: <span id="mcqValue" className="font-bold">10</span></Label>
               <Slider
