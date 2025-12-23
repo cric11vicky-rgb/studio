@@ -33,6 +33,15 @@ export async function createPracticePaper(
   prevState: any,
   formData: FormData
 ): Promise<PaperResult> {
+    
+  const syllabus = formData.get('syllabus') as 'CBSE' | 'RBSE' | 'NCERT' | 'Other';
+  let language = formData.get('language') as string | undefined;
+
+  // Automatically set language to Hindi if RBSE is selected
+  if (syllabus === 'RBSE') {
+    language = 'Hindi';
+  }
+    
   const validatedFields = paperSchema.safeParse({
     class: formData.get('class'),
     subject: formData.get('subject'),
@@ -43,8 +52,8 @@ export async function createPracticePaper(
     numberOfMediumAnswer: Number(formData.get('numberOfMediumAnswer')),
     numberOfLongAnswer: Number(formData.get('numberOfLongAnswer')),
     difficulty: formData.get('difficulty'),
-    syllabus: formData.get('syllabus'),
-    language: formData.get('language'),
+    syllabus: syllabus,
+    language: language,
   });
 
   if (!validatedFields.success) {
