@@ -11,6 +11,7 @@ export interface User {
   name: string;
   email: string;
   role: Role;
+  avatar: string;
 }
 
 export interface TeacherUser {
@@ -39,6 +40,7 @@ interface AuthContextType {
   addTeacher: (teacher: TeacherUser) => boolean;
   getTeachers: () => TeacherUser[];
   updateAdminCredentials: (data: { password?: string, mobileNumber?: string }) => void;
+  updateUserAvatar: (avatarUrl: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -99,6 +101,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       return Object.values(teachers);
   }
 
+  const updateUserAvatar = (avatarUrl: string) => {
+    if (user) {
+      const updatedUser = { ...user, avatar: avatarUrl };
+      setUser(updatedUser);
+      sessionStorage.setItem('smartVidyaUser', JSON.stringify(updatedUser));
+      const studentUsers = JSON.parse(localStorage.getItem('studentUsers') || '{}');
+      if (studentUsers[user.username]) {
+        studentUsers[user.username].avatar = avatarUrl;
+        localStorage.setItem('studentUsers', JSON.stringify(studentUsers));
+      }
+    }
+  };
+
+
   useEffect(() => {
     const checkAuth = () => {
       try {
@@ -106,14 +122,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const loggedInUser = session ? (JSON.parse(session) as User) : null;
         setUser(loggedInUser);
         
-        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/admin');
+        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/admin') || pathname.startsWith('/profile');
         if (!loggedInUser && !isAuthPage) {
           router.push('/student/login');
         }
       } catch (error) {
         console.error("Failed to parse user from session storage", error);
         setUser(null);
-        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/admin');
+        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/admin') || pathname.startsWith('/profile');
         if (!isAuthPage) {
           router.push('/student/login');
         }
@@ -136,6 +152,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             name: userData.name,
             email: userData.email,
             role: userData.role,
+            avatar: `https://picsum.photos/seed/${username}/100`,
         };
         sessionStorage.setItem('smartVidyaUser', JSON.stringify(loggedInUser));
         setUser(loggedInUser);
@@ -158,6 +175,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         name: userData.name,
         email: `${username}@smartvidya.com`,
         role: 'student',
+        avatar: userData.avatar || `https://picsum.photos/seed/${username}/100`,
       };
       sessionStorage.setItem('smartVidyaUser', JSON.stringify(loggedInUser));
       setUser(loggedInUser);
@@ -173,7 +191,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, adminUser, login, studentLogin, logout, isLoading, addTeacher, getTeachers, updateAdminCredentials }}>
+    <AuthContext.Provider value={{ user, adminUser, login, studentLogin, logout, isLoading, addTeacher, getTeachers, updateAdminCredentials, updateUserAvatar }}>
       {children}
     </AuthContext.Provider>
   );

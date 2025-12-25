@@ -126,7 +126,7 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
           <div className="flex items-center justify-between p-2">
             <div className="flex items-center gap-2">
               <Avatar className="size-8">
-                <AvatarImage src="https://picsum.photos/100" alt="User" data-ai-hint="student avatar" />
+                <AvatarImage src={user.avatar} alt="User" data-ai-hint="student avatar" />
                 <AvatarFallback>{user.name ? user.name.charAt(0) : 'S'}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col text-sm">
@@ -143,9 +143,11 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
               <DropdownMenuContent className="w-56 mb-2">
                 <DropdownMenuLabel>{language === 'English' ? 'My Account' : 'मेरा खाता'}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
-                  <span>{language === 'English' ? 'Profile' : 'प्रोफ़ाइल'}</span>
+                <DropdownMenuItem asChild>
+                  <Link href="/profile">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>{language === 'English' ? 'Profile' : 'प्रोफ़ाइल'}</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Settings className="mr-2 h-4 w-4" />
