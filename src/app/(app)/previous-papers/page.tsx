@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Download, FileText } from 'lucide-react';
+import { Download, FileText, BookCheck } from 'lucide-react';
 import { useClass } from '@/context/class-context';
 
 const papers = [
@@ -84,10 +84,14 @@ export default function PreviousPapersPage() {
                     <span>Year: {paper.year}</span>
                   </div>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="grid grid-cols-2 gap-4">
                   <Button className="w-full">
                     <Download className="mr-2"/>
                     Download Paper
+                  </Button>
+                  <Button variant="outline" className="w-full">
+                    <BookCheck className="mr-2"/>
+                    View Solution
                   </Button>
                 </CardFooter>
               </Card>
