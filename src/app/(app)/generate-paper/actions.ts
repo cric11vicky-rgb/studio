@@ -51,12 +51,13 @@ export async function createPracticePaper(
     numberOfShortAnswer: Number(formData.get('numberOfShortAnswer')),
     numberOfMediumAnswer: Number(formData.get('numberOfMediumAnswer')),
     numberOfLongAnswer: Number(formData.get('numberOfLongAnswer')),
-    difficulty: formData.get('difficulty'),
+    difficulty: formData.get('difficulty') as 'Easy' | 'Medium' | 'Hard',
     syllabus: syllabus,
     language: language,
   });
 
   if (!validatedFields.success) {
+    console.error(validatedFields.error.flatten().fieldErrors);
     return {
       success: false,
       error: 'Invalid form data. Please check your inputs.',
