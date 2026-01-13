@@ -24,10 +24,12 @@ import {
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { useClass } from '@/context/class-context';
+import { useLanguage } from '@/context/language-context';
 
 export type Book = {
   id: string;
   title: string;
+  titleHi: string;
   subject: string;
   class: string;
   board: string;
@@ -40,36 +42,35 @@ export type Book = {
 
 const initialBooks: Book[] = [
   // CBSE Books
-  { id: '1', board: 'CBSE', title: 'गणित का जादू - कक्षा 3', subject: 'Mathematics', class: '3', medium: 'Hindi', imageUrl: 'https://picsum.photos/300/400?book=cbse-math-3', aiHint: 'math textbook' },
-  { id: '2', board: 'CBSE', title: 'रिमझिम - कक्षा 3', subject: 'Hindi', class: '3', medium: 'Hindi', imageUrl: 'https://picsum.photos/300/400?book=cbse-hindi-3', aiHint: 'hindi textbook' },
-  { id: '3', board: 'CBSE', title: 'Marigold - Class 3', subject: 'English', class: '3', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=cbse-eng-3', aiHint: 'english textbook' },
-  { id: '4', board: 'CBSE', title: 'Looking Around - Class 3', subject: 'EVS', class: '3', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=cbse-evs-3', aiHint: 'evs textbook' },
-  { id: '5', board: 'RBSE', title: 'गणित - कक्षा 3', subject: 'Mathematics', class: '3', medium: 'Hindi', imageUrl: 'https://picsum.photos/300/400?book=rbse-math-3', aiHint: 'math textbook' },
+  { id: '1', board: 'CBSE', title: 'Mathematics Magic - Class 3', titleHi: 'गणित का जादू - कक्षा 3', subject: 'Mathematics', class: '3', medium: 'Hindi', imageUrl: 'https://picsum.photos/300/400?book=cbse-math-3', aiHint: 'math textbook' },
+  { id: '2', board: 'CBSE', title: 'Rimjhim - Class 3', titleHi: 'रिमझिम - कक्षा 3', subject: 'Hindi', class: '3', medium: 'Hindi', imageUrl: 'https://picsum.photos/300/400?book=cbse-hindi-3', aiHint: 'hindi textbook' },
+  { id: '3', board: 'CBSE', title: 'Marigold - Class 3', titleHi: 'मैरीगोल्ड - कक्षा 3', subject: 'English', class: '3', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=cbse-eng-3', aiHint: 'english textbook' },
+  { id: '4', board: 'CBSE', title: 'Looking Around - Class 3', titleHi: 'आस-पास - कक्षा 3', subject: 'EVS', class: '3', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=cbse-evs-3', aiHint: 'evs textbook' },
+  { id: '5', board: 'RBSE', title: 'Mathematics - Class 3', titleHi: 'गणित - कक्षा 3', subject: 'Mathematics', class: '3', medium: 'Hindi', imageUrl: 'https://picsum.photos/300/400?book=rbse-math-3', aiHint: 'math textbook' },
   // Class 11
-  { id: '11-sci-phy', board: 'NCERT', title: 'Physics Part I', subject: 'Physics (Science)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-phy', aiHint: 'physics textbook' },
-  { id: '11-sci-chem', board: 'NCERT', title: 'Chemistry Part I', subject: 'Chemistry (Science)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-chem', aiHint: 'chemistry textbook' },
-  { id: '11-comm-acc', board: 'NCERT', title: 'Financial Accounting', subject: 'Accountancy (Commerce)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-acc', aiHint: 'accounting textbook' },
-  { id: '11-arts-hist', board: 'NCERT', title: 'Themes in World History', subject: 'History (Arts)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-hist', aiHint: 'history textbook' },
+  { id: '11-sci-phy', board: 'NCERT', title: 'Physics Part I', titleHi: 'भौतिकी भाग I', subject: 'Physics (Science)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-phy', aiHint: 'physics textbook' },
+  { id: '11-sci-chem', board: 'NCERT', title: 'Chemistry Part I', titleHi: 'रसायन विज्ञान भाग I', subject: 'Chemistry (Science)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-chem', aiHint: 'chemistry textbook' },
+  { id: '11-comm-acc', board: 'NCERT', title: 'Financial Accounting', titleHi: 'वित्तीय लेखांकन', subject: 'Accountancy (Commerce)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-acc', aiHint: 'accounting textbook' },
+  { id: '11-arts-hist', board: 'NCERT', title: 'Themes in World History', titleHi: 'विश्व इतिहास में विषय-वस्तु', subject: 'History (Arts)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-hist', aiHint: 'history textbook' },
   // Class 12
-  { id: '12-sci-bio', board: 'NCERT', title: 'Biology', subject: 'Biology (Science)', class: '12', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=12-bio', aiHint: 'biology textbook' },
-  { id: '12-comm-bs', board: 'NCERT', title: 'Business Studies Part I', subject: 'Business Studies (Commerce)', class: '12', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=12-bs', aiHint: 'business textbook' },
-  { id: '12-arts-eco', board: 'NCERT', title: 'Introductory Macroeconomics', subject: 'Economics (Arts)', class: '12', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=12-eco', aiHint: 'economics textbook' },
-  { id: '12-arts-ps', board: 'NCERT', title: 'Contemporary World Politics', subject: 'Political Science (Arts)', class: '12', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=12-ps', aiHint: 'politics textbook' },
+  { id: '12-sci-bio', board: 'NCERT', title: 'Biology', titleHi: 'जीवविज्ञान', subject: 'Biology (Science)', class: '12', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=12-bio', aiHint: 'biology textbook' },
+  { id: '12-comm-bs', board: 'NCERT', title: 'Business Studies Part I', titleHi: 'बिजनेस स्टडीज भाग I', subject: 'Business Studies (Commerce)', class: '12', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=12-bs', aiHint: 'business textbook' },
+  { id: '12-arts-eco', board: 'NCERT', title: 'Introductory Macroeconomics', titleHi: 'परिचयात्मक समष्टि अर्थशास्त्र', subject: 'Economics (Arts)', class: '12', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=12-eco', aiHint: 'economics textbook' },
+  { id: '12-arts-ps', board: 'NCERT', title: 'Contemporary World Politics', titleHi: 'समकालीन विश्व राजनीति', subject: 'Political Science (Arts)', class: '12', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=12-ps', aiHint: 'politics textbook' },
 ];
 
 
 export default function BooksPage() {
   const { selectedClass, setSelectedClass, availableClasses } = useClass();
+  const { getTranslation, language } = useLanguage();
   const [selectedBoard, setSelectedBoard] = React.useState('All');
   const [selectedMedium, setSelectedMedium] = React.useState('All');
-  const [allBooks, setAllBooks] = React.useState<Book[]>([]);
+  const [allBooks, setAllBooks] = React.useState<Book[]>(initialBooks);
 
   React.useEffect(() => {
     const storedBooks = localStorage.getItem('uploadedBooks');
     if (storedBooks) {
       setAllBooks(JSON.parse(storedBooks));
-    } else {
-        setAllBooks(initialBooks);
     }
   }, []);
 
@@ -89,16 +90,16 @@ export default function BooksPage() {
       <main className="flex-1 space-y-4 p-4 pt-6 md:p-8">
         <Card>
           <CardContent className="p-4 flex flex-col md:flex-row gap-4 items-center">
-            <h2 className="font-headline font-semibold">Find Your Books</h2>
+            <h2 className="font-headline font-semibold">{getTranslation('Find Your Books')}</h2>
             <div className="flex-1 grid grid-cols-2 md:grid-cols-3 md:flex md:flex-row md:justify-end gap-4">
               <div className="space-y-1.5">
-                <Label htmlFor="board-filter">Board / Syllabus</Label>
+                <Label htmlFor="board-filter">{getTranslation('Board / Syllabus')}</Label>
                 <Select
                   value={selectedBoard}
                   onValueChange={setSelectedBoard}
                 >
                   <SelectTrigger id="board-filter" className="w-full md:w-[180px]">
-                    <SelectValue placeholder="Select Board" />
+                    <SelectValue placeholder={getTranslation('Select Board')} />
                   </SelectTrigger>
                   <SelectContent>
                     {boards.map((board) => (
@@ -110,13 +111,13 @@ export default function BooksPage() {
                 </Select>
               </div>
                 <div className="space-y-1.5">
-                <Label htmlFor="medium-filter">Medium</Label>
+                <Label htmlFor="medium-filter">{getTranslation('Medium')}</Label>
                 <Select
                   value={selectedMedium}
                   onValueChange={setSelectedMedium}
                 >
                   <SelectTrigger id="medium-filter" className="w-full md:w-[150px]">
-                    <SelectValue placeholder="Select Medium" />
+                    <SelectValue placeholder={getTranslation('Select Medium')} />
                   </SelectTrigger>
                   <SelectContent>
                     {mediums.map((medium) => (
@@ -128,18 +129,18 @@ export default function BooksPage() {
                 </Select>
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="class-filter">Class</Label>
+                <Label htmlFor="class-filter">{getTranslation('Class')}</Label>
                 <Select
                   value={selectedClass}
                   onValueChange={setSelectedClass}
                 >
                   <SelectTrigger id="class-filter" className="w-full md:w-[150px]">
-                    <SelectValue placeholder="Select Class" />
+                    <SelectValue placeholder={getTranslation('Select Class')} />
                   </SelectTrigger>
                   <SelectContent>
                     {availableClasses.map((c) => (
                       <SelectItem key={c} value={c}>
-                        {c === 'All' ? 'All Classes' : `Class ${c}`}
+                        {c === 'All' ? getTranslation('All Classes') : `${getTranslation('Class')} ${c}`}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -157,7 +158,7 @@ export default function BooksPage() {
                   <div className="relative aspect-[3/4] w-full">
                     <Image
                       src={book.imageUrl}
-                      alt={book.title}
+                      alt={language === 'English' ? book.title : book.titleHi}
                       fill
                       className="object-cover"
                       data-ai-hint={book.aiHint}
@@ -167,26 +168,26 @@ export default function BooksPage() {
                 <CardContent className="flex-1 p-4">
                   <div className="flex justify-between items-start mb-2 gap-2">
                      <div className="flex gap-2 flex-wrap">
-                        <Badge variant="outline">Class {book.class}</Badge>
+                        <Badge variant="outline">{getTranslation('Class')} {book.class}</Badge>
                         <Badge variant="secondary">{book.board}</Badge>
-                        <Badge variant="default">{book.medium}</Badge>
+                        <Badge variant="default">{getTranslation(book.medium)}</Badge>
                      </div>
                   </div>
                   <CardTitle className="font-headline text-lg">
-                    {book.title}
+                    {language === 'English' ? book.title : book.titleHi}
                   </CardTitle>
-                  <CardDescription>{book.subject}</CardDescription>
+                  <CardDescription>{getTranslation(book.subject)}</CardDescription>
                 </CardContent>
                 <CardFooter className="p-4 pt-0">
-                  <Button className="w-full">Read Now</Button>
+                  <Button className="w-full">{getTranslation('Read Now')}</Button>
                 </CardFooter>
               </Card>
             ))}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-64 border rounded-lg">
-            <p className="font-semibold">No books found for the selected filters.</p>
-            <p className="text-sm mt-1">Please try a different class or board.</p>
+            <p className="font-semibold">{getTranslation('No books found for the selected filters.')}</p>
+            <p className="text-sm mt-1">{getTranslation('Please try a different class or board.')}</p>
           </div>
         )}
       </main>

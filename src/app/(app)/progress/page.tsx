@@ -1,3 +1,4 @@
+'use client';
 
 import { AppHeader } from '@/app/(app)/layout';
 import { Badge } from '@/components/ui/badge';
@@ -13,6 +14,7 @@ import {
 import { Progress } from '@/components/ui/progress';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { TrendingUp, BarChart, Activity, Target } from 'lucide-react';
+import { useLanguage } from '@/context/language-context';
 
 const overallStats = [
     { title: 'Overall Score', value: '82%', icon: TrendingUp },
@@ -30,14 +32,15 @@ const subjectDetails = [
 ];
 
 export default function ProgressPage() {
+  const { getTranslation } = useLanguage();
   return (
     <div className="flex h-full flex-col">
       <AppHeader title="Progress Report" />
       <main className="flex-1 space-y-6 p-4 md:p-8">
         <Card>
             <CardHeader>
-                <CardTitle className="font-headline text-2xl">Your Academic Snapshot</CardTitle>
-                <CardDescription>A detailed overview of your performance and progress.</CardDescription>
+                <CardTitle className="font-headline text-2xl">{getTranslation('Your Academic Snapshot')}</CardTitle>
+                <CardDescription>{getTranslation('A detailed overview of your performance and progress.')}</CardDescription>
             </CardHeader>
         </Card>
         
@@ -45,7 +48,7 @@ export default function ProgressPage() {
             {overallStats.map((stat) => (
                  <Card key={stat.title}>
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
+                        <CardTitle className="text-sm font-medium">{getTranslation(stat.title)}</CardTitle>
                         <stat.icon className="h-5 w-5 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
@@ -57,23 +60,23 @@ export default function ProgressPage() {
 
         <Card>
             <CardHeader>
-                <CardTitle>Subject-wise Performance</CardTitle>
-                <CardDescription>Detailed breakdown of your scores and engagement in each subject.</CardDescription>
+                <CardTitle>{getTranslation('Subject-wise Performance')}</CardTitle>
+                <CardDescription>{getTranslation('Detailed breakdown of your scores and engagement in each subject.')}</CardDescription>
             </CardHeader>
             <CardContent>
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[150px]">Subject</TableHead>
-                            <TableHead>Score</TableHead>
-                            <TableHead>Attendance</TableHead>
-                            <TableHead className="text-right">Tests Taken</TableHead>
+                            <TableHead className="w-[150px]">{getTranslation('Subject')}</TableHead>
+                            <TableHead>{getTranslation('Score')}</TableHead>
+                            <TableHead>{getTranslation('Attendance')}</TableHead>
+                            <TableHead className="text-right">{getTranslation('Tests Taken')}</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {subjectDetails.map((subject) => (
                             <TableRow key={subject.subject}>
-                                <TableCell className="font-medium">{subject.subject}</TableCell>
+                                <TableCell className="font-medium">{getTranslation(subject.subject)}</TableCell>
                                 <TableCell>
                                     <div className="flex items-center gap-4">
                                         <span className="w-8">{subject.score}%</span>
