@@ -1,225 +1,209 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { PlusCircle, Trash2, Download, Search } from 'lucide-react';
+import * as React from 'react';
 import { AppHeader } from '@/app/(app)/layout';
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
 import { useClass } from '@/context/class-context';
+import { BookOpen } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { useLanguage } from '@/context/language-context';
 
 type Note = {
   id: number;
   title: string;
-  content: string;
-  timestamp: string;
-  tags: string[];
+  titleHi: string;
+  subject: string;
   class: string;
+  content: string;
+  tags: string[];
 };
 
-const initialNotes: Note[] = [
-    {
+const chapterNotes: Note[] = [
+  {
     id: 1,
-    title: 'Science: Living and Non-living things',
-    content: 'Living things breathe, eat, grow, move, and reproduce. Non-living things do not. Key features include respiration, nutrition, growth, movement, and reproduction. Created a mindmap for quick revision.',
-    timestamp: '1 day ago',
-    tags: ['Science', 'Mindmap'],
+    title: 'Living and Non-living things',
+    titleHi: 'सजीव और निर्जीव वस्तुएं',
+    subject: 'Science',
     class: '3',
+    content: 'Living things breathe, eat, grow, move, and reproduce. Non-living things do not. Key features include respiration, nutrition, growth, movement, and reproduction.',
+    tags: ['Science', 'Biology'],
   },
   {
     id: 2,
-    title: 'Hindi: संज्ञा के भेद',
-    content: 'किसी व्यक्ति, वस्तु, स्थान, या भाव के नाम को संज्ञा कहते हैं। इसके तीन मुख्य भेद हैं: व्यक्तिवाचक, जातिवाचक, और भाववाचक।',
-    timestamp: '3 days ago',
-    tags: ['Hindi', 'Grammar'],
+    title: 'Kinds of Nouns (संज्ञा के भेद)',
+    titleHi: 'संज्ञा के भेद',
+    subject: 'Hindi',
     class: '4',
+    content: 'किसी व्यक्ति, वस्तु, स्थान, या भाव के नाम को संज्ञा कहते हैं। इसके तीन मुख्य भेद हैं: व्यक्तिवाचक, जातिवाचक, और भाववाचक। (A noun is the name of a person, place, thing, or idea. It has three main types: Proper Noun, Common Noun, and Abstract Noun.)',
+    tags: ['Hindi', 'Grammar'],
   },
   {
     id: 3,
-    title: 'EVS: The Water Cycle Explained',
-    content: 'The water cycle consists of four main stages: Evaporation (liquid to gas), Condensation (gas to liquid, forming clouds), Precipitation (rain, snow), and Collection (in rivers, lakes).',
-    timestamp: '4 days ago',
-    tags: ['EVS', 'Diagram'],
+    title: 'The Water Cycle',
+    titleHi: 'जल चक्र',
+    subject: 'EVS',
     class: '5',
+    content: 'The water cycle consists of four main stages: Evaporation (liquid to gas), Condensation (gas to liquid, forming clouds), Precipitation (rain, snow), and Collection (in rivers, lakes).',
+    tags: ['EVS', 'Geography'],
   },
   {
     id: 4,
-    title: 'History: Indus Valley Civilization Key Points',
-    content: 'Major cities: Harappa and Mohenjo-Daro. Known for its advanced urban planning, standardized weights, and impressive drainage system. Decline reasons are still debated.',
-    timestamp: '1 week ago',
-    tags: ['History'],
+    title: 'Indus Valley Civilization',
+    titleHi: 'सिंधु घाटी सभ्यता',
+    subject: 'History',
     class: '6',
+    content: 'Major cities: Harappa and Mohenjo-Daro. Known for its advanced urban planning, standardized weights, and impressive drainage system. Decline reasons are still debated.',
+    tags: ['History', 'Ancient India'],
   },
   {
     id: 5,
-    title: 'Science: Acids, Bases, and Salts',
-    content: 'Acids are sour, turn blue litmus red. Bases are bitter, turn red litmus blue. A salt is formed when an acid and a base react. pH scale measures acidity.',
-    timestamp: '1 week ago',
-    tags: ['Science', 'Chemistry'],
+    title: 'Acids, Bases, and Salts',
+    titleHi: 'अम्ल, क्षार और लवण',
+    subject: 'Science',
     class: '7',
+    content: 'Acids are sour, turn blue litmus red. Bases are bitter, turn red litmus blue. A salt is formed when an acid and a base react. pH scale measures acidity.',
+    tags: ['Science', 'Chemistry'],
   },
   {
     id: 6,
-    title: 'Maths: Squares and Square Roots',
-    content: 'The square of a number is the number multiplied by itself (e.g., 5x5=25). The square root is the inverse operation. Important to memorize squares up to 20.',
-    timestamp: '2 weeks ago',
-    tags: ['Maths', 'Formula'],
+    title: 'Squares and Square Roots',
+    titleHi: 'वर्ग और वर्गमूल',
+    subject: 'Mathematics',
     class: '8',
+    content: 'The square of a number is the number multiplied by itself (e.g., 5x5=25). The square root is the inverse operation. Important to memorize squares up to 20.',
+    tags: ['Maths', 'Formula'],
+  },
+   {
+    id: 7,
+    title: 'Motion',
+    titleHi: 'गति',
+    subject: 'Physics (Science)',
+    class: '9',
+    content: 'Motion is the change in position of an object over time. Key concepts include distance, displacement, speed, velocity, and acceleration. Understand Newton\'s laws of motion.',
+    tags: ['Physics', 'Mechanics'],
+  },
+  {
+    id: 8,
+    title: 'Carbon and its Compounds',
+    titleHi: 'कार्बन और उसके यौगिक',
+    subject: 'Chemistry (Science)',
+    class: '10',
+    content: 'Carbon forms covalent bonds and has the property of catenation, leading to a large number of compounds. Study of hydrocarbons, functional groups, and isomerism.',
+    tags: ['Chemistry', 'Organic'],
+  },
+  {
+    id: 9,
+    title: 'Sets Theory',
+    titleHi: 'समुच्चय सिद्धांत',
+    subject: 'Mathematics (Science)',
+    class: '11',
+    content: 'A set is a collection of well-defined objects. Learn about types of sets, Venn diagrams, operations on sets like union, intersection, and difference.',
+    tags: ['Maths', 'Algebra'],
+  },
+  {
+    id: 10,
+    title: 'Introduction to Accounting',
+    titleHi: 'लेखांकन का परिचय',
+    subject: 'Accountancy (Commerce)',
+    class: '11',
+    content: 'Accounting is the process of recording financial transactions. Key principles include the double-entry system, accounting concepts, and conventions.',
+    tags: ['Commerce', 'Accounting'],
+  },
+  {
+    id: 11,
+    title: 'Themes in World History: From the Beginning of Time',
+    titleHi: 'विश्व इतिहास में विषय: समय की शुरुआत से',
+    subject: 'History (Arts)',
+    class: '11',
+    content: 'This chapter traces the beginning of human existence, from the remote past. It covers early human evolution, hunter-gatherer societies, and the development of tools.',
+    tags: ['History', 'World History'],
+  },
+  {
+    id: 12,
+    title: 'Electric Charges and Fields',
+    titleHi: 'विद्युत आवेश तथा क्षेत्र',
+    subject: 'Physics (Science)',
+    class: '12',
+    content: 'Study of static electric charges, Coulomb\'s law, electric field, electric field lines, electric flux, and Gauss\'s law and its applications.',
+    tags: ['Physics', 'Electrostatics'],
+  },
+  {
+    id: 13,
+    title: 'Accounting for Partnership Firms: Fundamentals',
+    titleHi: 'साझेदारी फर्मों के लिए लेखांकन: मूल बातें',
+    subject: 'Accountancy (Commerce)',
+    class: '12',
+    content: 'Learn about partnership deeds, calculation of interest on capital and drawings, and preparation of Profit and Loss Appropriation Account.',
+    tags: ['Commerce', 'Partnership'],
+  },
+   {
+    id: 14,
+    title: 'The Cold War Era',
+    titleHi: 'शीत युद्ध का दौर',
+    subject: 'Political Science (Arts)',
+    class: '12',
+    content: 'The Cold War was a period of geopolitical tension between the United States and the Soviet Union and their respective allies. Key events include the Cuban Missile Crisis and the arms race.',
+    tags: ['Political Science', 'World Politics'],
   },
 ];
 
 export default function NotesPage() {
-  const { selectedClass, isInitialized: classIsInitialized } = useClass();
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [isClient, setIsClient] = useState(false);
-  const [newNoteTitle, setNewNoteTitle] = useState('');
-  const [newNoteContent, setNewNoteContent] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
+  const { selectedClass } = useClass();
+  const { language, getTranslation } = useLanguage();
 
-  useEffect(() => {
-    setIsClient(true);
-    const savedNotes = localStorage.getItem('userNotes');
-    if (savedNotes) {
-      setNotes(JSON.parse(savedNotes));
-    } else {
-      setNotes(initialNotes);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isClient) {
-      localStorage.setItem('userNotes', JSON.stringify(notes));
-    }
-  }, [notes, isClient]);
-
-  const handleAddNote = () => {
-    if (newNoteTitle.trim() && newNoteContent.trim() && selectedClass !== 'All') {
-      const newNote: Note = {
-        id: Date.now(),
-        title: newNoteTitle,
-        content: newNoteContent,
-        timestamp: 'Just now',
-        tags: ['New'],
-        class: selectedClass,
-      };
-      setNotes([newNote, ...notes]);
-      setNewNoteTitle('');
-      setNewNoteContent('');
-    }
-  };
-  
-  const handleDeleteNote = (id: number) => {
-    setNotes(notes.filter(note => note.id !== id));
-  }
-  
-  const filteredNotes = notes.filter(note => {
-    const classMatch = selectedClass === 'All' || note.class === selectedClass;
-    const searchMatch = 
-      note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-    return classMatch && searchMatch;
+  const filteredNotes = chapterNotes.filter(note => {
+    return selectedClass === 'All' || note.class === selectedClass;
   });
-
-  if (!isClient || !classIsInitialized) {
-      return null;
-  }
 
   return (
     <div className="flex h-full flex-col">
-      <AppHeader title="My Notes" />
+      <AppHeader title="Notes" />
       <main className="flex-1 space-y-6 p-4 md:p-8">
         <Card>
-          <CardHeader>
-            <CardTitle className="font-headline">Create a New Note</CardTitle>
-            <CardDescription>
-              Jot down important points for Class {selectedClass}. Your notes are saved to your device.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Input
-              placeholder="Note title..."
-              value={newNoteTitle}
-              onChange={(e) => setNewNoteTitle(e.target.value)}
-              className="font-semibold"
-              disabled={selectedClass === 'All'}
-            />
-            <Textarea
-              placeholder="Start writing your note here..."
-              className="min-h-[120px]"
-              value={newNoteContent}
-              onChange={(e) => setNewNoteContent(e.target.value)}
-              disabled={selectedClass === 'All'}
-            />
-            <Button onClick={handleAddNote} disabled={selectedClass === 'All' || !newNoteTitle.trim() || !newNoteContent.trim()}>
-              <PlusCircle className="mr-2 h-4 w-4" />
-              {selectedClass === 'All' ? 'Select a class to add a note' : 'Save Note'}
-            </Button>
-          </CardContent>
+            <CardHeader>
+                <CardTitle className="font-headline">{getTranslation('Chapter Notes')}</CardTitle>
+                <CardDescription>
+                {getTranslation('Find concise notes for various chapters to help you revise quickly.')}
+                </CardDescription>
+            </CardHeader>
         </Card>
-
-        <div className="space-y-4">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <h2 className="font-headline text-2xl font-semibold">Your Saved Notes</h2>
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search notes..."
-                className="pl-8 sm:w-[300px]"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
+        {filteredNotes.length > 0 ? (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {filteredNotes.map((note) => (
+              <Card key={note.id} className="flex flex-col">
+                <CardHeader>
+                   <div className="flex justify-between items-start gap-2">
+                        <div className="flex gap-2 flex-wrap">
+                            <Badge variant="secondary">{getTranslation('Class')} {note.class}</Badge>
+                            {note.tags.map(tag => (
+                                <Badge key={tag} variant="outline">{getTranslation(tag)}</Badge>
+                            ))}
+                        </div>
+                        <BookOpen className="h-6 w-6 text-primary shrink-0"/>
+                    </div>
+                  <CardTitle className="font-headline text-lg pt-2">{language === 'English' ? note.title : note.titleHi}</CardTitle>
+                  <CardDescription>{getTranslation(note.subject)}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-1">
+                  <p className="text-sm text-muted-foreground line-clamp-4">{note.content}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-          {filteredNotes.length > 0 ? (
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {filteredNotes.map((note) => (
-                <Card key={note.id} className="flex flex-col">
-                  <CardHeader>
-                    <div className="flex justify-between items-start gap-2">
-                        <CardTitle className="font-headline text-lg">{note.title}</CardTitle>
-                         <Button variant="ghost" size="icon" className="h-8 w-8 shrink-0" onClick={() => handleDeleteNote(note.id)}>
-                            <Trash2 className="h-4 w-4" />
-                            <span className="sr-only">Delete note</span>
-                        </Button>
-                    </div>
-                     <div className="flex flex-wrap gap-1 pt-2 items-center">
-                      {note.class}
-                      {note.tags.map(tag => (
-                        <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground">{tag}</span>
-                      ))}
-                    </div>
-                  </CardHeader>
-                  <CardContent className="flex-1">
-                    <p className="text-sm text-muted-foreground line-clamp-4">{note.content}</p>
-
-                  </CardContent>
-                   <CardFooter>
-                    <p className="text-xs text-muted-foreground">{note.timestamp}</p>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          ) : (
-             <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-48 border rounded-lg">
-                <p className="font-semibold">No notes found.</p>
-                <p className="text-sm mt-1">Try a different search term or create a new note.</p>
-            </div>
-          )}
-        </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center text-center text-muted-foreground h-64 border rounded-lg">
+            <p className="font-semibold">{getTranslation('No notes found for Class')} {selectedClass}.</p>
+            <p className="text-sm mt-1">{getTranslation('Please select a different class.')}</p>
+          </div>
+        )}
       </main>
     </div>
   );
 }
-
-    

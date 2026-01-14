@@ -75,6 +75,16 @@ const translations: Record<string, Record<string, string>> = {
   'Mathematics (Science)': {'English': 'Mathematics (Science)', 'हिन्दी': 'गणित (विज्ञान)'},
   'Accountancy (Commerce)': {'English': 'Accountancy (Commerce)', 'हिन्दी': 'लेखा (वाणिज्य)'},
   'Biology (Science)': {'English': 'Biology (Science)', 'हिन्दी': 'जीव विज्ञान (विज्ञान)'},
+  'Chapter Notes': { 'English': 'Chapter Notes', 'हिन्दी': 'अध्याय नोट्स' },
+  'Find concise notes for various chapters to help you revise quickly.': { 'English': 'Find concise notes for various chapters to help you revise quickly.', 'हिन्दी': 'जल्दी से दोहराने में मदद के लिए विभिन्न अध्यायों के संक्षिप्त नोट्स खोजें।' },
+  'No notes found for Class': { 'English': 'No notes found for Class', 'हिन्दी': 'कक्षा के लिए कोई नोट्स नहीं मिला' },
+  'Biology': { 'English': 'Biology', 'हिन्दी': 'जीव विज्ञान' },
+  'Hindi': { 'English': 'Hindi', 'हिन्दी': 'हिन्दी' },
+  'EVS': { 'English': 'EVS', 'हिन्दी': 'ईवीएस' },
+  'History': { 'English': 'History', 'हिन्दी': 'इतिहास' },
+  'Chemistry': { 'English': 'Chemistry', 'हिन्दी': 'रसायन विज्ञान' },
+  'Physics (Science)': { 'English': 'Physics (Science)', 'हिन्दी': 'भौतिकी (विज्ञान)' },
+  'Political Science (Arts)': { 'English': 'Political Science (Arts)', 'हिन्दी': 'राजनीति विज्ञान (कला)' },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
