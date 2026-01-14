@@ -194,7 +194,7 @@ export default function NotesPage() {
                         </Button>
                     </div>
                      <div className="flex flex-wrap gap-1 pt-2 items-center">
-                      <Badge variant="secondary">Class {note.class}</Badge>
+                      {note.class}
                       {note.tags.map(tag => (
                         <span key={tag} className="text-xs px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground">{tag}</span>
                       ))}
