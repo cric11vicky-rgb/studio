@@ -25,13 +25,6 @@ const papers = [
     board: 'CBSE',
   },
   {
-    title: 'RBSE Class 12 Maths 2022',
-    subject: 'Mathematics',
-    class: '12',
-    year: 2022,
-    board: 'RBSE',
-  },
-  {
     title: 'CBSE Class 10 Social Science 2021',
     subject: 'Social Science',
     class: '10',

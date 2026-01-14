@@ -159,7 +159,6 @@ export default function GeneratePaperClient() {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="CBSE">CBSE</SelectItem>
-                            <SelectItem value="RBSE">RBSE</SelectItem>
                             <SelectItem value="NCERT">NCERT</SelectItem>
                             <SelectItem value="Other">Other</SelectItem>
                         </SelectContent>

@@ -46,7 +46,6 @@ const initialBooks: Book[] = [
   { id: '2', board: 'CBSE', title: 'Rimjhim - Class 3', titleHi: 'रिमझिम - कक्षा 3', subject: 'Hindi', class: '3', medium: 'Hindi', imageUrl: 'https://picsum.photos/300/400?book=cbse-hindi-3', aiHint: 'hindi textbook' },
   { id: '3', board: 'CBSE', title: 'Marigold - Class 3', titleHi: 'मैरीगोल्ड - कक्षा 3', subject: 'English', class: '3', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=cbse-eng-3', aiHint: 'english textbook' },
   { id: '4', board: 'CBSE', title: 'Looking Around - Class 3', titleHi: 'आस-पास - कक्षा 3', subject: 'EVS', class: '3', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=cbse-evs-3', aiHint: 'evs textbook' },
-  { id: '5', board: 'RBSE', title: 'Mathematics - Class 3', titleHi: 'गणित - कक्षा 3', subject: 'Mathematics', class: '3', medium: 'Hindi', imageUrl: 'https://picsum.photos/300/400?book=rbse-math-3', aiHint: 'math textbook' },
   // Class 11
   { id: '11-sci-phy', board: 'NCERT', title: 'Physics Part I', titleHi: 'भौतिकी भाग I', subject: 'Physics (Science)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-phy', aiHint: 'physics textbook' },
   { id: '11-sci-chem', board: 'NCERT', title: 'Chemistry Part I', titleHi: 'रसायन विज्ञान भाग I', subject: 'Chemistry (Science)', class: '11', medium: 'English', imageUrl: 'https://picsum.photos/300/400?book=11-chem', aiHint: 'chemistry textbook' },

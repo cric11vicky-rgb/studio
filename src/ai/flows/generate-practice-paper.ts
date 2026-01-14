@@ -46,7 +46,7 @@ const GeneratePracticePaperInputSchema = z.object({
     .default(3)
     .describe('The number of long answer questions to include.'),
     difficulty: z.enum(['Easy', 'Medium', 'Hard']).default('Medium').describe('The difficulty level of the questions.'),
-    syllabus: z.enum(['CBSE', 'RBSE', 'NCERT', 'Other']).default('NCERT').describe('The syllabus to align with (e.g., CBSE, RBSE, NCERT).'),
+    syllabus: z.enum(['CBSE', 'NCERT', 'Other']).default('NCERT').describe('The syllabus to align with (e.g., CBSE, NCERT).'),
     language: z.string().optional().describe('The language of the paper (e.g., English, Hindi).'),
 });
 export type GeneratePracticePaperInput = z.infer<typeof GeneratePracticePaperInputSchema>;

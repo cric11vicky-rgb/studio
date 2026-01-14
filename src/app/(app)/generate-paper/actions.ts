@@ -14,7 +14,7 @@ const paperSchema = z.object({
   numberOfMediumAnswer: z.number().min(0).max(30),
   numberOfLongAnswer: z.number().min(0).max(20),
   difficulty: z.enum(['Easy', 'Medium', 'Hard']),
-  syllabus: z.enum(['CBSE', 'RBSE', 'NCERT', 'Other']),
+  syllabus: z.enum(['CBSE', 'NCERT', 'Other']),
   language: z.string().optional(),
 });
 
@@ -34,13 +34,9 @@ export async function createPracticePaper(
   formData: FormData
 ): Promise<PaperResult> {
     
-  const syllabus = formData.get('syllabus') as 'CBSE' | 'RBSE' | 'NCERT' | 'Other';
+  const syllabus = formData.get('syllabus') as 'CBSE' | 'NCERT' | 'Other';
   let language = formData.get('language') as string | undefined;
 
-  // Automatically set language to Hindi if RBSE is selected
-  if (syllabus === 'RBSE') {
-    language = 'Hindi';
-  }
     
   const validatedFields = paperSchema.safeParse({
     class: formData.get('class'),
