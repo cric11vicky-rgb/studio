@@ -34,6 +34,7 @@ export default function TeachersPage() {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [mobileNumber, setMobileNumber] = React.useState('');
+  const [subjects, setSubjects] = React.useState('');
 
   React.useEffect(() => {
     setTeachers(getTeachers());
@@ -41,11 +42,17 @@ export default function TeachersPage() {
 
   const handleAddTeacher = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !username || !password || !mobileNumber) {
+    if (!name || !username || !password || !mobileNumber || !subjects) {
       toast({ variant: 'destructive', title: 'Error', description: 'Please fill all fields.' });
       return;
     }
-    const success = addTeacher({ name, username, password, mobileNumber, role: 'teacher' });
+    const subjectArray = subjects.split(',').map(s => s.trim()).filter(s => s);
+    if (subjectArray.length === 0) {
+        toast({ variant: 'destructive', title: 'Error', description: 'Please enter at least one subject.' });
+        return;
+    }
+
+    const success = addTeacher({ name, username, password, mobileNumber, role: 'teacher', subjects: subjectArray });
     if (success) {
       toast({ title: 'Success', description: 'Teacher added successfully.' });
       setTeachers(getTeachers());
@@ -54,6 +61,7 @@ export default function TeachersPage() {
       setUsername('');
       setPassword('');
       setMobileNumber('');
+      setSubjects('');
     } else {
       toast({ variant: 'destructive', title: 'Error', description: 'Username already exists.' });
     }
@@ -96,6 +104,11 @@ export default function TeachersPage() {
                 <Label htmlFor="mobile">Mobile Number</Label>
                 <Input id="mobile" placeholder="For OTP verification" value={mobileNumber} onChange={e => setMobileNumber(e.target.value)} />
               </div>
+               <div className="space-y-2">
+                <Label htmlFor="subjects">Subjects</Label>
+                <Input id="subjects" placeholder="e.g., Physics, Maths" value={subjects} onChange={e => setSubjects(e.target.value)} />
+                <p className='text-xs text-muted-foreground'>Comma-separated list of subjects.</p>
+              </div>
               <Button type="submit" className="w-full">
                 <UserPlus className="mr-2 h-4 w-4" />
                 Add Teacher
@@ -117,7 +130,7 @@ export default function TeachersPage() {
                 <TableRow>
                   <TableHead>Teacher</TableHead>
                   <TableHead>Username</TableHead>
-                  <TableHead>Mobile Number</TableHead>
+                  <TableHead>Subjects</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -133,7 +146,7 @@ export default function TeachersPage() {
                         {teacher.name}
                       </TableCell>
                       <TableCell>{teacher.username}</TableCell>
-                      <TableCell>{teacher.mobileNumber}</TableCell>
+                      <TableCell>{teacher.subjects?.join(', ')}</TableCell>
                       <TableCell className="text-right">
                          <Button variant="ghost" size="icon" disabled>
                            <Trash2 className="h-4 w-4" />

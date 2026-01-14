@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { PlusCircle, BookOpen, Trash2 } from 'lucide-react';
+import { useAuth } from '@/context/auth-context';
 
 const lessonPlans = [
     { id: 1, class: '10', subject: 'Physics', topic: 'Light - Reflection and Refraction', objectives: 'Understand laws of reflection. Learn about spherical mirrors.', duration: '2 weeks' },
@@ -29,7 +30,20 @@ const lessonPlans = [
     { id: 5, class: '12', subject: 'Accountancy', topic: 'Partnership Fundamentals', objectives: 'Learn about partnership deeds and profit distribution.', duration: '2 weeks' },
 ];
 
+const allSubjects = [
+    'Mathematics', 'Science', 'English', 'History', 'Physics', 'Chemistry',
+    'Biology', 'Accountancy', 'Business Studies', 'Economics', 'Political Science'
+];
+
 export default function CurriculumPage() {
+    const { user } = useAuth();
+
+    const teacherSubjects = user?.role === 'teacher' ? user.subjects : allSubjects;
+
+    const filteredLessonPlans = lessonPlans.filter(plan => 
+        user?.role === 'admin' || (teacherSubjects && teacherSubjects.includes(plan.subject))
+    );
+
   return (
     <div className="flex-1 space-y-6 p-4 md:p-8">
       <header>
@@ -59,17 +73,9 @@ export default function CurriculumPage() {
                   <SelectValue placeholder="Select Subject" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="maths">Mathematics</SelectItem>
-                  <SelectItem value="science">Science</SelectItem>
-                  <SelectItem value="english">English</SelectItem>
-                  <SelectItem value="history">History</SelectItem>
-                  <SelectItem value="physics">Physics</SelectItem>
-                  <SelectItem value="chemistry">Chemistry</SelectItem>
-                  <SelectItem value="biology">Biology</SelectItem>
-                  <SelectItem value="accountancy">Accountancy</SelectItem>
-                  <SelectItem value="business_studies">Business Studies</SelectItem>
-                  <SelectItem value="economics">Economics</SelectItem>
-                  <SelectItem value="political_science">Political Science</SelectItem>
+                    {teacherSubjects?.map(subject => (
+                        <SelectItem key={subject} value={subject.toLowerCase().replace(' ', '_')}>{subject}</SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
             </div>
@@ -120,11 +126,11 @@ export default function CurriculumPage() {
         <CardHeader>
           <CardTitle>Existing Lesson Plans</CardTitle>
           <CardDescription>
-            Here are the lesson plans you have created.
+            Here are the lesson plans you have created for your subjects.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {lessonPlans.map(plan => (
+          {filteredLessonPlans.map(plan => (
             <Card key={plan.id} className="p-4 flex justify-between items-start">
               <div className="grid gap-1">
                   <div className="flex items-center gap-2">
@@ -145,6 +151,11 @@ export default function CurriculumPage() {
               </div>
             </Card>
           ))}
+           {filteredLessonPlans.length === 0 && (
+                <div className="text-center p-8 text-muted-foreground">
+                    No lesson plans found for your assigned subjects.
+                </div>
+            )}
         </CardContent>
       </Card>
     </div>

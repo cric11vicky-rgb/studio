@@ -20,8 +20,9 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Send, Bot } from 'lucide-react';
+import { useAuth } from '@/context/auth-context';
 
-const pendingDoubts = [
+const allPendingDoubts = [
   {
     id: 1,
     student: 'Aarav Sharma',
@@ -44,14 +45,29 @@ const pendingDoubts = [
     id: 3,
     student: 'Karan Patel',
     class: '9',
-    subject: 'Maths',
+    subject: 'Mathematics',
     question: 'I am stuck on proving the midpoint theorem. Can you provide a step-by-step proof?',
     timestamp: '1 day ago',
     avatar: 'https://picsum.photos/100?student=3'
   },
+  {
+    id: 4,
+    student: 'Priya Singh',
+    class: '12',
+    subject: 'Accountancy',
+    question: 'What is the difference between capital expenditure and revenue expenditure?',
+    timestamp: '3 hours ago',
+    avatar: 'https://picsum.photos/100?student=4'
+  },
 ];
 
 export default function DoubtsPage() {
+    const { user } = useAuth();
+    
+    const pendingDoubts = user?.role === 'teacher'
+        ? allPendingDoubts.filter(doubt => user.subjects?.includes(doubt.subject))
+        : allPendingDoubts;
+
   return (
     <div className="flex-1 space-y-6 p-4 md:p-8">
       <header>
@@ -70,7 +86,7 @@ export default function DoubtsPage() {
         </CardHeader>
         <CardContent>
           <Accordion type="single" collapsible className="w-full space-y-4">
-            {pendingDoubts.map((doubt) => (
+            {pendingDoubts.length > 0 ? pendingDoubts.map((doubt) => (
               <AccordionItem value={`item-${doubt.id}`} key={doubt.id} className="border rounded-lg px-4">
                 <AccordionTrigger>
                   <div className="flex items-center gap-4 text-left">
@@ -81,7 +97,7 @@ export default function DoubtsPage() {
                     <div>
                         <div className="font-semibold">{doubt.question}</div>
                         <div className="text-sm text-muted-foreground">
-                            Asked by {doubt.student} (Class {doubt.class}) • {doubt.timestamp}
+                            Asked by {doubt.student} (Class {doubt.class}, {doubt.subject}) • {doubt.timestamp}
                         </div>
                     </div>
                   </div>
@@ -105,7 +121,11 @@ export default function DoubtsPage() {
                   </div>
                 </AccordionContent>
               </AccordionItem>
-            ))}
+            )) : (
+                 <div className="text-center p-8 text-muted-foreground">
+                    No pending doubts for your assigned subjects.
+                </div>
+            )}
           </Accordion>
         </CardContent>
       </Card>

@@ -12,6 +12,7 @@ export interface User {
   email: string;
   role: Role;
   avatar: string;
+  subjects?: string[]; // Subjects a teacher is assigned to
 }
 
 export interface TeacherUser {
@@ -20,6 +21,7 @@ export interface TeacherUser {
   password?: string; // Optional for security reasons on client
   mobileNumber: string;
   role: 'teacher';
+  subjects: string[];
 }
 
 const initialAdminState = {
@@ -153,6 +155,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             email: userData.email,
             role: userData.role,
             avatar: `https://picsum.photos/seed/${username}/100`,
+            subjects: userData.subjects,
         };
         sessionStorage.setItem('smartVidyaUser', JSON.stringify(loggedInUser));
         setUser(loggedInUser);

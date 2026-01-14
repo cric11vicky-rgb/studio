@@ -23,6 +23,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { cn } from '@/lib/utils';
 import { CalendarIcon, PlusCircle, Video } from 'lucide-react';
 import { format } from 'date-fns';
+import { useAuth } from '@/context/auth-context';
+
 
 const upcomingClasses = [
     { id: 1, title: 'Introduction to Trigonometry', class: '10', subject: 'Mathematics', date: '2023-11-05', time: '4:00 PM' },
@@ -31,8 +33,21 @@ const upcomingClasses = [
     { id: 4, title: 'Vectors and 3D Geometry', class: '12', subject: 'Mathematics', date: '2023-11-08', time: '6:00 PM' },
 ]
 
+const allSubjects = [
+    'Mathematics', 'Science', 'English', 'History', 'Physics', 'Chemistry',
+    'Biology', 'Accountancy', 'Business Studies', 'Economics', 'Political Science'
+];
+
+
 export default function SchedulePage() {
   const [date, setDate] = React.useState<Date>();
+  const { user } = useAuth();
+  
+  const teacherSubjects = user?.role === 'teacher' ? user.subjects : allSubjects;
+
+  const filteredClasses = user?.role === 'teacher' 
+    ? upcomingClasses.filter(c => teacherSubjects?.includes(c.subject))
+    : upcomingClasses;
 
   return (
     <div className="flex-1 space-y-6 p-4 md:p-8">
@@ -61,17 +76,9 @@ export default function SchedulePage() {
                   <SelectValue placeholder="Select Subject" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="maths">Mathematics</SelectItem>
-                  <SelectItem value="science">Science</SelectItem>
-                  <SelectItem value="english">English</SelectItem>
-                  <SelectItem value="history">History</SelectItem>
-                  <SelectItem value="physics">Physics</SelectItem>
-                  <SelectItem value="chemistry">Chemistry</SelectItem>
-                  <SelectItem value="biology">Biology</SelectItem>
-                  <SelectItem value="accountancy">Accountancy</SelectItem>
-                  <SelectItem value="business_studies">Business Studies</SelectItem>
-                  <SelectItem value="economics">Economics</SelectItem>
-                  <SelectItem value="political_science">Political Science</SelectItem>
+                    {teacherSubjects?.map(subject => (
+                        <SelectItem key={subject} value={subject.toLowerCase().replace(' ', '_')}>{subject}</SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
             </div>
@@ -131,7 +138,7 @@ export default function SchedulePage() {
                 <CardDescription>Here is a list of your scheduled classes.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                {upcomingClasses.map(cls => (
+                {filteredClasses.length > 0 ? filteredClasses.map(cls => (
                     <Card key={cls.id} className="p-4">
                         <div className="flex justify-between items-start">
                             <div>
@@ -149,7 +156,11 @@ export default function SchedulePage() {
                             </Button>
                         </div>
                     </Card>
-                ))}
+                )) : (
+                     <div className="text-center p-8 text-muted-foreground">
+                        No upcoming classes for your subjects.
+                    </div>
+                )}
             </CardContent>
         </Card>
       </div>

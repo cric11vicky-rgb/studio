@@ -29,6 +29,7 @@ import {
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/context/auth-context';
 
 // Define the Book type
 export type Book = {
@@ -46,6 +47,7 @@ export type Book = {
 
 export default function ContentPage() {
   const { toast } = useToast();
+  const { user } = useAuth();
 
   // Form state
   const [title, setTitle] = useState('');
@@ -95,6 +97,16 @@ export default function ContentPage() {
       });
       return;
     }
+    
+    // Enforce subject restriction for teachers
+    if (user && user.role === 'teacher' && user.subjects && !user.subjects.includes(subject)) {
+        toast({
+            variant: 'destructive',
+            title: 'Permission Denied',
+            description: `You can only add books for your assigned subjects: ${user.subjects.join(', ')}.`,
+        });
+        return;
+    }
 
     const newBook: Book = {
       id: `${Date.now()}`,
@@ -119,7 +131,8 @@ export default function ContentPage() {
     setMedium('');
     setFile(null);
     // This is tricky, but we can reset the file input by keying it
-    document.getElementById('file-upload')!.value = '';
+    const fileInput = document.getElementById('file-upload') as HTMLInputElement;
+    if(fileInput) fileInput.value = '';
 
 
     toast({
@@ -135,6 +148,12 @@ export default function ContentPage() {
           description: `The book has been removed from the library.`,
         });
   }
+  
+  const teacherSubjects = user?.role === 'teacher' ? user.subjects : null;
+  const filteredBooks = teacherSubjects 
+    ? uploadedBooks.filter(book => teacherSubjects.includes(book.subject))
+    : uploadedBooks;
+
 
   return (
     <div className="flex-1 space-y-6 p-4 md:p-8">
@@ -160,7 +179,7 @@ export default function ContentPage() {
             </div>
              <div className="space-y-2">
               <Label htmlFor="subject">Subject</Label>
-              <Input id="subject" placeholder="e.g., Science" value={subject} onChange={(e) => setSubject(e.target.value)} />
+              <Input id="subject" placeholder="e.g., Science, Physics" value={subject} onChange={(e) => setSubject(e.target.value)} />
             </div>
              <div className="space-y-2">
               <Label htmlFor="class">Class</Label>
@@ -218,7 +237,7 @@ export default function ContentPage() {
         <CardHeader>
           <CardTitle>Uploaded Books</CardTitle>
           <CardDescription>
-            Here is a list of all book PDFs you have uploaded.
+            Here is a list of all book PDFs you have uploaded for your subjects.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -235,8 +254,8 @@ export default function ContentPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {uploadedBooks.length > 0 ? (
-                uploadedBooks.map((book) => (
+              {filteredBooks.length > 0 ? (
+                filteredBooks.map((book) => (
                   <TableRow key={book.id}>
                     <TableCell className="font-medium flex items-center gap-2">
                       <FileText className="h-4 w-4 text-muted-foreground" />
@@ -260,7 +279,7 @@ export default function ContentPage() {
                ) : (
                 <TableRow>
                   <TableCell colSpan={7} className="h-24 text-center">
-                    No books uploaded yet.
+                    No books uploaded yet for your assigned subjects.
                   </TableCell>
                 </TableRow>
               )}
