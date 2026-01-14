@@ -113,7 +113,7 @@ export default function TeacherLayout({ children }: { children: React.ReactNode 
         <SidebarFooter>
           <div className="flex items-center justify-between p-2">
             <div className="flex items-center gap-2">
-              <Avatar className="size-8">
+              <Avatar className="h-8 w-8">
                 <AvatarImage src="https://picsum.photos/100?teacher" alt="Teacher" data-ai-hint="teacher avatar" />
                 <AvatarFallback>{user.name ? user.name.charAt(0) : 'T'}</AvatarFallback>
               </Avatar>
