@@ -43,6 +43,7 @@ interface AuthContextType {
   getTeachers: () => TeacherUser[];
   updateAdminCredentials: (data: { password?: string, mobileNumber?: string }) => void;
   updateUserAvatar: (avatarUrl: string) => void;
+  changeStudentPassword: (username: string, oldPass: string, newPass: string) => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -124,14 +125,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const loggedInUser = session ? (JSON.parse(session) as User) : null;
         setUser(loggedInUser);
         
-        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/admin') || pathname.startsWith('/profile');
+        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/admin') || pathname.startsWith('/profile') || pathname.startsWith('/settings');
         if (!loggedInUser && !isAuthPage) {
           router.push('/student/login');
         }
       } catch (error) {
         console.error("Failed to parse user from session storage", error);
         setUser(null);
-        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/admin') || pathname.startsWith('/profile');
+        const isAuthPage = pathname.startsWith('/login') || pathname.startsWith('/student') || pathname === '/contact' || pathname.startsWith('/admin') || pathname.startsWith('/profile') || pathname.startsWith('/settings');
         if (!isAuthPage) {
           router.push('/student/login');
         }
@@ -192,6 +193,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return null;
   };
 
+  const changeStudentPassword = (username: string, oldPass: string, newPass: string) => {
+    const studentUsers = JSON.parse(localStorage.getItem('studentUsers') || '{}');
+    const userData = studentUsers[username.toLowerCase()];
+    if (userData && userData.password === oldPass) {
+      studentUsers[username.toLowerCase()].password = newPass;
+      localStorage.setItem('studentUsers', JSON.stringify(studentUsers));
+      return true;
+    }
+    return false;
+  };
+
   const logout = () => {
     sessionStorage.removeItem('smartVidyaUser');
     setUser(null);
@@ -199,7 +211,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, adminUser, login, studentLogin, logout, isLoading, addTeacher, getTeachers, updateAdminCredentials, updateUserAvatar }}>
+    <AuthContext.Provider value={{ user, adminUser, login, studentLogin, logout, isLoading, addTeacher, getTeachers, updateAdminCredentials, updateUserAvatar, changeStudentPassword }}>
       {children}
     </AuthContext.Provider>
   );

@@ -26,6 +26,7 @@ import {
   ChevronDown,
   LogOut,
   BrainCircuit,
+  KeyRound,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -149,9 +150,11 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
                     <span>{language === 'English' ? 'Profile' : 'प्रोफ़ाइल'}</span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>{language === 'English' ? 'Settings' : 'सेटिंग्स'}</span>
+                <DropdownMenuItem asChild>
+                   <Link href="/settings" className='flex items-center w-full'>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>{language === 'English' ? 'Settings' : 'सेटिंग्स'}</span>
+                  </Link>
                 </DropdownMenuItem>
                 {user.role === 'admin' && (
                   <DropdownMenuItem>
