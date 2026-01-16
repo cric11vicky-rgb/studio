@@ -82,18 +82,18 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   React.useEffect(() => {
-    if (!isLoading && !user) {
+    if (isLoading) {
+      return;
+    }
+    if (!user) {
       router.push('/student/login');
+    } else if (user.role === 'teacher') {
+      router.push('/teacher-dashboard');
     }
   }, [isLoading, user, router]);
 
-  if (isLoading || !user) {
+  if (isLoading || !user || user.role !== 'student') {
     return null; // or a loading spinner
-  }
-  
-  if (user.role === 'teacher') {
-      router.push('/teacher-dashboard');
-      return null;
   }
 
   return (
